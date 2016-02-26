@@ -7,6 +7,8 @@
 //
 
 #import "ViewController.h"
+#import "ShowSearchViewController.h"
+#import "AreaViewController.h"
 
 @interface ViewController ()
 
@@ -14,6 +16,23 @@
 
 @implementation ViewController
 
+-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([[segue identifier]isEqualToString:@"flatSeg"] || [[segue identifier] isEqualToString:@"villaSeg"] || [[segue identifier] isEqualToString:@"storeSeg"])
+    {
+        AreaViewController* dst = (AreaViewController*)[segue destinationViewController];
+        if([[segue identifier]isEqualToString:@"flatSeg"])
+        {
+            [dst setType:@"flats"];
+        }else if([[segue identifier]isEqualToString:@"storeSeg"])
+        {
+            [dst setType:@"stores"];
+        }else
+        {
+            [dst setType:@"villas"];
+        }
+    }
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
