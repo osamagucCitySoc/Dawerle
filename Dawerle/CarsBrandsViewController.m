@@ -9,10 +9,11 @@
 #import "CarsBrandsViewController.h"
 #import "Popup.h"
 #import <Parse/Parse.h>
+#import "searchCars.h"
 #import "FlatSearchTableViewController.h"
 
 @interface CarsBrandsViewController ()<UITableViewDataSource,UITableViewDelegate,PopupDelegate,UISearchBarDelegate>
-
+@property(nonatomic,strong)KCSAppdataStore* store;
 @end
 
 @implementation CarsBrandsViewController
@@ -167,33 +168,29 @@
         NSNumber* pr = [NSNumber numberWithInt:[price intValue]];
         NSNumber* yr = [NSNumber numberWithInt:[year intValue]];
         
+        _store = [KCSAppdataStore storeWithOptions:@{ KCSStoreKeyCollectionName : @"searchCars",
+                                                      KCSStoreKeyCollectionTemplateClass : [searchCars class]}];
+        searchCars* event = [[searchCars alloc] init];
+        event.brands = brands;
+        event.sub = subBrands;
+        event.price = pr;
+        event.year = yr;
         
-        PFObject *order = [PFObject objectWithClassName:@"searchCars"];
-        PFInstallation *installation = [PFInstallation currentInstallation];
-        [order addUniqueObjectsFromArray:brands forKey:@"brands"];
-        [order addUniqueObjectsFromArray:subBrands forKey:@"sub"];
-        [order setObject:pr forKey:@"price"];
-        [order setObject:yr forKey:@"year"];
-        
-        
-        [order saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            if (succeeded) {
-                NSMutableArray* channels = [[NSMutableArray alloc] initWithArray:[installation channels] copyItems:YES];
-                [channels addObject:[NSString stringWithFormat:@"c%@",[order objectId]]];
+        [_store saveObject:event withCompletionBlock:^(NSArray *objectsOrNil, NSError *errorOrNil) {
+            if (errorOrNil != nil) {
+                //save failed
+                NSLog(@"Save failed, with error: %@", [errorOrNil localizedFailureReason]);
+            } else {
+                //save was successful
+                NSString* ID = [objectsOrNil[0] kinveyObjectId];
                 NSMutableArray* searchFlats = [[NSMutableArray alloc] initWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"carSearch"]];
-                [searchFlats addObject:[order objectId]];
+                [searchFlats addObject:ID];
                 [[NSUserDefaults standardUserDefaults]setObject:searchFlats forKey:@"carSearch"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
-                [installation setChannels:channels];
-                [installation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                    if(succeeded)
-                    {
-                        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"Wohoo" message:@"Relax and we will notify you.." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                        [alert show];
-                    }
-                }];
+                UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"Wohoo" message:@"Relax and we will notify you.." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                [alert show];
             }
-        }];
+        } withProgressBlock:nil];
     }];
     [popup setKeyboardTypeForTextFields:@[@"NUMBER",@"NUMBER"]];
     [popup setBackgroundBlurType:PopupBackGroundBlurTypeDark];

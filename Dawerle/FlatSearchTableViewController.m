@@ -7,11 +7,14 @@
 //
 
 #import "FlatSearchTableViewController.h"
-#import <Parse/Parse.h>
+#import <KinveyKit/KinveyKit.h>
+#import "searchFlats.h"
+#import "searchCars.h"
 #import "ExploreTableViewController.h"
 
-@interface FlatSearchTableViewController ()
 
+@interface FlatSearchTableViewController ()
+@property(nonatomic,strong)KCSAppdataStore* store;
 @end
 
 @implementation FlatSearchTableViewController
@@ -42,34 +45,50 @@
     {
         localID = @"flatSearch";
         parseID = @"searchFlats";
+        _store = [KCSAppdataStore storeWithOptions:@{ KCSStoreKeyCollectionName : parseID,
+                                                      KCSStoreKeyCollectionTemplateClass : [searchFlats class]}];
     }else if([dataID isEqualToString:@"villas"])
     {
         localID = @"villaSearch";
         parseID = @"searchFlats";
+        _store = [KCSAppdataStore storeWithOptions:@{ KCSStoreKeyCollectionName : parseID,
+                                                      KCSStoreKeyCollectionTemplateClass : [searchFlats class]}];
     }else if([dataID isEqualToString:@"stores"])
     {
         localID = @"storeSearch";
         parseID = @"searchFlats";
+        _store = [KCSAppdataStore storeWithOptions:@{ KCSStoreKeyCollectionName : parseID,
+                                                      KCSStoreKeyCollectionTemplateClass : [searchFlats class]}];
     }else if([dataID isEqualToString:@"cars"])
     {
         localID = @"carSearch";
         parseID = @"searchCars";
+        _store = [KCSAppdataStore storeWithOptions:@{ KCSStoreKeyCollectionName : parseID,
+                                                      KCSStoreKeyCollectionTemplateClass : [searchCars class]}];
     }else if([dataID isEqualToString:@"jobs"])
     {
         localID = @"jobSearch";
         parseID = @"searchJobs";
     }
     
-    PFQuery *query = [PFQuery queryWithClassName:parseID];
-    [query whereKey:@"objectId" containedIn:[[NSUserDefaults standardUserDefaults] objectForKey:localID]];
-
-    [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
-        dataSource = [[NSMutableArray alloc] initWithArray:results];
-        dispatch_async( dispatch_get_main_queue(), ^{
-            [self.tableView reloadData];
-            [self.tableView setNeedsDisplay];
-        });
-    }];
+    
+    [_store loadObjectWithID:[[NSUserDefaults standardUserDefaults] objectForKey:localID] withCompletionBlock:^(NSArray *objectsOrNil, NSError *errorOrNil) {
+        if (errorOrNil == nil) {
+            if(objectsOrNil)
+            {
+                dataSource = [[NSMutableArray alloc] initWithArray:objectsOrNil];
+            }else
+            {
+                dataSource = [[NSMutableArray alloc]init];
+            }
+            dispatch_async( dispatch_get_main_queue(), ^{
+                [self.tableView reloadData];
+                [self.tableView setNeedsDisplay];
+            });
+        } else {
+            NSLog(@"error occurred: %@", errorOrNil);
+        }
+    } withProgressBlock:nil];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -99,12 +118,14 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
     
-    PFObject* object = [dataSource objectAtIndex:indexPath.row];
+    
+    
     if([dataID isEqualToString:@"flats"])
     {
-        NSString* keywords = [object[@"keywords"] componentsJoinedByString:@" "];
-        int maxPrice  = [(NSNumber*)object[@"price"] intValue];
-        NSString* rooms = [object[@"rooms"] componentsJoinedByString:@" "];
+        searchFlats* object = [dataSource objectAtIndex:indexPath.row];
+        NSString* keywords = [object.keywords componentsJoinedByString:@" "];
+        int maxPrice  = [object.price intValue];
+        NSString* rooms = [object.rooms componentsJoinedByString:@" "];
     
     
         NSString* string = [NSString stringWithFormat:@"%@\n%i\n%@",keywords,maxPrice,rooms];
@@ -113,8 +134,9 @@
         [(UITextView*)[cell viewWithTag:1] setText:string];
     }else if([dataID isEqualToString:@"villas"] || [dataID isEqualToString:@"stores"])
     {
-        NSString* keywords = [object[@"keywords"] componentsJoinedByString:@" "];
-        int maxPrice  = [(NSNumber*)object[@"price"] intValue];
+        searchFlats* object = [dataSource objectAtIndex:indexPath.row];
+        NSString* keywords = [object.keywords componentsJoinedByString:@" "];
+        int maxPrice  = [object.price intValue];
         
         NSString* string = [NSString stringWithFormat:@"%@\n%i",keywords,maxPrice];
         
@@ -122,19 +144,20 @@
         [(UITextView*)[cell viewWithTag:1] setText:string];
     }else if([dataID isEqualToString:@"cars"])
     {
-        NSString* brands = [object[@"brands"] componentsJoinedByString:@" "];
-        NSString* sub = [object[@"sub"] componentsJoinedByString:@" "];
-        int maxPrice  = [(NSNumber*)object[@"price"] intValue];
-        int year  = [(NSNumber*)object[@"year"] intValue];
+        searchCars* object = [dataSource objectAtIndex:indexPath.row];
+        NSString* brands = [object.brands componentsJoinedByString:@" "];
+        NSString* sub = [object.sub componentsJoinedByString:@" "];
+        int maxPrice  = [object.price intValue];
+        int year  = [object.year intValue];
         
         NSString* string = [NSString stringWithFormat:@"%@\n%@\n%i\n%i",brands,sub,maxPrice,year];
         
         
         [(UITextView*)[cell viewWithTag:1] setText:string];
-    }else if([dataID isEqualToString:@"jobs"])
+    }/*else if([dataID isEqualToString:@"jobs"])
     {
         [(UITextView*)[cell viewWithTag:1] setText:[object[@"keywords"] componentsJoinedByString:@" - "]];
-    }
+    }*/
     
     return cell;
 }
@@ -153,17 +176,19 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        PFObject* object = [dataSource objectAtIndex:indexPath.row];
-        [object deleteInBackgroundWithBlock:^(BOOL succeeded, NSError* error)
-         {
-             if(succeeded)
-             {
-                 dispatch_async( dispatch_get_main_queue(), ^{
-                     [dataSource removeObjectAtIndex:indexPath.row];
-                     [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-                 });
-             }
-         }];
+        [_store removeObject:[dataSource objectAtIndex:indexPath.row] withDeletionBlock:^(NSDictionary* deletionDictOrNil, NSError *errorOrNil) {
+            if (errorOrNil) {
+            } else {
+                NSMutableArray* array = [[NSMutableArray alloc]initWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:localID]];
+                [array removeObjectAtIndex:indexPath.row];
+                [[NSUserDefaults standardUserDefaults]setObject:array forKey:localID];
+                [[NSUserDefaults standardUserDefaults]synchronize];
+                dispatch_async( dispatch_get_main_queue(), ^{
+                    [dataSource removeObjectAtIndex:indexPath.row];
+                    [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+                });
+            }
+        } withProgressBlock:nil];
     }
 }
 

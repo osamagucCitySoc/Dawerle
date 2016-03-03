@@ -7,11 +7,12 @@
 //
 
 #import "RoomsViewController.h"
-#import <Parse/Parse.h>
+#import <KinveyKit/KinveyKit.h>
+#import "searchFlats.h"
 #import "Popup.h"
 
 @interface RoomsViewController ()<UITableViewDelegate,UITableViewDataSource,PopupDelegate>
-
+@property(nonatomic,strong)KCSAppdataStore* store;
 @end
 
 @implementation RoomsViewController
@@ -60,8 +61,10 @@
                                     cancelTitle:@"Cancel"
                                    successTitle:@"Success"
                                     cancelBlock:^{} successBlock:^{
-                                        PFObject *order = [PFObject objectWithClassName:@"searchFlats"];
-                                        PFInstallation *installation = [PFInstallation currentInstallation];
+                                        _store = [KCSAppdataStore storeWithOptions:@{ KCSStoreKeyCollectionName : @"searchFlats",
+                                                                                      KCSStoreKeyCollectionTemplateClass : [searchFlats class]}];
+                                        searchFlats* event = [[searchFlats alloc] init];
+
                                         NSMutableArray* rooms = [[NSMutableArray alloc]init];
                                         for(int i = 0 ; i < [tableView indexPathsForSelectedRows].count ; i++)
                                         {
@@ -71,32 +74,30 @@
                                         {
                                             [rooms addObject:@"-1"];
                                         }
-                                        [order addUniqueObjectsFromArray:selectedAreas forKey:@"keywords"];
-                                        [order addUniqueObjectsFromArray:rooms forKey:@"rooms"];
+                                        event.rooms = rooms;
+                                        event.keywords = selectedAreas;
+                                        
                                         if([maxPrice isEqualToString:@""])
                                         {
                                             maxPrice = @"-1";
                                         }
-                                        [order setObject:[NSNumber numberWithInt:[maxPrice intValue]] forKey:@"price"];
-                                        [order setObject:@"flat" forKey:@"type"];
-                                        [order saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                                            if (succeeded) {
-                                                NSMutableArray* channels = [[NSMutableArray alloc] initWithArray:[installation channels] copyItems:YES];
-                                                [channels addObject:[NSString stringWithFormat:@"c%@",[order objectId]]];
+                                        event.price = [NSNumber numberWithInt:[maxPrice intValue]];
+                                        event.type = @"flat";
+                                        [_store saveObject:event withCompletionBlock:^(NSArray *objectsOrNil, NSError *errorOrNil) {
+                                            if (errorOrNil != nil) {
+                                                //save failed
+                                                NSLog(@"Save failed, with error: %@", [errorOrNil localizedFailureReason]);
+                                            } else {
+                                                //save was successful
+                                                NSString* ID = [objectsOrNil[0] kinveyObjectId];
                                                 NSMutableArray* searchFlats = [[NSMutableArray alloc] initWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"flatSearch"]];
-                                                [searchFlats addObject:[order objectId]];
+                                                [searchFlats addObject:ID];
                                                 [[NSUserDefaults standardUserDefaults]setObject:searchFlats forKey:@"flatSearch"];
                                                 [[NSUserDefaults standardUserDefaults] synchronize];
-                                                [installation setChannels:channels];
-                                                [installation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                                                    if(succeeded)
-                                                    {
-                                                        UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"Wohoo" message:@"Relax and we will notify you.." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                                                        [alert show];
-                                                    }
-                                                }];
+                                                UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"Wohoo" message:@"Relax and we will notify you.." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                                                [alert show];
                                             }
-                                        }];
+                                        } withProgressBlock:nil];
                                     }];
     [popup setKeyboardTypeForTextFields:@[@"NUMBER"]];
     [popup setBackgroundBlurType:PopupBackGroundBlurTypeDark];

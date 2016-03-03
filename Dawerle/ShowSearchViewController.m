@@ -8,8 +8,8 @@
 
 #import "ShowSearchViewController.h"
 
-@interface ShowSearchViewController ()
 
+@interface ShowSearchViewController ()
 @end
 
 @implementation ShowSearchViewController
@@ -23,30 +23,13 @@
     [super viewDidLoad];
     if(!self.link)
     {
-        NSString* className = @"";
-        if([[searchItem objectForKey:@"c"]isEqualToString:@"1"])
+        NSURL* url = [NSURL URLWithString:[searchItem objectForKey:@"i"]];
+        if(!url)
         {
-            className = @"Flats";
-        }else if([[searchItem objectForKey:@"c"]isEqualToString:@"2"])
-        {
-            className = @"Cars";
-        }else if([[searchItem objectForKey:@"c"]isEqualToString:@"3"])
-        {
-            className = @"Jobs";
+            url = [NSURL URLWithString:[[searchItem objectForKey:@"i"]stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         }
-        
-        PFQuery *query = [PFQuery queryWithClassName:className];
-        [query getObjectInBackgroundWithId:[searchItem objectForKey:@"i"] block:^(PFObject *searchEntry, NSError *error) {
-            dispatch_async( dispatch_get_main_queue(), ^{
-                NSURL* url = [NSURL URLWithString:searchEntry[@"link"]];
-                if(!url)
-                {
-                    url = [NSURL URLWithString:[searchEntry[@"link"] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
-                }
-                NSURLRequest* req = [[NSURLRequest alloc]initWithURL:url];
-                [webView loadRequest:req];
-            });
-        }];
+        NSURLRequest* req = [[NSURLRequest alloc]initWithURL:url];
+        [webView loadRequest:req];
 
     }else
     {

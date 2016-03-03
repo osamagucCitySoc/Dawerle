@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C15531AF753A5AE80B41CB82 /* libPods-Dawerle.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9E856C7C6AFB26A196E9CC9 /* libPods-Dawerle.a */; };
 		E80D1E251C80339700C11C50 /* Hyundai.png in Resources */ = {isa = PBXBuildFile; fileRef = E80D1E1D1C80339700C11C50 /* Hyundai.png */; };
 		E80D1E261C80339700C11C50 /* Infiniti.png in Resources */ = {isa = PBXBuildFile; fileRef = E80D1E1E1C80339700C11C50 /* Infiniti.png */; };
 		E80D1E271C80339700C11C50 /* Isuzu.png in Resources */ = {isa = PBXBuildFile; fileRef = E80D1E1F1C80339700C11C50 /* Isuzu.png */; };
@@ -16,6 +17,9 @@
 		E80D1E2B1C80339700C11C50 /* Lamborghini.png in Resources */ = {isa = PBXBuildFile; fileRef = E80D1E231C80339700C11C50 /* Lamborghini.png */; };
 		E80D1E2C1C80339700C11C50 /* LandRover.png in Resources */ = {isa = PBXBuildFile; fileRef = E80D1E241C80339700C11C50 /* LandRover.png */; };
 		E81BA6B41C6E15E1000FF703 /* JobSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E81BA6B31C6E15E1000FF703 /* JobSearchViewController.m */; };
+		E84773021C87175600F6DEC1 /* Cars.m in Sources */ = {isa = PBXBuildFile; fileRef = E84773011C87175600F6DEC1 /* Cars.m */; };
+		E84773051C874A2600F6DEC1 /* searchCars.m in Sources */ = {isa = PBXBuildFile; fileRef = E84773041C874A2600F6DEC1 /* searchCars.m */; };
+		E84773081C874C3100F6DEC1 /* searchParent.m in Sources */ = {isa = PBXBuildFile; fileRef = E84773071C874C3100F6DEC1 /* searchParent.m */; };
 		E8529B801C6EB56000D71623 /* ExploreTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8529B7F1C6EB56000D71623 /* ExploreTableViewController.m */; };
 		E8529B831C6F2F7B00D71623 /* DownloaderClass.m in Sources */ = {isa = PBXBuildFile; fileRef = E8529B821C6F2F7B00D71623 /* DownloaderClass.m */; };
 		E859266E1C5A650B00560C02 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E859266C1C5A650B00560C02 /* Bolts.framework */; };
@@ -35,6 +39,8 @@
 		E87710DE1C5A61120079BF0D /* carsSooq.json in Resources */ = {isa = PBXBuildFile; fileRef = E87710DB1C5A61120079BF0D /* carsSooq.json */; };
 		E87710DF1C5A61120079BF0D /* carsWaset.json in Resources */ = {isa = PBXBuildFile; fileRef = E87710DC1C5A61120079BF0D /* carsWaset.json */; };
 		E87710E11C5A611B0079BF0D /* carsQ8.json in Resources */ = {isa = PBXBuildFile; fileRef = E87710E01C5A611B0079BF0D /* carsQ8.json */; };
+		E878D1921C85B1140068D22C /* searchFlats.m in Sources */ = {isa = PBXBuildFile; fileRef = E878D1911C85B1140068D22C /* searchFlats.m */; };
+		E878D1951C85BBBB0068D22C /* Flats.m in Sources */ = {isa = PBXBuildFile; fileRef = E878D1941C85BBBB0068D22C /* Flats.m */; };
 		E8875A651C7F9D4600156A4E /* cars.json in Resources */ = {isa = PBXBuildFile; fileRef = E8875A4E1C7F9D4600156A4E /* cars.json */; };
 		E8875A661C7F9D4600156A4E /* chery.png in Resources */ = {isa = PBXBuildFile; fileRef = E8875A4F1C7F9D4600156A4E /* chery.png */; };
 		E8875A671C7F9D4600156A4E /* Chevrolet.png in Resources */ = {isa = PBXBuildFile; fileRef = E8875A501C7F9D4600156A4E /* Chevrolet.png */; };
@@ -68,11 +74,15 @@
 		E8D9E36D1C56405500D7F5E1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8D9E36B1C56405500D7F5E1 /* LaunchScreen.storyboard */; };
 		E8D9E3761C56406300D7F5E1 /* AreaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D9E3751C56406300D7F5E1 /* AreaViewController.m */; };
 		E8D9E3781C56411B00D7F5E1 /* combinedAreas.json in Resources */ = {isa = PBXBuildFile; fileRef = E8D9E3771C56411B00D7F5E1 /* combinedAreas.json */; };
+		E8DFC12E1C80AB3300EE29DD /* n.caf in Resources */ = {isa = PBXBuildFile; fileRef = E8DFC12D1C80AB3300EE29DD /* n.caf */; };
 		E8E29BCE1C58CC7B00919710 /* FlatSearchTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8E29BCD1C58CC7B00919710 /* FlatSearchTableViewController.m */; };
 		E8E29BD11C58D8DF00919710 /* ShowSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8E29BD01C58D8DF00919710 /* ShowSearchViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		ACA9BE8C26890975B19B7438 /* Pods-Dawerle.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dawerle.release.xcconfig"; path = "Pods/Target Support Files/Pods-Dawerle/Pods-Dawerle.release.xcconfig"; sourceTree = "<group>"; };
+		D9E856C7C6AFB26A196E9CC9 /* libPods-Dawerle.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Dawerle.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA92531E76F7F131546836D8 /* Pods-Dawerle.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dawerle.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Dawerle/Pods-Dawerle.debug.xcconfig"; sourceTree = "<group>"; };
 		E80D1E1D1C80339700C11C50 /* Hyundai.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Hyundai.png; sourceTree = "<group>"; };
 		E80D1E1E1C80339700C11C50 /* Infiniti.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Infiniti.png; sourceTree = "<group>"; };
 		E80D1E1F1C80339700C11C50 /* Isuzu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Isuzu.png; sourceTree = "<group>"; };
@@ -83,6 +93,12 @@
 		E80D1E241C80339700C11C50 /* LandRover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LandRover.png; sourceTree = "<group>"; };
 		E81BA6B21C6E15E1000FF703 /* JobSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JobSearchViewController.h; sourceTree = "<group>"; };
 		E81BA6B31C6E15E1000FF703 /* JobSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JobSearchViewController.m; sourceTree = "<group>"; };
+		E84773001C87175600F6DEC1 /* Cars.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cars.h; sourceTree = "<group>"; };
+		E84773011C87175600F6DEC1 /* Cars.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cars.m; sourceTree = "<group>"; };
+		E84773031C874A2600F6DEC1 /* searchCars.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = searchCars.h; sourceTree = "<group>"; };
+		E84773041C874A2600F6DEC1 /* searchCars.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = searchCars.m; sourceTree = "<group>"; };
+		E84773061C874C3100F6DEC1 /* searchParent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = searchParent.h; sourceTree = "<group>"; };
+		E84773071C874C3100F6DEC1 /* searchParent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = searchParent.m; sourceTree = "<group>"; };
 		E8529B7E1C6EB56000D71623 /* ExploreTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExploreTableViewController.h; sourceTree = "<group>"; };
 		E8529B7F1C6EB56000D71623 /* ExploreTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExploreTableViewController.m; sourceTree = "<group>"; };
 		E8529B811C6F2F7B00D71623 /* DownloaderClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloaderClass.h; sourceTree = "<group>"; };
@@ -106,6 +122,10 @@
 		E87710DB1C5A61120079BF0D /* carsSooq.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = carsSooq.json; sourceTree = "<group>"; };
 		E87710DC1C5A61120079BF0D /* carsWaset.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = carsWaset.json; sourceTree = "<group>"; };
 		E87710E01C5A611B0079BF0D /* carsQ8.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = carsQ8.json; sourceTree = "<group>"; };
+		E878D1901C85B1140068D22C /* searchFlats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = searchFlats.h; sourceTree = "<group>"; };
+		E878D1911C85B1140068D22C /* searchFlats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = searchFlats.m; sourceTree = "<group>"; };
+		E878D1931C85BBBB0068D22C /* Flats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flats.h; sourceTree = "<group>"; };
+		E878D1941C85BBBB0068D22C /* Flats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Flats.m; sourceTree = "<group>"; };
 		E8875A4E1C7F9D4600156A4E /* cars.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cars.json; sourceTree = "<group>"; };
 		E8875A4F1C7F9D4600156A4E /* chery.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chery.png; sourceTree = "<group>"; };
 		E8875A501C7F9D4600156A4E /* Chevrolet.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Chevrolet.png; sourceTree = "<group>"; };
@@ -146,6 +166,7 @@
 		E8D9E3741C56406300D7F5E1 /* AreaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AreaViewController.h; sourceTree = "<group>"; };
 		E8D9E3751C56406300D7F5E1 /* AreaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AreaViewController.m; sourceTree = "<group>"; };
 		E8D9E3771C56411B00D7F5E1 /* combinedAreas.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = combinedAreas.json; sourceTree = "<group>"; };
+		E8DFC12D1C80AB3300EE29DD /* n.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = n.caf; sourceTree = "<group>"; };
 		E8E29BCC1C58CC7B00919710 /* FlatSearchTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlatSearchTableViewController.h; sourceTree = "<group>"; };
 		E8E29BCD1C58CC7B00919710 /* FlatSearchTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlatSearchTableViewController.m; sourceTree = "<group>"; };
 		E8E29BCF1C58D8DF00919710 /* ShowSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowSearchViewController.h; sourceTree = "<group>"; };
@@ -169,12 +190,38 @@
 				E85926711C5A651D00560C02 /* AudioToolbox.framework in Frameworks */,
 				E859266F1C5A650B00560C02 /* Parse.framework in Frameworks */,
 				E859266E1C5A650B00560C02 /* Bolts.framework in Frameworks */,
+				C15531AF753A5AE80B41CB82 /* libPods-Dawerle.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		34F380F0C367DF02FF2A10F4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D9E856C7C6AFB26A196E9CC9 /* libPods-Dawerle.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E878D18F1C85B1030068D22C /* KinveyStore */ = {
+			isa = PBXGroup;
+			children = (
+				E878D1901C85B1140068D22C /* searchFlats.h */,
+				E878D1911C85B1140068D22C /* searchFlats.m */,
+				E878D1931C85BBBB0068D22C /* Flats.h */,
+				E878D1941C85BBBB0068D22C /* Flats.m */,
+				E84773001C87175600F6DEC1 /* Cars.h */,
+				E84773011C87175600F6DEC1 /* Cars.m */,
+				E84773031C874A2600F6DEC1 /* searchCars.h */,
+				E84773041C874A2600F6DEC1 /* searchCars.m */,
+				E84773061C874C3100F6DEC1 /* searchParent.h */,
+				E84773071C874C3100F6DEC1 /* searchParent.m */,
+			);
+			name = KinveyStore;
+			sourceTree = "<group>";
+		};
 		E8875A4D1C7F9D3700156A4E /* cars */ = {
 			isa = PBXGroup;
 			children = (
@@ -229,6 +276,8 @@
 				E85926701C5A651D00560C02 /* AudioToolbox.framework */,
 				E8D9E35C1C56405400D7F5E1 /* Dawerle */,
 				E8D9E35B1C56405400D7F5E1 /* Products */,
+				FCC6B6C46B941ED8300A42CF /* Pods */,
+				34F380F0C367DF02FF2A10F4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -243,6 +292,8 @@
 		E8D9E35C1C56405400D7F5E1 /* Dawerle */ = {
 			isa = PBXGroup;
 			children = (
+				E878D18F1C85B1030068D22C /* KinveyStore */,
+				E8DFC12D1C80AB3300EE29DD /* n.caf */,
 				E8875A4D1C7F9D3700156A4E /* cars */,
 				E8529B811C6F2F7B00D71623 /* DownloaderClass.h */,
 				E8529B821C6F2F7B00D71623 /* DownloaderClass.m */,
@@ -290,6 +341,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		FCC6B6C46B941ED8300A42CF /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				DA92531E76F7F131546836D8 /* Pods-Dawerle.debug.xcconfig */,
+				ACA9BE8C26890975B19B7438 /* Pods-Dawerle.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -297,9 +357,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E8D9E3711C56405500D7F5E1 /* Build configuration list for PBXNativeTarget "Dawerle" */;
 			buildPhases = (
+				035809903EF005DA784BF126 /* Check Pods Manifest.lock */,
 				E8D9E3561C56405400D7F5E1 /* Sources */,
 				E8D9E3571C56405400D7F5E1 /* Frameworks */,
 				E8D9E3581C56405400D7F5E1 /* Resources */,
+				99473A104F42FD36CE38D63D /* Embed Pods Frameworks */,
+				7509B6766033DB0A30083F25 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -382,6 +445,7 @@
 				E8875A651C7F9D4600156A4E /* cars.json in Resources */,
 				E8875A741C7F9D4600156A4E /* hummer.png in Resources */,
 				E8875A6A1C7F9D4600156A4E /* cmc.png in Resources */,
+				E8DFC12E1C80AB3300EE29DD /* n.caf in Resources */,
 				E8875A7B1C7F9D4600156A4E /* cadillac.png in Resources */,
 				E8875A6B1C7F9D4600156A4E /* Daewoo.png in Resources */,
 				E8D9E3781C56411B00D7F5E1 /* combinedAreas.json in Resources */,
@@ -391,22 +455,75 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		035809903EF005DA784BF126 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		7509B6766033DB0A30083F25 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Dawerle/Pods-Dawerle-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		99473A104F42FD36CE38D63D /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Dawerle/Pods-Dawerle-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		E8D9E3561C56405400D7F5E1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				E8E29BCE1C58CC7B00919710 /* FlatSearchTableViewController.m in Sources */,
+				E878D1921C85B1140068D22C /* searchFlats.m in Sources */,
 				E8B54D181C56B6F300C2249F /* Popup.m in Sources */,
 				E87710D91C5A558A0079BF0D /* CarsBrandsViewController.m in Sources */,
 				E8529B801C6EB56000D71623 /* ExploreTableViewController.m in Sources */,
+				E84773021C87175600F6DEC1 /* Cars.m in Sources */,
+				E84773051C874A2600F6DEC1 /* searchCars.m in Sources */,
 				E8D9E3651C56405400D7F5E1 /* ViewController.m in Sources */,
 				E8529B831C6F2F7B00D71623 /* DownloaderClass.m in Sources */,
 				E81BA6B41C6E15E1000FF703 /* JobSearchViewController.m in Sources */,
 				E8E29BD11C58D8DF00919710 /* ShowSearchViewController.m in Sources */,
 				E8D9E3621C56405400D7F5E1 /* AppDelegate.m in Sources */,
 				E8B54D151C56B2B100C2249F /* RoomsViewController.m in Sources */,
+				E84773081C874C3100F6DEC1 /* searchParent.m in Sources */,
 				E8D9E35F1C56405400D7F5E1 /* main.m in Sources */,
+				E878D1951C85BBBB0068D22C /* Flats.m in Sources */,
 				E8D9E3761C56406300D7F5E1 /* AreaViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -522,6 +639,7 @@
 		};
 		E8D9E3721C56405500D7F5E1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DA92531E76F7F131546836D8 /* Pods-Dawerle.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Musaed Alazmi (V4668H5U74)";
@@ -545,6 +663,7 @@
 		};
 		E8D9E3731C56405500D7F5E1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = ACA9BE8C26890975B19B7438 /* Pods-Dawerle.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Musaed Alazmi (V4668H5U74)";
