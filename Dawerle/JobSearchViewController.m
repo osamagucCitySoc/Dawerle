@@ -7,17 +7,27 @@
 //
 
 #import "JobSearchViewController.h"
-#import <Parse/Parse.h>
-#import "FlatSearchTableViewController.h"
+#import "SearchesViewController.h"
+#import "JJMaterialTextfield.h"
+#import <KinveyKit/KinveyKit.h>
+#import "searchJobs.h"
+#import <FlatUIKit.h>
+#import "FeEqualize.h"
+#import "ViewController.h"
+#import <OpinionzAlertView/OpinionzAlertView.h>
 
-@interface JobSearchViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
 
+@interface JobSearchViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIAlertViewDelegate>
+@property(nonatomic,strong)KCSAppdataStore* store;
+@property (strong, nonatomic) FeEqualize *equalizer;
 @end
 
 @implementation JobSearchViewController
 {
-    __weak IBOutlet UITextField *keyWordTextField;
+    __weak IBOutlet JJMaterialTextfield *keyWordTextField;
     __weak IBOutlet UITableView *tableView;
+    __weak IBOutlet FUIButton *roomesButton;
+    __weak IBOutlet UIView *eqHolder;
     NSMutableArray* dataSource;
 }
 
@@ -26,7 +36,7 @@
 {
     if([[segue identifier]isEqualToString:@"showRecordedSearch"])
     {
-        FlatSearchTableViewController* dst = (FlatSearchTableViewController*)[segue destinationViewController];
+        SearchesViewController* dst = (SearchesViewController*)[segue destinationViewController];
         [dst setDataID:@"jobs"];
     }
 }
@@ -34,19 +44,77 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     @{NSForegroundColorAttributeName:[UIColor whiteColor],
+       NSFontAttributeName:[UIFont fontWithName:@"DroidArabicKufi-Bold" size:21]}];
+    
+    
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)
+                                                         forBarMetrics:UIBarMetricsDefault];
+    
+    self.title = @"الوظائف";
+    
+    UIImage *myImage = [UIImage imageNamed:@"sine-waves-analysis.png"];
+    myImage = [myImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithImage:myImage style:UIBarButtonItemStylePlain target:self action:@selector(mySearchClicked:)];
+    self.navigationItem.rightBarButtonItem = menuButton;
+
+    
     dataSource = [[NSMutableArray alloc] init];
     [tableView setDataSource:self];
     [tableView setDelegate:self];
     [keyWordTextField setDelegate:self];
+    
+    keyWordTextField.textColor= [UIColor colorFromHexCode:@"34a853"];
+    keyWordTextField.enableMaterialPlaceHolder = NO;
+    keyWordTextField.errorColor=[UIColor colorWithRed:0.910 green:0.329 blue:0.271 alpha:1.000]; // FLAT RED COLOR
+    keyWordTextField.lineColor=[UIColor colorFromHexCode:@"1085C7"];
+    keyWordTextField.tintColor=[UIColor colorFromHexCode:@"1085C7"];
+    [keyWordTextField setTextAlignment:NSTextAlignmentRight];
+    [keyWordTextField becomeFirstResponder];
+    
+    
+    roomesButton.buttonColor = [UIColor colorFromHexCode:@"34a853"];
+    roomesButton.shadowColor = [UIColor greenSeaColor];
+    roomesButton.shadowHeight = 0.0f;
+    roomesButton.cornerRadius = 0.0f;
+    roomesButton.alpha = 0.0f;
+
+    
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    _equalizer = [[FeEqualize alloc] initWithView:eqHolder title:@"جاري حفظ بحثك"];
+    CGRect frame = CGRectMake(0, 0, 70, 70);
+    [_equalizer setFrame:frame];
+    [_equalizer setBackgroundColor:[UIColor clearColor]];
+    [eqHolder setBackgroundColor:[UIColor clearColor]];
+    [eqHolder addSubview:_equalizer];
+    [eqHolder setAlpha:0.0];
+    [_equalizer dismiss];
+}
 
 
 #pragma mark table view methods
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+-(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return @"الكلمات الدالة المضافة :";
+}
+
+
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -62,52 +130,104 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
     
-    [[cell textLabel]setText:[dataSource objectAtIndex:indexPath.row]];
+    [(UILabel*)[cell viewWithTag:1]setText:[dataSource objectAtIndex:indexPath.row]];
+    
+    [(UIButton*)[cell viewWithTag:2] addTarget:self
+                                         action:@selector(deleteClicked:) forControlEvents:UIControlEventTouchUpInside];
     
     return cell;
     
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    return YES;
+    return NO;
 }
 
-
-- (void)tableView:(UITableView *)tableVieww commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [dataSource removeObjectAtIndex:indexPath.row];
-        [tableVieww deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationRight];
-    }
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 50.0f;
+}
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
+{
+    // Background color
+    view.tintColor = [UIColor groupTableViewBackgroundColor];
+    
+    // Text Color
+    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+    [header.textLabel setTextColor:[UIColor blackColor]];
+    [header.textLabel setFont:[UIFont fontWithName:@"DroidArabicKufi" size:20.0]];
+    [header.textLabel setTextAlignment:NSTextAlignmentRight];
 }
 
 - (IBAction)submitClicked:(id)sender {
     [keyWordTextField resignFirstResponder];
-    PFObject *order = [PFObject objectWithClassName:@"searchJobs"];
-    PFInstallation *installation = [PFInstallation currentInstallation];
-    [order addUniqueObjectsFromArray:dataSource forKey:@"keywords"];
-    [order saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        if (succeeded) {
-            NSMutableArray* channels = [[NSMutableArray alloc] initWithArray:[installation channels] copyItems:YES];
-            [channels addObject:[NSString stringWithFormat:@"c%@",[order objectId]]];
+    
+    
+    [UIView transitionWithView:eqHolder
+                      duration:0.2f
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^{
+                        [eqHolder setAlpha:1.0];
+                        [_equalizer show];
+                    } completion:NULL];
+
+    
+    _store = [KCSAppdataStore storeWithOptions:@{ KCSStoreKeyCollectionName : @"searchJobs",
+                                                  KCSStoreKeyCollectionTemplateClass : [searchJobs class]}];
+    searchJobs* event = [[searchJobs alloc] init];
+    event.keywords = dataSource;
+    
+    [_store saveObject:event withCompletionBlock:^(NSArray *objectsOrNil, NSError *errorOrNil) {
+        if (errorOrNil != nil) {
+            //save failed
+            NSLog(@"Save failed, with error: %@", [errorOrNil localizedFailureReason]);
+        } else {
+            //save was successful
+            NSString* ID = [objectsOrNil[0] kinveyObjectId];
             NSMutableArray* searchFlats = [[NSMutableArray alloc] initWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"jobSearch"]];
-            [searchFlats addObject:[order objectId]];
+            [searchFlats addObject:ID];
             [[NSUserDefaults standardUserDefaults]setObject:searchFlats forKey:@"jobSearch"];
             [[NSUserDefaults standardUserDefaults] synchronize];
-            [installation setChannels:channels];
-            [installation saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                if(succeeded)
-                {
-                    UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"Wohoo" message:@"Relax and we will notify you.." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                    [alert show];
-                }
-            }];
+            
+            OpinionzAlertView *alert = [[OpinionzAlertView alloc] initWithTitle:@"Wohoo"
+                                                                        message:@"الأن إستريح و دورلي سيقوم بالبحث بدلاً عنك ;)" cancelButtonTitle:@"(Y)"              otherButtonTitles:nil          usingBlockWhenTapButton:^(OpinionzAlertView *alertView, NSInteger buttonIndex) {
+                                                                            NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
+                                                                            for (UIViewController *aViewController in allViewControllers) {
+                                                                                if ([aViewController isKindOfClass:[ViewController class]]) {
+                                                                                    [self.navigationController popToViewController:aViewController animated:YES];
+                                                                                }
+                                                                            }
+                                                                        }];
+            alert.iconType = OpinionzAlertIconSuccess;
+            alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
+
+            
+            
+            [UIView transitionWithView:eqHolder
+                              duration:0.2f
+                               options:UIViewAnimationOptionTransitionCrossDissolve
+                            animations:^{
+                                [eqHolder setAlpha:0.0];
+                                [_equalizer dismiss];
+                            } completion:^(BOOL finished){
+                                [alert show];
+                            }];
         }
-    }];
+    } withProgressBlock:nil];
 }
 - (IBAction)addKeyWordClicked:(id)sender {
     if(keyWordTextField.text.length > 0)
     {
         [dataSource addObject:keyWordTextField.text];
-        [tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:dataSource.count-1 inSection:0]] withRowAnimation:UITableViewRowAnimationLeft];
+        [tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:dataSource.count-1 inSection:0]] withRowAnimation:UITableViewRowAnimationTop];
+        if(roomesButton.alpha == 0)
+        {
+            [UIView transitionWithView:roomesButton
+                              duration:0.2f
+                               options:UIViewAnimationOptionTransitionCrossDissolve
+                            animations:^{
+                                [roomesButton setAlpha:1.0f];
+                            } completion:NULL];
+        }
     }
 }
 - (IBAction)mySearchClicked:(id)sender {
@@ -120,5 +240,40 @@
     [self addKeyWordClicked:nil];
     return YES;
 }
+- (void)deleteClicked:(id)sender
+{
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:tableView];
+    NSIndexPath *indexPath = [tableView indexPathForRowAtPoint:buttonPosition];
+    if (indexPath != nil)
+    {
+        [dataSource removeObjectAtIndex:indexPath.row];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
+        if(dataSource.count == 0)
+        {
+            [UIView transitionWithView:roomesButton
+                              duration:0.2f
+                               options:UIViewAnimationOptionTransitionCrossDissolve
+                            animations:^{
+                                [roomesButton setAlpha:0.0f];
+                            } completion:NULL];
+        }
+    }
+}
+
+
+#pragma mark aert view methods
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(alertView.tag == 1)
+    {
+        NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
+        for (UIViewController *aViewController in allViewControllers) {
+            if ([aViewController isKindOfClass:[ViewController class]]) {
+                [self.navigationController popToViewController:aViewController animated:YES];
+            }
+        }
+    }
+}
+
 
 @end

@@ -1,6 +1,6 @@
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/KinveyKit"
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/FBGlowLabel" "${PODS_ROOT}/Headers/Public/FlatUIKit" "${PODS_ROOT}/Headers/Public/JJMaterialTextField" "${PODS_ROOT}/Headers/Public/KinveyKit" "${PODS_ROOT}/Headers/Public/OpinionzAlertView"
 LIBRARY_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/KinveyKit/KinveyKit-1.40.5"
-OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/KinveyKit"
-OTHER_LDFLAGS = $(inherited) -ObjC -l"KinveyKit" -l"sqlite3" -framework "Accounts" -framework "CoreGraphics" -framework "CoreLocation" -framework "MobileCoreServices" -framework "Security" -framework "Social" -framework "SystemConfiguration" -weak_framework "WebKit"
+OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/FBGlowLabel" -isystem "${PODS_ROOT}/Headers/Public/FlatUIKit" -isystem "${PODS_ROOT}/Headers/Public/JJMaterialTextField" -isystem "${PODS_ROOT}/Headers/Public/KinveyKit" -isystem "${PODS_ROOT}/Headers/Public/OpinionzAlertView"
+OTHER_LDFLAGS = $(inherited) -ObjC -l"FBGlowLabel" -l"FlatUIKit" -l"JJMaterialTextField" -l"KinveyKit" -l"OpinionzAlertView" -l"sqlite3" -framework "Accounts" -framework "CoreGraphics" -framework "CoreLocation" -framework "CoreText" -framework "MobileCoreServices" -framework "QuartzCore" -framework "Security" -framework "Social" -framework "SystemConfiguration" -weak_framework "WebKit"
 PODS_ROOT = ${SRCROOT}/Pods

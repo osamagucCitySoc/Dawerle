@@ -6,6 +6,10 @@
 target 'Dawerle' do
 
 pod 'KinveyKit'
+pod 'FlatUIKit'
+pod 'FBGlowLabel', :git => 'https://github.com/lyokato/FBGlowLabel.git'
+pod "JJMaterialTextField"
+pod 'OpinionzAlertView'
 
 end
 

@@ -18,7 +18,10 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-
+    
+    [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
+    [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
+    
     UIUserNotificationSettings *settings =
     [UIUserNotificationSettings settingsForTypes:UIUserNotificationTypeAlert |
      UIUserNotificationTypeBadge |

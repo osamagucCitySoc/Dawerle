@@ -7,14 +7,18 @@
 //
 
 #import "ShowSearchViewController.h"
+#import <FlatUIKit.h>
+#import "FeEqualize.h"
 
 
-@interface ShowSearchViewController ()
+@interface ShowSearchViewController ()<UIWebViewDelegate>
+@property (strong, nonatomic) FeEqualize *equalizer;
 @end
 
 @implementation ShowSearchViewController
 {
     __weak IBOutlet UIWebView *webView;
+    __weak IBOutlet UIView *eqHolder;
 }
 
 @synthesize searchItem;
@@ -36,11 +40,43 @@
         NSURLRequest* req = [[NSURLRequest alloc]initWithURL:self.link];
         [webView loadRequest:req];
     }
+    
+    
+    [webView setDelegate:self];
+    
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     @{NSForegroundColorAttributeName:[UIColor whiteColor],
+       NSFontAttributeName:[UIFont fontWithName:@"DroidArabicKufi-Bold" size:21]}];
+    
+    if(self.titlee)
+    {
+        [self setTitle:self.titlee];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    [_equalizer removeFromSuperview];
+    _equalizer = [[FeEqualize alloc] initWithView:eqHolder title:@"جاري التحميل.."];
+    CGRect frame = CGRectMake(0, 0, 70, 70);
+    [_equalizer setFrame:frame];
+    
+    [_equalizer setBackgroundColor:[UIColor clearColor]];
+    [eqHolder setBackgroundColor:[UIColor clearColor]];
+    [eqHolder addSubview:_equalizer];
+    [eqHolder setAlpha:1.0];
+    [_equalizer show];
+
+}
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [eqHolder setAlpha:0.0];
+    [_equalizer dismiss];
 }
 
 /*

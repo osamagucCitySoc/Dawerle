@@ -10,16 +10,23 @@
 #import "DownloaderClass.h"
 #import "ShowSearchViewController.h"
 #import "Flats.h"
+#import "Jobs.h"
+#import <FlatUIKit.h>
 #import "Cars.h"
+#import "FeEqualize.h"
 
-@interface ExploreTableViewController ()
+@interface ExploreTableViewController ()<UITableViewDataSource,UITableViewDelegate>
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property(nonatomic,strong)KCSAppdataStore* store;
+@property (strong, nonatomic) FeEqualize *equalizer;
 @end
 
 @implementation ExploreTableViewController
 {
     NSMutableArray* dataSource;
     DownloaderClass* class;
+     __weak IBOutlet UIView *eqHolder;
+    NSIndexPath* selected;
 }
 
 @synthesize className,searchingParams;
@@ -30,27 +37,39 @@
     if([[segue identifier]isEqualToString:@"searchWebSeg"])
     {
         NSURL* url;
+        NSString* titlee;
         if([className isEqualToString:@"cars"])
         {
-            Cars* cars = [dataSource objectAtIndex:self.tableView.indexPathForSelectedRow.row];
+            Cars* cars = [dataSource objectAtIndex:selected.section];
             url = [NSURL URLWithString:cars.link];
             if(!url)
             {
                 url = [NSURL URLWithString:[cars.link stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
             }
+            titlee = [NSString stringWithFormat:@"%@ : %@",@"إعلان من موقع",cars.source];
         }else if([className isEqualToString:@"flats"] || [className isEqualToString:@"villas"] || [className isEqualToString:@"stores"])
         {
-            Flats* flats = [dataSource objectAtIndex:self.tableView.indexPathForSelectedRow.row];
+            Flats* flats = [dataSource objectAtIndex:selected.section];
             url = [NSURL URLWithString:flats.link];
             if(!url)
             {
                 url = [NSURL URLWithString:[flats.link stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
             }
+            titlee = [NSString stringWithFormat:@"%@ : %@",@"إعلان من موقع",flats.source];
+        }else if([className isEqualToString:@"jobs"])
+        {
+            Jobs* cars = [dataSource objectAtIndex:selected.section];
+            url = [NSURL URLWithString:cars.link];
+            if(!url)
+            {
+                url = [NSURL URLWithString:[cars.link stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            }
+            titlee = [NSString stringWithFormat:@"%@ : %@",@"إعلان من موقع",cars.source];
         }
-       
         
         ShowSearchViewController* dst = (ShowSearchViewController*)[segue destinationViewController];
         [dst setLink:url];
+        [dst setTitlee:titlee];
     }
 }
 
@@ -59,13 +78,41 @@
     
     dataSource = [[NSMutableArray alloc] init];
     class = [DownloaderClass sharedInstance];
-    
-    [self loadItems];
-    
+    [self.tableView setDelegate:self];
+    [self.tableView setDataSource:self];
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    if(dataSource.count == 0)
+    {
+        [self loadItems];
+    }
 }
 
 -(void)loadItems
 {
+    [_equalizer removeFromSuperview];
+    _equalizer = [[FeEqualize alloc] initWithView:eqHolder title:@"جاري التحميل.."];
+    CGRect frame = CGRectMake(0, 0, 70, 70);
+    [_equalizer setFrame:frame];
+    
+    [_equalizer setBackgroundColor:[UIColor clearColor]];
+    [eqHolder setBackgroundColor:[UIColor clearColor]];
+    [eqHolder addSubview:_equalizer];
+    [eqHolder setAlpha:0.0];
+    [_equalizer dismiss];
+    
+    [UIView transitionWithView:eqHolder
+                      duration:0.2f
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^{
+                        [eqHolder setAlpha:1.0];
+                        [_equalizer show];
+                    } completion:nil];
+
+    
     if([className isEqualToString:@"cars"])
     {
         NSArray* brands = ((searchCars*)searchingParams).brands;
@@ -91,7 +138,7 @@
             compoundQuery = [KCSQuery queryForJoiningOperator:kKCSAnd onQueries:nameQuery1,nameQuery2,nameQuery3,nil];
         }
         [compoundQuery addSortModifier:dateSort];
-        
+        compoundQuery.limitModifer = [[KCSQueryLimitModifier alloc] initWithLimit:500];
         _store = [KCSAppdataStore storeWithOptions:@{ KCSStoreKeyCollectionName : @"Cars",
                                                       KCSStoreKeyCollectionTemplateClass : [Cars class]}];
         
@@ -112,25 +159,15 @@
                     [self.tableView setNeedsDisplay];
                 });
             }
+            [UIView transitionWithView:eqHolder
+                              duration:0.2f
+                               options:UIViewAnimationOptionTransitionCrossDissolve
+                            animations:^{
+                                [eqHolder setAlpha:0.0];
+                                [_equalizer dismiss];
+                            } completion:nil];
+
         } withProgressBlock:nil];
-        
-        
-        /*PFQuery *query = [PFQuery queryWithClassName:@"Cars"];
-        [query whereKey:@"brand" containedIn:searchingParams[@"brands"]];
-        [query whereKey:@"sub" containedIn:searchingParams[@"sub"]];
-        [query whereKey:@"year" lessThanOrEqualTo:searchingParams[@"year"]];
-        [query orderByDescending:@"updatedAt"];
-        NSNumber* num = searchingParams[@"price"];
-        if([num intValue] != -1)
-        {
-            [query whereKey:@"price" lessThanOrEqualTo:num];
-        }
-        
-        [query findObjectsInBackgroundWithBlock:^(NSArray *results, NSError *error) {
-            [dataSource addObjectsFromArray:results];
-            [self.tableView reloadData];
-            [self.tableView setNeedsDisplay];
-        }];*/
     }else if([className isEqualToString:@"flats"] || [className isEqualToString:@"villas"] || [className isEqualToString:@"stores"])
     {
         NSMutableArray* rooms = [[NSMutableArray alloc]initWithArray:((searchFlats*)searchingParams).rooms];
@@ -170,7 +207,8 @@
             compoundQuery = [KCSQuery queryForJoiningOperator:kKCSAnd onQueries:nameQuery1,nameQuery2,nameQuery3,nil];
         }
         [compoundQuery addSortModifier:dateSort];
-    
+        compoundQuery.limitModifer = [[KCSQueryLimitModifier alloc] initWithLimit:500];
+        
         _store = [KCSAppdataStore storeWithOptions:@{ KCSStoreKeyCollectionName : @"Flats",
                                                       KCSStoreKeyCollectionTemplateClass : [Flats class]}];
         
@@ -191,6 +229,51 @@
                     [self.tableView setNeedsDisplay];
                 });
             }
+            [UIView transitionWithView:eqHolder
+                              duration:0.2f
+                               options:UIViewAnimationOptionTransitionCrossDissolve
+                            animations:^{
+                                [eqHolder setAlpha:0.0];
+                                [_equalizer dismiss];
+                            } completion:nil];
+
+        } withProgressBlock:nil];
+    }else if([className isEqualToString:@"jobs"])
+    {
+        NSArray* keywords = ((searchJobs*)searchingParams).keywords;
+        KCSQuery* nameQuery1 = [KCSQuery queryOnField:@"keywords" usingConditional:kKCSIn forValue:keywords];
+        KCSQuerySortModifier* dateSort = [[KCSQuerySortModifier alloc] initWithField:KCSMetadataFieldLastModifiedTime inDirection:kKCSDescending];
+        [nameQuery1 addSortModifier:dateSort];
+        nameQuery1.limitModifer = [[KCSQueryLimitModifier alloc] initWithLimit:500];
+        
+        _store = [KCSAppdataStore storeWithOptions:@{ KCSStoreKeyCollectionName : @"Jobs",
+                                                      KCSStoreKeyCollectionTemplateClass : [Jobs class]}];
+        
+        [_store queryWithQuery:nameQuery1 withCompletionBlock:^(NSArray *objectsOrNil, NSError *errorOrNil) {
+            if (errorOrNil != nil) {
+                //An error happened, just log for now
+                NSLog(@"An error occurred on fetch: %@", errorOrNil);
+            } else {
+                if(objectsOrNil)
+                {
+                    dataSource = [[NSMutableArray alloc] initWithArray:objectsOrNil];
+                }else
+                {
+                    dataSource = [[NSMutableArray alloc]init];
+                }
+                dispatch_async( dispatch_get_main_queue(), ^{
+                    [self.tableView reloadData];
+                    [self.tableView setNeedsDisplay];
+                });
+            }
+            [UIView transitionWithView:eqHolder
+                              duration:0.2f
+                               options:UIViewAnimationOptionTransitionCrossDissolve
+                            animations:^{
+                                [eqHolder setAlpha:0.0];
+                                [_equalizer dismiss];
+                            } completion:nil];
+            
         } withProgressBlock:nil];
     }
 }
@@ -203,12 +286,23 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 1;
+    return dataSource.count;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return dataSource.count;
+    if([className isEqualToString:@"villas"] || [className isEqualToString:@"flats"] || [className isEqualToString:@"stores"])
+    {
+        return 6;
+    }else if([className isEqualToString:@"cars"])
+    {
+        return 6;
+    }else if([className isEqualToString:@"jobs"])
+    {
+        return 3;
+    }
+    return 2;
 }
+
 
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -221,96 +315,169 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
     
-    
+    ((FUIButton*)[cell viewWithTag:2]).alpha = 0.0f;
     
     if([className isEqualToString:@"cars"])
     {
-        Cars* object = [dataSource objectAtIndex:indexPath.row];
+        Cars* object = [dataSource objectAtIndex:indexPath.section];
         
-        
-        NSURL* url = [NSURL URLWithString:object.img];
-        if(!url)
+        if(indexPath.row == 0)
         {
-            url = [NSURL URLWithString:[object.img stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            [(UILabel*)[cell viewWithTag:1] setText:[NSString stringWithFormat:@"%@ : %@ - %@",@"الماركة",object.brand,object.sub]];
+        }else if(indexPath.row == 1)
+        {
+            [(UILabel*)[cell viewWithTag:1] setText:[NSString stringWithFormat:@"%@ : %i",@"سنة الصنع",object.year.intValue]];
+        }else if(indexPath.row == 2)
+        {
+            if(object.price.intValue <= 0)
+            {
+                [(UILabel*)[cell viewWithTag:1] setText:[NSString stringWithFormat:@"%@ : %@",@"السعر",@"غير محدد"]];
+            }else
+            {
+                [(UILabel*)[cell viewWithTag:1] setText:[NSString stringWithFormat:@"%@ : %i",@"السعر",object.price.intValue]];
+            }
+        }else if(indexPath.row == 3)
+        {
+            [(UILabel*)[cell viewWithTag:1] setText:[NSString stringWithFormat:@"%@ : %@",@"العنوان",object.title]];
+        }else if(indexPath.row == 4)
+        {
+            [(UILabel*)[cell viewWithTag:1] setText:[NSString stringWithFormat:@"%@ : %@",@"الوصف",object.desc]];
+        }else if(indexPath.row == 5)
+        {
+            ((FUIButton*)[cell viewWithTag:2]).buttonColor = [UIColor colorFromHexCode:@"34a853"];
+            ((FUIButton*)[cell viewWithTag:2]).shadowColor = [UIColor greenSeaColor];
+            ((FUIButton*)[cell viewWithTag:2]).shadowHeight = 0.0f;
+            ((FUIButton*)[cell viewWithTag:2]).cornerRadius = 0.0f;
+            ((FUIButton*)[cell viewWithTag:2]).alpha = 1.0f;
+            [(FUIButton*)[cell viewWithTag:2] addTarget:self
+                                                 action:@selector(exploreClicked:) forControlEvents:UIControlEventTouchUpInside];
         }
-
-        [(UIImageView*)[cell viewWithTag:1] setImage:nil];
-        [class downloadFileAtUrl:url downloadingBlock:^(BOOL Succedded,NSString* locallySavedPath, NSString* error, NSString* loadedFrom)
-         {
-             if(Succedded)
-             {
-                 UIImage * myImage = [UIImage imageWithContentsOfFile: locallySavedPath];
-                 dispatch_async(dispatch_get_main_queue(), ^{
-                     [(UIImageView*)[cell viewWithTag:1] setImage:myImage];
-                 });
-             }
-         }];
-        
-        NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
-        [formatter setDateFormat:@"dd-MM-YYYY"];
-        
-        [(UILabel*)[cell viewWithTag:2] setText:object.title];
-        [(UITextView*)[cell viewWithTag:3] setText:object.desc];
-        [(UILabel*)[cell viewWithTag:4] setText:[formatter stringFromDate:object.metadata.lastModifiedTime]];
-        [(UILabel*)[cell viewWithTag:5] setText:object.source];
-    }else if([className isEqualToString:@"flats"])
+    }else if([className isEqualToString:@"flats"] || [className isEqualToString:@"villas"] || [className isEqualToString:@"stores"])
     {
-        Flats* object = [dataSource objectAtIndex:indexPath.row];
-        
-        
-        NSURL* url = [NSURL URLWithString:object.img];
-        if(!url)
+        Flats* object = [dataSource objectAtIndex:indexPath.section];
+        if(indexPath.row == 0)
         {
-            url = [NSURL URLWithString:[object.img stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            if([object.loc isEqualToString:@"-1"])
+            {
+                [(UILabel*)[cell viewWithTag:1] setText:[NSString stringWithFormat:@"%@ : %@",@"العنوان",@"غير محدد"]];
+            }else
+            {
+                [(UILabel*)[cell viewWithTag:1] setText:[NSString stringWithFormat:@"%@ : %@",@"العنوان",object.loc]];
+            }
+        }else if(indexPath.row == 1)
+        {
+            if([object.rooms.firstObject isEqualToString:@"-1"] || [object.rooms.firstObject isEqualToString:@"0"])
+            {
+                [(UILabel*)[cell viewWithTag:1] setText:[NSString stringWithFormat:@"%@ : %@",@"عدد الغرف",@"غير محدد"]];
+            }else
+            {
+                [(UILabel*)[cell viewWithTag:1] setText:[NSString stringWithFormat:@"%@ : %@",@"عدد الغرف",object.rooms.firstObject]];
+            }
+        }else if(indexPath.row == 2)
+        {
+            if(object.price.intValue <= 0)
+            {
+                [(UILabel*)[cell viewWithTag:1] setText:[NSString stringWithFormat:@"%@ : %@",@"السعر",@"غير محدد"]];
+            }else
+            {
+                [(UILabel*)[cell viewWithTag:1] setText:[NSString stringWithFormat:@"%@ : %i",@"السعر",object.price.intValue]];
+            }
+        }else if(indexPath.row == 3)
+        {
+            [(UILabel*)[cell viewWithTag:1] setText:[NSString stringWithFormat:@"%@ : %@",@"العنوان",object.title]];
+        }else if(indexPath.row == 4)
+        {
+            [(UILabel*)[cell viewWithTag:1] setText:[NSString stringWithFormat:@"%@ : %@",@"الوصف",object.desc]];
+        }else if(indexPath.row == 5)
+        {
+            ((FUIButton*)[cell viewWithTag:2]).buttonColor = [UIColor colorFromHexCode:@"34a853"];
+            ((FUIButton*)[cell viewWithTag:2]).shadowColor = [UIColor greenSeaColor];
+            ((FUIButton*)[cell viewWithTag:2]).shadowHeight = 0.0f;
+            ((FUIButton*)[cell viewWithTag:2]).cornerRadius = 0.0f;
+            ((FUIButton*)[cell viewWithTag:2]).alpha = 1.0f;
+            [(FUIButton*)[cell viewWithTag:2] addTarget:self
+                                                 action:@selector(exploreClicked:) forControlEvents:UIControlEventTouchUpInside];
+            
         }
-
-        [(UIImageView*)[cell viewWithTag:1] setImage:nil];
-        [class downloadFileAtUrl:url downloadingBlock:^(BOOL Succedded,NSString* locallySavedPath, NSString* error, NSString* loadedFrom)
-         {
-             if(Succedded)
-             {
-                 UIImage * myImage = [UIImage imageWithContentsOfFile: locallySavedPath];
-                 dispatch_async(dispatch_get_main_queue(), ^{
-                     [(UIImageView*)[cell viewWithTag:1] setImage:myImage];
-                 });
-             }
-         }];
+    }else if([className isEqualToString:@"jobs"])
+    {
+        Jobs* object = [dataSource objectAtIndex:indexPath.section];
         
-        NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
-        [formatter setDateFormat:@"dd-MM-YYYY"];
-        
-        NSString* locs = [object.locs componentsJoinedByString:@" - "];
-        if([locs isEqualToString:@"-1"])
+        if(indexPath.row == 0)
         {
-            locs = @"المكان غير محدد";
+            [(UILabel*)[cell viewWithTag:1] setText:[NSString stringWithFormat:@"%@ : %@",@"العنوان",object.title]];
+        }else if(indexPath.row == 1)
+        {
+            [(UILabel*)[cell viewWithTag:1] setText:[NSString stringWithFormat:@"%@ : %@",@"الوصف",object.desc]];
+        }else if(indexPath.row == 2)
+        {
+            ((FUIButton*)[cell viewWithTag:2]).buttonColor = [UIColor colorFromHexCode:@"34a853"];
+            ((FUIButton*)[cell viewWithTag:2]).shadowColor = [UIColor greenSeaColor];
+            ((FUIButton*)[cell viewWithTag:2]).shadowHeight = 0.0f;
+            ((FUIButton*)[cell viewWithTag:2]).cornerRadius = 0.0f;
+            ((FUIButton*)[cell viewWithTag:2]).alpha = 1.0f;
+            [(FUIButton*)[cell viewWithTag:2] addTarget:self
+                                                 action:@selector(exploreClicked:) forControlEvents:UIControlEventTouchUpInside];
         }
-        NSNumber* price = object.price;
-        NSString* priceStr = @"";
-        if([price intValue] == -1)
-        {
-            priceStr = @"0 KD";
-        }else
-        {
-            priceStr = [NSString stringWithFormat:@"%i KD",[price intValue]];
-        }
-        [(UILabel*)[cell viewWithTag:2] setText:locs];
-        [(UITextView*)[cell viewWithTag:3] setText:[NSString stringWithFormat:@"%@\n%@\n%@",object.title,object.desc,priceStr]];
-        [(UILabel*)[cell viewWithTag:4] setText:[formatter stringFromDate:object.metadata.lastModifiedTime]];
-        [(UILabel*)[cell viewWithTag:5] setText:object.source];
     }
     return cell;
 }
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [self performSegueWithIdentifier:@"searchWebSeg" sender:self];
-}
-
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 120.0f;
+    
+    return 50.0f;
 }
 
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
+    return NO;
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
+{
+    // Text Color
+    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
+    [[header contentView]setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
+    [header.textLabel setTextColor:[UIColor blackColor]];
+    [header.textLabel setFont:[UIFont fontWithName:@"DroidArabicKufi" size:20.0]];
+    [header.textLabel setTextAlignment:NSTextAlignmentRight];
+}
+
+
+-(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"dd/MM"];
+    
+    if([className isEqualToString:@"villas"] || [className isEqualToString:@"flats"] || [className isEqualToString:@"stores"])
+    {
+        Flats* object = [dataSource  objectAtIndex:section];
+        return [NSString stringWithFormat:@"%@ : %@. في %@",@"إعلان من موقع",object.source,[formatter stringFromDate:object.metadata.lastModifiedTime]];
+    }else if([className isEqualToString:@"cars"])
+    {
+        Cars* object = [dataSource  objectAtIndex:section];
+        return [NSString stringWithFormat:@"%@ : %@. في %@",@"إعلان من موقع",object.source,[formatter stringFromDate:object.metadata.lastModifiedTime]];
+    }else if([className isEqualToString:@"jobs"])
+    {
+        Jobs* object = [dataSource  objectAtIndex:section];
+        return [NSString stringWithFormat:@"%@ : %@. في %@",@"إعلان من موقع",object.source,[formatter stringFromDate:object.metadata.lastModifiedTime]];
+    }
+
+    return @"";
+}
+
+
+- (void)exploreClicked:(id)sender
+{
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    if (indexPath != nil)
+    {
+        selected = indexPath;
+        [self performSegueWithIdentifier:@"searchWebSeg" sender:self];
+    }
+}
 
 /*
 // Override to support conditional editing of the table view.

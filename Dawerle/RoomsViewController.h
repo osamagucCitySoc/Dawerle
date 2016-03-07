@@ -10,7 +10,7 @@
 
 @interface RoomsViewController : UIViewController
 
-
 @property (nonatomic,strong)NSMutableArray* selectedAreas;
+@property(nonatomic, strong)NSString* type;
 
 @end

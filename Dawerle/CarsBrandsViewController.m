@@ -10,22 +10,29 @@
 #import "Popup.h"
 #import <Parse/Parse.h>
 #import "searchCars.h"
-#import "FlatSearchTableViewController.h"
+#import "SearchesViewController.h"
+#import <FlatUIKit.h>
+#import "FeEqualize.h"
+#import "ViewController.h"
+#import <OpinionzAlertView/OpinionzAlertView.h>
 
-@interface CarsBrandsViewController ()<UITableViewDataSource,UITableViewDelegate,PopupDelegate,UISearchBarDelegate>
+@interface CarsBrandsViewController ()<UITableViewDataSource,UITableViewDelegate,PopupDelegate,UISearchBarDelegate,UIAlertViewDelegate>
 @property(nonatomic,strong)KCSAppdataStore* store;
+@property (strong, nonatomic) FeEqualize *equalizer;
 @end
 
 @implementation CarsBrandsViewController
 {
+    __weak IBOutlet FUIButton *roomesButton;
     IBOutlet UIView *headerView;
     __weak IBOutlet UITableView *tableVieww;
     NSMutableArray* dataSource;
     NSMutableArray* origDataSource;
     NSString* price;
     NSString* year;
-    __weak IBOutlet UIButton *butt;
     __weak IBOutlet UISearchBar *searchBar;
+    __weak IBOutlet UIView *eqHolder;
+    NSMutableArray* indexLetters;
 }
 
 
@@ -33,7 +40,7 @@
 {
     if([[segue identifier]isEqualToString:@"showRecordedSearch"])
     {
-        FlatSearchTableViewController* dst = (FlatSearchTableViewController*)[segue destinationViewController];
+        SearchesViewController* dst = (SearchesViewController*)[segue destinationViewController];
         [dst setDataID:@"cars"];
     }
 }
@@ -42,23 +49,30 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self.navigationController.navigationBar setTitleTextAttributes:
+     @{NSForegroundColorAttributeName:[UIColor whiteColor],
+       NSFontAttributeName:[UIFont fontWithName:@"DroidArabicKufi-Bold" size:21]}];
     
-    NSString *filePath1 = [[NSBundle mainBundle] pathForResource:@"cars" ofType:@"json"];
-    NSData *content1 = [[NSData alloc] initWithContentsOfFile:filePath1];
-    dataSource = [[NSMutableArray alloc]initWithArray:[NSJSONSerialization JSONObjectWithData:content1 options:kNilOptions error:nil]];
+    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)
+                                                         forBarMetrics:UIBarMetricsDefault];
+    
+    UIImage *myImage = [UIImage imageNamed:@"sine-waves-analysis.png"];
+    myImage = [myImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithImage:myImage style:UIBarButtonItemStylePlain target:self action:@selector(myCarSearchClicked:)];
+    self.navigationItem.rightBarButtonItem = menuButton;
+    
+    roomesButton.buttonColor = [UIColor colorFromHexCode:@"34a853"];
+    roomesButton.shadowColor = [UIColor greenSeaColor];
+    roomesButton.shadowHeight = 0.0f;
+    roomesButton.cornerRadius = 0.0f;
+    roomesButton.alpha = 0.0f;
+
+    self.title = @"السيارات";
     
     
-    
-    for (int i = 0; i < dataSource.count; i++) {
-        NSMutableDictionary* dict = [[NSMutableDictionary alloc]initWithDictionary:[dataSource objectAtIndex:i]];
-        NSMutableArray* arr = [[NSMutableArray alloc]initWithArray:[dict objectForKey:@"cats"]];
-        NSSortDescriptor *aSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"sub" ascending:YES];
-        [arr sortUsingDescriptors:[NSArray arrayWithObject:aSortDescriptor]];
-        [dict setObject:arr forKey:@"cats"];
-        [dataSource replaceObjectAtIndex:i withObject:dict];
-    }
-    
-    origDataSource = [NSMutableArray arrayWithArray:dataSource];
+    dataSource = [[NSMutableArray alloc]init];
+    origDataSource = [[NSMutableArray alloc]init];
+    indexLetters = [[NSMutableArray alloc]init];
     
     [searchBar setDelegate:self];
     
@@ -73,6 +87,43 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+    if(dataSource.count == 0)
+    {
+        NSString *filePath1 = [[NSBundle mainBundle] pathForResource:@"cars" ofType:@"json"];
+        NSData *content1 = [[NSData alloc] initWithContentsOfFile:filePath1];
+        dataSource = [[NSMutableArray alloc]initWithArray:[NSJSONSerialization JSONObjectWithData:content1 options:kNilOptions error:nil]];
+        
+        NSMutableIndexSet* indices = [[NSMutableIndexSet alloc]init];
+        
+        for (int i = 0; i < dataSource.count; i++) {
+            NSMutableDictionary* dict = [[NSMutableDictionary alloc]initWithDictionary:[dataSource objectAtIndex:i]];
+            NSMutableArray* arr = [[NSMutableArray alloc]initWithArray:[dict objectForKey:@"cats"]];
+            NSSortDescriptor *aSortDescriptor = [[NSSortDescriptor alloc] initWithKey:@"sub" ascending:YES];
+            [arr sortUsingDescriptors:[NSArray arrayWithObject:aSortDescriptor]];
+            [dict setObject:arr forKey:@"cats"];
+            [dataSource replaceObjectAtIndex:i withObject:dict];
+            if(![indexLetters containsObject:[[dict objectForKey:@"brand"] substringToIndex:1]])
+            {
+                [indexLetters addObject:[[dict objectForKey:@"brand"] substringToIndex:1]];
+            }
+            [indices addIndex:i];
+        }
+        
+        origDataSource = [NSMutableArray arrayWithArray:dataSource];
+        [tableVieww insertSections:indices withRowAnimation:UITableViewRowAnimationTop];
+    }
+    
+    _equalizer = [[FeEqualize alloc] initWithView:eqHolder title:@"جاري حفظ بحثك"];
+    CGRect frame = CGRectMake(0, 0, 70, 70);
+    [_equalizer setFrame:frame];
+    [_equalizer setBackgroundColor:[UIColor clearColor]];
+    [eqHolder setBackgroundColor:[UIColor clearColor]];
+    [eqHolder addSubview:_equalizer];
+    [eqHolder setAlpha:0.0];
+    [_equalizer dismiss];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
@@ -92,32 +143,28 @@
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView* view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, tableVieww.frame.size.width, 128)];
+    UIView* view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, tableVieww.frame.size.width, 80)];
     [view setBackgroundColor:headerView.backgroundColor];
     
-    UIImageView* imageView = [[UIImageView alloc]initWithFrame:CGRectMake(8, 32, 64, 64)];
+    UIImageView* imageView = [[UIImageView alloc]initWithFrame:CGRectMake(8, 8, 64, 64)];
     [imageView setImage:[UIImage imageNamed:[[dataSource objectAtIndex:section] objectForKey:@"icon"]]];
     [view addSubview:imageView];
     
-    UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(80, 54 , 344, 21)];
+    UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(80, 30 , 300, 21)];
     [label setText:[[dataSource objectAtIndex:section] objectForKey:@"brand"]];
+    [label setFont: [UIFont fontWithName:@"Courier-Bold" size:20.0]];
     [view addSubview:label];
-    
-    UIButton* button = [[UIButton alloc]initWithFrame:CGRectMake(tableVieww.frame.size.width-75, 90, 70, 25)];
-    [button setTitle:@"Add all" forState:UIControlStateNormal];
-    [button setTitleColor:[butt titleColorForState:UIControlStateNormal] forState:UIControlStateNormal];
-    [view addSubview:button];
     
     return view;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 128.0f;
+    return 80.0f;
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString* cellID = @"brandCell";
+    static NSString* cellID = @"brandsCell";
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:cellID forIndexPath:indexPath];
     if(!cell)
     {
@@ -126,31 +173,86 @@
     
     NSString* label = [[[[dataSource objectAtIndex:indexPath.section] objectForKey:@"cats"]objectAtIndex:indexPath.row] objectForKey:@"sub"];
     
+    
+    [(UILabel*)[cell viewWithTag:1]setText:label];
+    [(UIImageView*)[cell viewWithTag:2]setImage:[UIImage imageNamed:@"circle.png"]];
+    
     if([[tableView indexPathsForSelectedRows]containsObject:indexPath])
     {
-        [cell setAccessoryType:UITableViewCellAccessoryCheckmark];
-    }else
-    {
-        [cell setAccessoryType:UITableViewCellAccessoryNone];
+        [UIView transitionWithView:(UIImageView*)[cell viewWithTag:2]
+                          duration:0.2f
+                           options:UIViewAnimationOptionTransitionCrossDissolve
+                        animations:^{
+                            [(UIImageView*)[cell viewWithTag:2]setImage:[UIImage imageNamed:@"circlef.png"]];
+                        } completion:NULL];
     }
-
-    
-    [[cell textLabel]setText:label];
-    
     return cell;
-    
 }
 
 -(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [[tableView cellForRowAtIndexPath:indexPath] setAccessoryType:UITableViewCellAccessoryNone];
+    [UIView transitionWithView:(UIImageView*)[[tableVieww cellForRowAtIndexPath:indexPath] viewWithTag:2]
+                      duration:0.2f
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^{
+                        [(UIImageView*)[[tableVieww cellForRowAtIndexPath:indexPath] viewWithTag:2]setImage:[UIImage imageNamed:@"circle.png"]];
+                        if(tableVieww.indexPathsForSelectedRows.count == 0)
+                        {
+                            [roomesButton setAlpha:0.0f];
+                        }
+                    } completion:NULL];
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [[tableView cellForRowAtIndexPath:indexPath] setAccessoryType:UITableViewCellAccessoryCheckmark];
+    [UIView transitionWithView:(UIImageView*)[[tableVieww cellForRowAtIndexPath:indexPath] viewWithTag:2]
+                      duration:0.2f
+                       options:UIViewAnimationOptionTransitionCrossDissolve
+                    animations:^{
+                        [(UIImageView*)[[tableVieww cellForRowAtIndexPath:indexPath] viewWithTag:2]setImage:[UIImage imageNamed:@"circlef.png"]];
+                        if(roomesButton.alpha == 0.0f)
+                        {
+                            [roomesButton setAlpha:1.0f];
+                        }
+                    } completion:NULL];
 }
+
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 50.0f;
+}
+
+- (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView
+{
+    return indexLetters;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index
+{
+    for(int i = 0 ; i < dataSource.count ; i++)
+    {
+        NSDictionary* dict = [dataSource objectAtIndex:i];
+        if([[dict objectForKey:@"brand"] hasPrefix:title])
+        {
+            return i;
+        }
+    }
+    return 0;
+}
+
 - (IBAction)submitClicked:(id)sender {
-    Popup *popup = [[Popup alloc] initWithTitle:@"Options" subTitle:@"Search Options" textFieldPlaceholders:@[@"Max Price",@"Min Year"] cancelTitle:@"Cancel" successTitle:@"Submit" cancelBlock:^{} successBlock:^{
+
+    
+    
+    Popup *popup = [[Popup alloc] initWithTitle:@"خيارات إضافية" subTitle:@"من فضلك، قم بكتابة الحد الأقصى للسعر و الحد الأدنى لسنة الصنع أو أتركهم فارغين للحصول على كل النتائج." textFieldPlaceholders:@[@"السعر",@"السنة"] cancelTitle:@"إلغاء" successTitle:@"دورلي ;)" cancelBlock:^{} successBlock:^{
+        
+        
+        [UIView transitionWithView:eqHolder
+                          duration:0.2f
+                           options:UIViewAnimationOptionTransitionCrossDissolve
+                        animations:^{
+                            [eqHolder setAlpha:1.0];
+                            [_equalizer show];
+                        } completion:NULL];
         
         NSMutableArray* brands = [[NSMutableArray alloc]init];
         NSMutableArray* subBrands = [[NSMutableArray alloc]init];
@@ -187,8 +289,28 @@
                 [searchFlats addObject:ID];
                 [[NSUserDefaults standardUserDefaults]setObject:searchFlats forKey:@"carSearch"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
-                UIAlertView* alert = [[UIAlertView alloc]initWithTitle:@"Wohoo" message:@"Relax and we will notify you.." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-                [alert show];
+               
+                OpinionzAlertView *alert = [[OpinionzAlertView alloc] initWithTitle:@"Wohoo"
+                                                                            message:@"الأن إستريح و دورلي سيقوم بالبحث بدلاً عنك ;)" cancelButtonTitle:@"(Y)"              otherButtonTitles:nil          usingBlockWhenTapButton:^(OpinionzAlertView *alertView, NSInteger buttonIndex) {
+                                                                                NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
+                                                                                for (UIViewController *aViewController in allViewControllers) {
+                                                                                    if ([aViewController isKindOfClass:[ViewController class]]) {
+                                                                                        [self.navigationController popToViewController:aViewController animated:YES];
+                                                                                    }
+                                                                                }
+                                                                            }];
+                alert.iconType = OpinionzAlertIconSuccess;
+                alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
+                
+                [UIView transitionWithView:eqHolder
+                                  duration:0.2f
+                                   options:UIViewAnimationOptionTransitionCrossDissolve
+                                animations:^{
+                                    [eqHolder setAlpha:0.0];
+                                    [_equalizer dismiss];
+                                } completion:^(BOOL finished){
+                                    [alert show];
+                                }];
             }
         } withProgressBlock:nil];
     }];
@@ -198,6 +320,12 @@
     [popup setOutgoingTransition:PopupOutgoingTransitionTypeBounceFromCenter];
     [popup setTapBackgroundToDismiss:YES];
     [popup setDelegate:self];
+    [popup setBackgroundColor:[UIColor colorFromHexCode:@"1085C7"]];
+    [popup setSuccessBtnColor:[UIColor colorFromHexCode:@"34a853"]];
+    [popup setSuccessTitleColor:[UIColor whiteColor]];
+    [popup setCancelTitleColor:[UIColor whiteColor]];
+    [popup setTitleColor:[UIColor whiteColor]];
+    [popup setSubTitleColor:[UIColor whiteColor]];
     [popup showPopup];
 }
 
@@ -234,8 +362,32 @@
         dataSource = [[NSMutableArray alloc]initWithArray:[origDataSource filteredArrayUsingPredicate:predicate]];
     }
     
+    indexLetters = [[NSMutableArray alloc]init];
+    for(NSDictionary* dict in dataSource)
+    {
+        if(![indexLetters containsObject:[[dict objectForKey:@"brand"] substringToIndex:1]])
+        {
+            [indexLetters addObject:[[dict objectForKey:@"brand"] substringToIndex:1]];
+        }
+    }
+    
     [tableVieww reloadData];
     [tableVieww setNeedsDisplay];
+}
+
+
+#pragma mark alert view methods
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(alertView.tag == 1)
+    {
+        NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
+        for (UIViewController *aViewController in allViewControllers) {
+            if ([aViewController isKindOfClass:[ViewController class]]) {
+                [self.navigationController popToViewController:aViewController animated:YES];
+            }
+        }
+    }
 }
 
 /*

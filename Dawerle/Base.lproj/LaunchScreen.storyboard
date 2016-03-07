@@ -16,12 +16,59 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cloud-data-distribution-symbol3.png" translatesAutoresizingMaskIntoConstraints="NO" id="bri-Nd-t8t">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="256" id="GVY-BX-GjU"/>
+                                    <constraint firstAttribute="height" constant="256" id="aFB-gY-LeZ"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="GVY-BX-GjU"/>
+                                        <exclude reference="aFB-gY-LeZ"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="GVY-BX-GjU"/>
+                                        <include reference="aFB-gY-LeZ"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.062745098040000002" green="0.52156862749999999" blue="0.78039215689999997" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="bri-Nd-t8t" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="e0z-qG-aEd"/>
+                            <constraint firstItem="bri-Nd-t8t" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="iNS-O5-1HY"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="bri-Nd-t8t"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="e0z-qG-aEd"/>
+                                <exclude reference="iNS-O5-1HY"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="bri-Nd-t8t"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="e0z-qG-aEd"/>
+                                <include reference="iNS-O5-1HY"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52.5" y="375"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="cloud-data-distribution-symbol3.png" width="512" height="512"/>
+    </resources>
 </document>

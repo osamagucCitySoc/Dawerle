@@ -10,10 +10,10 @@
 #import <KinveyKit/KinveyKit.h>
 #import "searchFlats.h"
 #import "searchCars.h"
+#import "searchJobs.h"
 #import "searchParent.h"
 
-@interface ExploreTableViewController : UITableViewController
-
+@interface ExploreTableViewController : UIViewController
 
 @property(nonatomic,strong) NSString* className;
 @property(nonatomic,strong) searchParent* searchingParams;

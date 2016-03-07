@@ -13,5 +13,6 @@
 
 @property(nonatomic, strong)NSDictionary* searchItem;
 @property(nonatomic, strong)NSURL* link;
+@property(nonatomic, strong)NSString* titlee;
 
 @end
