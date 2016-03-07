@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import <KinveyKit/KinveyKit.h>
 #import "ShowSearchViewController.h"
+#import <OpinionzAlertView/OpinionzAlertView.h>
 
 @interface AppDelegate ()<UIAlertViewDelegate>
 
@@ -87,35 +88,22 @@
 -(void)searchNotification:(NSDictionary*)userInfo
 {
 
-    UIAlertController *alertController = [UIAlertController
-                                          alertControllerWithTitle:@"New Item"
-                                          message:[[userInfo objectForKey:@"aps"] objectForKey:@"alert"]
-                                          preferredStyle:UIAlertControllerStyleAlert];
-    UIAlertAction *cancelAction = [UIAlertAction
-                                   actionWithTitle:NSLocalizedString(@"Cancel", @"Cancel action")
-                                   style:UIAlertActionStyleCancel
-                                   handler:^(UIAlertAction *action)
-                                   {
-                                       NSLog(@"Cancel action");
-                                   }];
-    
-    UIAlertAction *okAction = [UIAlertAction
-                               actionWithTitle:NSLocalizedString(@"OK", @"OK action")
-                               style:UIAlertActionStyleDefault
-                               handler:^(UIAlertAction *action)
-                               {
-                                   dispatch_async( dispatch_get_main_queue(), ^{
-                                       UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:NULL];
-                                       ShowSearchViewController *dst = [storyboard instantiateViewControllerWithIdentifier:@"ShowSearchViewController"];
-                                       [dst setSearchItem:userInfo];
-                                       UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
-                                       [navigationController pushViewController:dst animated:YES];
-                                   });
-                               }];
-    
-    [alertController addAction:cancelAction];
-    [alertController addAction:okAction];
-    [self.window.rootViewController presentViewController:alertController animated:YES completion:nil];
+    OpinionzAlertView *alert = [[OpinionzAlertView alloc] initWithTitle:@"إعلان جديد"
+                                                                message:[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] cancelButtonTitle:@"إلغاء"              otherButtonTitles:@[@"مشاهدة"]          usingBlockWhenTapButton:^(OpinionzAlertView *alertView, NSInteger buttonIndex) {
+                                                                    if(buttonIndex == 1)
+                                                                    {
+                                                                        dispatch_async( dispatch_get_main_queue(), ^{
+                                                                            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:NULL];
+                                                                            ShowSearchViewController *dst = [storyboard instantiateViewControllerWithIdentifier:@"ShowSearchViewController"];
+                                                                            [dst setSearchItem:userInfo];
+                                                                            UINavigationController *navigationController = (UINavigationController *)self.window.rootViewController;
+                                                                            [navigationController pushViewController:dst animated:YES];
+                                                                        });
+                                                                    }
+                                                                }];
+    alert.iconType = OpinionzAlertIconInfo;
+    alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
+    [alert show];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {

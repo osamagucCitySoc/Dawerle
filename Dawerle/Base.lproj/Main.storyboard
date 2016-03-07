@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="C5L-36-znO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="raH-NG-Opk">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -85,7 +85,7 @@
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                     <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="16" y="62.5" width="304" height="19"/>
+                                                        <rect key="frame" x="16" y="69.5" width="304" height="12"/>
                                                     </variation>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cars.png" translatesAutoresizingMaskIntoConstraints="NO" id="ssk-MC-XlU">
@@ -186,12 +186,12 @@
                                 <exclude reference="fD0-mX-ez8"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="Viq-OS-XYd"/>
                                 <exclude reference="0nN-6o-Twp"/>
                                 <exclude reference="4eC-R4-C9G"/>
                                 <exclude reference="7lE-pk-vcC"/>
                                 <exclude reference="hJI-02-eJ9"/>
                                 <exclude reference="q2H-bR-T2x"/>
-                                <exclude reference="Viq-OS-XYd"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -199,12 +199,12 @@
                                 <include reference="fD0-mX-ez8"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="Viq-OS-XYd"/>
                                 <include reference="0nN-6o-Twp"/>
                                 <exclude reference="4eC-R4-C9G"/>
                                 <include reference="7lE-pk-vcC"/>
                                 <exclude reference="hJI-02-eJ9"/>
                                 <include reference="q2H-bR-T2x"/>
-                                <include reference="Viq-OS-XYd"/>
                             </mask>
                         </variation>
                     </view>
@@ -730,6 +730,9 @@
                                                     <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" name="DroidArabicKufi" family="Droid Arabic Kufi" pointSize="16"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="48" y="8" width="184" height="33.5"/>
+                                                    </variation>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle.png" translatesAutoresizingMaskIntoConstraints="NO" id="4oh-st-PHl">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
@@ -932,6 +935,9 @@
                                 <rect key="frame" x="-25" y="-30" width="97" height="30"/>
                                 <fontDescription key="fontDescription" name="DroidArabicKufi" family="Droid Arabic Kufi" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="done"/>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="20" y="139" width="320" height="17"/>
+                                </variation>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="أدخل الكلمات التي تريدها في وصف الوظيفة. مثلاً: أكتب مهندس و إضغط على + و هكذا." textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z7d-N4-NlD">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
@@ -1482,6 +1488,9 @@
                                 <fontDescription key="fontDescription" name="DroidArabicKufi-Bold" family="Droid Arabic Kufi" pointSize="50"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="135.5" y="536" width="129" height="58.5"/>
+                                </variation>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="0.062745098040000002" green="0.52156862749999999" blue="0.78039215689999997" alpha="1" colorSpace="calibratedRGB"/>
@@ -1516,15 +1525,16 @@
                             </mask>
                         </variation>
                     </view>
+                    <navigationItem key="navigationItem" id="i67-h9-XFl"/>
                     <simulatedStatusBarMetrics key="simulatedStatusBarMetrics" statusBarStyle="lightContent"/>
                     <connections>
                         <outlet property="v" destination="nGe-A3-eA2" id="P79-OX-L2d"/>
-                        <segue destination="raH-NG-Opk" kind="show" identifier="launchSeg" id="057-qL-jpJ"/>
+                        <segue destination="BYZ-38-t0r" kind="show" identifier="launchSeg" id="PNj-zk-R4u"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cj2-QT-X92" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1134" y="364.5"/>
+            <point key="canvasLocation" x="2079" y="364.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="pyJ-P3-oki">
@@ -1543,12 +1553,12 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="yRW-yf-tCg"/>
+                        <segue destination="C5L-36-znO" kind="relationship" relationship="rootViewController" id="ahy-QF-UZO"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cp2-zv-4Wz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1915.5" y="364.5"/>
+            <point key="canvasLocation" x="1179" y="364.5"/>
         </scene>
         <!--Searches View Controller-->
         <scene sceneID="YL9-Os-tkf">
