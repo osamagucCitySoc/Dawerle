@@ -161,7 +161,7 @@
     
     [(UIImageView*)[cell viewWithTag:2]setImage:[UIImage imageNamed:[dict objectForKey:@"img"]]];
     [(UILabel*)[cell viewWithTag:1]setText:[dict objectForKey:@"title"]];
-    [(UILabel*)[cell viewWithTag:3]setText:[dict objectForKey:@"desc"]];
+    //[(UILabel*)[cell viewWithTag:3]setText:[dict objectForKey:@"desc"]];
     
     return cell;
 }

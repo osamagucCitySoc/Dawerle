@@ -458,15 +458,15 @@
     if([className isEqualToString:@"villas"] || [className isEqualToString:@"flats"] || [className isEqualToString:@"stores"])
     {
         Flats* object = [dataSource  objectAtIndex:section];
-        return [NSString stringWithFormat:@"%@ : %@. في %@",@"إعلان من موقع",object.source,[formatter stringFromDate:object.metadata.lastModifiedTime]];
+        return [NSString stringWithFormat:@"في %@",[formatter stringFromDate:object.metadata.lastModifiedTime]];
     }else if([className isEqualToString:@"cars"])
     {
         Cars* object = [dataSource  objectAtIndex:section];
-        return [NSString stringWithFormat:@"%@ : %@. في %@",@"إعلان من موقع",object.source,[formatter stringFromDate:object.metadata.lastModifiedTime]];
+        return [NSString stringWithFormat:@"في %@",[formatter stringFromDate:object.metadata.lastModifiedTime]];
     }else if([className isEqualToString:@"jobs"])
     {
         Jobs* object = [dataSource  objectAtIndex:section];
-        return [NSString stringWithFormat:@"%@ : %@. في %@",@"إعلان من موقع",object.source,[formatter stringFromDate:object.metadata.lastModifiedTime]];
+        return [NSString stringWithFormat:@"في %@",[formatter stringFromDate:object.metadata.lastModifiedTime]];
     }
 
     return @"";
