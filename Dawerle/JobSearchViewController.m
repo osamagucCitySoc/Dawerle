@@ -45,10 +45,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
+    
     
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSForegroundColorAttributeName:[UIColor whiteColor],
-       NSFontAttributeName:[UIFont fontWithName:@"DroidArabicKufi-Bold" size:21]}];
+       NSFontAttributeName:[UIFont fontWithName:@"DroidArabicKufi-Bold" size:19]}];
     
     
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)
@@ -56,10 +59,10 @@
     
     self.title = @"الوظائف";
     
-    UIImage *myImage = [UIImage imageNamed:@"sine-waves-analysis.png"];
-    myImage = [myImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithImage:myImage style:UIBarButtonItemStylePlain target:self action:@selector(mySearchClicked:)];
-    self.navigationItem.rightBarButtonItem = menuButton;
+//    UIImage *myImage = [UIImage imageNamed:@"search-icon.png"];
+//    myImage = [myImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+//    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithImage:myImage style:UIBarButtonItemStylePlain target:self action:@selector(mySearchClicked:)];
+//    self.navigationItem.rightBarButtonItem = menuButton;
 
     
     dataSource = [[NSMutableArray alloc] init];
@@ -83,6 +86,27 @@
     roomesButton.alpha = 0.0f;
 
     
+}
+
+- (void)keyboardDidShow:(NSNotification *)notification
+{
+    NSDictionary *userInfo = [notification userInfo];
+    CGSize size = [[userInfo objectForKey: UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    CGRect frame = CGRectMake(tableView.frame.origin.x,
+                              tableView.frame.origin.y,
+                              tableView.frame.size.width,
+                              tableView.frame.size.height - size.height);
+    tableView.frame = frame;
+}
+
+- (void)keyboardDidHide:(NSNotification *)notification
+{
+    NSDictionary *userInfo = [notification userInfo];
+    CGSize size = [[userInfo objectForKey: UIKeyboardFrameEndUserInfoKey] CGRectValue].size;
+    tableView.frame = CGRectMake(tableView.frame.origin.x,
+                                      tableView.frame.origin.y,
+                                      tableView.frame.size.width,
+                                      tableView.frame.size.height + size.height);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -130,6 +154,11 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
     
+    if (dataSource.count == (indexPath.row+1))
+    {
+        [(UILabel*)[cell viewWithTag:4]setHidden:YES];
+    }
+    
     [(UILabel*)[cell viewWithTag:1]setText:[dataSource objectAtIndex:indexPath.row]];
     
     [(UIButton*)[cell viewWithTag:2] addTarget:self
@@ -146,6 +175,7 @@
 {
     return 50.0f;
 }
+
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
 {
     // Background color
@@ -153,8 +183,8 @@
     
     // Text Color
     UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
-    [header.textLabel setTextColor:[UIColor blackColor]];
-    [header.textLabel setFont:[UIFont fontWithName:@"DroidArabicKufi" size:20.0]];
+    [header.textLabel setTextColor:[UIColor colorWithRed:90.0/255.0 green:90.0/255.0 blue:90.0/255.0 alpha:1.0]];
+    [header.textLabel setFont:[UIFont fontWithName:@"DroidArabicKufi" size:14.0]];
     [header.textLabel setTextAlignment:NSTextAlignmentRight];
 }
 
@@ -219,6 +249,12 @@
     {
         [dataSource addObject:keyWordTextField.text];
         [tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForItem:dataSource.count-1 inSection:0]] withRowAnimation:UITableViewRowAnimationTop];
+        
+        [NSTimer scheduledTimerWithTimeInterval: 0.5
+                                         target: self
+                                       selector:@selector(scrollTheTable:)
+                                       userInfo: nil repeats:NO];
+        
         if(roomesButton.alpha == 0)
         {
             [UIView transitionWithView:roomesButton
@@ -230,6 +266,15 @@
         }
     }
 }
+
+-(void)scrollTheTable:(NSTimer *)timer {
+    [tableView scrollRectToVisible:CGRectMake(0.0,
+                                              tableView.contentSize.height - 1.0,
+                                              1.0,
+                                              1.0)
+                          animated:YES];
+}
+
 - (IBAction)mySearchClicked:(id)sender {
     [self performSegueWithIdentifier:@"showRecordedSearch" sender:self];
 }
@@ -238,6 +283,7 @@
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [self addKeyWordClicked:nil];
+    [textField resignFirstResponder];
     return YES;
 }
 - (void)deleteClicked:(id)sender
@@ -247,7 +293,16 @@
     if (indexPath != nil)
     {
         [dataSource removeObjectAtIndex:indexPath.row];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
+        
+        if (indexPath.row == 0)
+        {
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationLeft];
+        }
+        else
+        {
+            [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationTop];
+        }
+        
         if(dataSource.count == 0)
         {
             [UIView transitionWithView:roomesButton

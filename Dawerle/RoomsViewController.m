@@ -37,7 +37,7 @@
     
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSForegroundColorAttributeName:[UIColor whiteColor],
-       NSFontAttributeName:[UIFont fontWithName:@"DroidArabicKufi-Bold" size:21]}];
+       NSFontAttributeName:[UIFont fontWithName:@"DroidArabicKufi-Bold" size:19]}];
     
     
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)
@@ -102,7 +102,7 @@
         {
             [indices addObject:[NSIndexPath indexPathForRow:i inSection:0]];
         }
-        [tableView insertRowsAtIndexPaths:indices withRowAnimation:UITableViewRowAnimationLeft];
+        [tableView insertRowsAtIndexPaths:indices withRowAnimation:UITableViewRowAnimationTop];
     }
 }
 
@@ -230,7 +230,7 @@
 }
 -(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return @"إختر الغرف :";
+    return @"إختر عدد الغرف:";
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -248,8 +248,13 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
     
+    if (dataSource.count == (indexPath.row+1))
+    {
+        [(UILabel*)[cell viewWithTag:4]setHidden:YES];
+    }
+    
     [(UILabel*)[cell viewWithTag:1]setText:[dataSource objectAtIndex:indexPath.row]];
-    [(UIImageView*)[cell viewWithTag:2]setImage:[UIImage imageNamed:@"circle.png"]];
+    [(UIImageView*)[cell viewWithTag:2]setImage:[UIImage imageNamed:@"mark-off.png"]];
     
     if([[tableView indexPathsForSelectedRows]containsObject:indexPath])
     {
@@ -257,7 +262,7 @@
                           duration:0.2f
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
-                            [(UIImageView*)[cell viewWithTag:2]setImage:[UIImage imageNamed:@"circlef.png"]];
+                            [(UIImageView*)[cell viewWithTag:2]setImage:[UIImage imageNamed:@"mark-on.png"]];
                         } completion:NULL];
     }
     
@@ -270,7 +275,7 @@
                       duration:0.2f
                        options:UIViewAnimationOptionTransitionCrossDissolve
                     animations:^{
-                        [(UIImageView*)[[tableVieww cellForRowAtIndexPath:indexPath] viewWithTag:2]setImage:[UIImage imageNamed:@"circle.png"]];
+                        [(UIImageView*)[[tableVieww cellForRowAtIndexPath:indexPath] viewWithTag:2]setImage:[UIImage imageNamed:@"mark-off.png"]];
                         if(tableVieww.indexPathsForSelectedRows.count == 0)
                         {
                             [roomesButton setAlpha:0.0f];
@@ -285,7 +290,7 @@
                       duration:0.2f
                        options:UIViewAnimationOptionTransitionCrossDissolve
                     animations:^{
-                        [(UIImageView*)[[tableVieww cellForRowAtIndexPath:indexPath] viewWithTag:2]setImage:[UIImage imageNamed:@"circlef.png"]];
+                        [(UIImageView*)[[tableVieww cellForRowAtIndexPath:indexPath] viewWithTag:2]setImage:[UIImage imageNamed:@"mark-on.png"]];
                         if(roomesButton.alpha == 0.0f)
                         {
                             [roomesButton setAlpha:1.0f];
@@ -294,7 +299,7 @@
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50.0f;
+    return 70.0f;
 }
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
 {
@@ -303,8 +308,8 @@
     
     // Text Color
     UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
-    [header.textLabel setTextColor:[UIColor blackColor]];
-    [header.textLabel setFont:[UIFont fontWithName:@"DroidArabicKufi" size:20.0]];
+    [header.textLabel setTextColor:[UIColor colorWithRed:90.0/255.0 green:90.0/255.0 blue:90.0/255.0 alpha:1.0]];
+    [header.textLabel setFont:[UIFont fontWithName:@"DroidArabicKufi" size:14.0]];
     [header.textLabel setTextAlignment:NSTextAlignmentRight];
 }
 

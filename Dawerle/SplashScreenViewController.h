@@ -9,5 +9,6 @@
 #import "ViewController.h"
 
 @interface SplashScreenViewController : ViewController
+@property (strong, nonatomic) IBOutlet UIImageView *logoImageView;
 
 @end

@@ -315,6 +315,11 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
     
+    if (dataSource.count == (indexPath.row+1))
+    {
+        [(UILabel*)[cell viewWithTag:4]setHidden:YES];
+    }
+    
     ((FUIButton*)[cell viewWithTag:2]).alpha = 0.0f;
     
     if([className isEqualToString:@"cars"])
@@ -426,7 +431,7 @@
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    return 50.0f;
+    return 70.0f;
 }
 
 
@@ -439,8 +444,8 @@
     // Text Color
     UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
     [[header contentView]setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
-    [header.textLabel setTextColor:[UIColor blackColor]];
-    [header.textLabel setFont:[UIFont fontWithName:@"DroidArabicKufi" size:20.0]];
+    [header.textLabel setTextColor:[UIColor colorWithRed:90.0/255.0 green:90.0/255.0 blue:90.0/255.0 alpha:1.0]];
+    [header.textLabel setFont:[UIFont fontWithName:@"DroidArabicKufi" size:14.0]];
     [header.textLabel setTextAlignment:NSTextAlignmentRight];
 }
 

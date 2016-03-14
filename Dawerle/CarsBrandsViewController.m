@@ -51,15 +51,15 @@
     
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSForegroundColorAttributeName:[UIColor whiteColor],
-       NSFontAttributeName:[UIFont fontWithName:@"DroidArabicKufi-Bold" size:21]}];
+       NSFontAttributeName:[UIFont fontWithName:@"DroidArabicKufi-Bold" size:19]}];
     
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)
                                                          forBarMetrics:UIBarMetricsDefault];
     
-    UIImage *myImage = [UIImage imageNamed:@"sine-waves-analysis.png"];
-    myImage = [myImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithImage:myImage style:UIBarButtonItemStylePlain target:self action:@selector(myCarSearchClicked:)];
-    self.navigationItem.rightBarButtonItem = menuButton;
+//    UIImage *myImage = [UIImage imageNamed:@"search-icon.png"];
+//    myImage = [myImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+//    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithImage:myImage style:UIBarButtonItemStylePlain target:self action:@selector(myCarSearchClicked:)];
+//    self.navigationItem.rightBarButtonItem = menuButton;
     
     roomesButton.buttonColor = [UIColor colorFromHexCode:@"34a853"];
     roomesButton.shadowColor = [UIColor greenSeaColor];
@@ -143,23 +143,28 @@
 
 -(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView* view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, tableVieww.frame.size.width, 80)];
+    UIView* view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, tableVieww.frame.size.width, 60)];
     [view setBackgroundColor:headerView.backgroundColor];
     
-    UIImageView* imageView = [[UIImageView alloc]initWithFrame:CGRectMake(8, 8, 64, 64)];
+    UIImageView* imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 0, 50, 60)];
+    imageView.contentMode = UIViewContentModeCenter;
+    if (imageView.bounds.size.width > ((UIImage*)[UIImage imageNamed:[[dataSource objectAtIndex:section] objectForKey:@"icon"]]).size.width && imageView.bounds.size.height > ((UIImage*)[UIImage imageNamed:[[dataSource objectAtIndex:section] objectForKey:@"icon"]]).size.height) {
+        imageView.contentMode = UIViewContentModeScaleAspectFit;
+    }
+    
     [imageView setImage:[UIImage imageNamed:[[dataSource objectAtIndex:section] objectForKey:@"icon"]]];
     [view addSubview:imageView];
     
-    UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(80, 30 , 300, 21)];
+    UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(70, 0 , 300, 60)];
     [label setText:[[dataSource objectAtIndex:section] objectForKey:@"brand"]];
-    [label setFont: [UIFont fontWithName:@"Courier-Bold" size:20.0]];
+    [label setFont: [UIFont fontWithName:@"Courier-bold" size:19.0]];
     [view addSubview:label];
     
     return view;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 80.0f;
+    return 60.0f;
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -171,11 +176,16 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
     
+    if (dataSource.count == (indexPath.row+1))
+    {
+        [(UILabel*)[cell viewWithTag:4]setHidden:YES];
+    }
+    
     NSString* label = [[[[dataSource objectAtIndex:indexPath.section] objectForKey:@"cats"]objectAtIndex:indexPath.row] objectForKey:@"sub"];
     
     
     [(UILabel*)[cell viewWithTag:1]setText:label];
-    [(UIImageView*)[cell viewWithTag:2]setImage:[UIImage imageNamed:@"circle.png"]];
+    [(UIImageView*)[cell viewWithTag:2]setImage:[UIImage imageNamed:@"mark-off.png"]];
     
     if([[tableView indexPathsForSelectedRows]containsObject:indexPath])
     {
@@ -183,7 +193,7 @@
                           duration:0.2f
                            options:UIViewAnimationOptionTransitionCrossDissolve
                         animations:^{
-                            [(UIImageView*)[cell viewWithTag:2]setImage:[UIImage imageNamed:@"circlef.png"]];
+                            [(UIImageView*)[cell viewWithTag:2]setImage:[UIImage imageNamed:@"mark-on.png"]];
                         } completion:NULL];
     }
     return cell;
@@ -195,7 +205,7 @@
                       duration:0.2f
                        options:UIViewAnimationOptionTransitionCrossDissolve
                     animations:^{
-                        [(UIImageView*)[[tableVieww cellForRowAtIndexPath:indexPath] viewWithTag:2]setImage:[UIImage imageNamed:@"circle.png"]];
+                        [(UIImageView*)[[tableVieww cellForRowAtIndexPath:indexPath] viewWithTag:2]setImage:[UIImage imageNamed:@"mark-off.png"]];
                         if(tableVieww.indexPathsForSelectedRows.count == 0)
                         {
                             [roomesButton setAlpha:0.0f];
@@ -208,7 +218,7 @@
                       duration:0.2f
                        options:UIViewAnimationOptionTransitionCrossDissolve
                     animations:^{
-                        [(UIImageView*)[[tableVieww cellForRowAtIndexPath:indexPath] viewWithTag:2]setImage:[UIImage imageNamed:@"circlef.png"]];
+                        [(UIImageView*)[[tableVieww cellForRowAtIndexPath:indexPath] viewWithTag:2]setImage:[UIImage imageNamed:@"mark-on.png"]];
                         if(roomesButton.alpha == 0.0f)
                         {
                             [roomesButton setAlpha:1.0f];
@@ -218,7 +228,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 50.0f;
+    return 70.0f;
 }
 
 - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView

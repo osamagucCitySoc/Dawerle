@@ -10,6 +10,7 @@
 
 @interface SearchesViewController : UIViewController
 
+@property (strong, nonatomic) IBOutlet UIView *resView;
 
 @property(nonatomic,strong)NSString* dataID;
 

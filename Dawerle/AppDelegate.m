@@ -34,7 +34,7 @@
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"numberOfNumbers"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     
-
+    
     
     BOOL remoteNotificationsEnabled = false, noneEnabled,alertsEnabled, badgesEnabled, soundsEnabled;
     
@@ -87,7 +87,7 @@
 
 -(void)searchNotification:(NSDictionary*)userInfo
 {
-
+    
     OpinionzAlertView *alert = [[OpinionzAlertView alloc] initWithTitle:@"إعلان جديد"
                                                                 message:[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] cancelButtonTitle:@"إلغاء"              otherButtonTitles:@[@"مشاهدة"]          usingBlockWhenTapButton:^(OpinionzAlertView *alertView, NSInteger buttonIndex) {
                                                                     if(buttonIndex == 1)

@@ -27,17 +27,20 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    
+    _logoImageView.transform = CGAffineTransformMakeScale(1.0, 1.0);
 
-    v.textAlignment = NSTextAlignmentCenter;
-    v.clipsToBounds = YES;
-    v.backgroundColor = [UIColor clearColor];
-    v.alpha = 1.0;
-    v.textColor = UIColor.whiteColor;
-    v.glowSize = 10;
-    v.glowColor = [UIColor whiteColor];
-    v.innerGlowSize = 2;
-    v.innerGlowColor = [UIColor whiteColor];
-    [self performSelector:@selector(hoba) withObject:nil afterDelay:2.0];
+    [UIView animateWithDuration:0.2 delay:0.2 options:0
+                     animations:^{
+                         _logoImageView.transform = CGAffineTransformMakeScale(0.0001, 0.0001);
+                         //[_logoImageView setAlpha:0.0];
+                     }
+                     completion:^(BOOL finished) {
+                         _logoImageView.transform = CGAffineTransformMakeScale(0.0, 0.0);
+                         [self hoba];
+                         [UIView commitAnimations];
+                     }];
+    [UIView commitAnimations];
 }
 
 -(void)hoba
