@@ -6,9 +6,10 @@
 //
 
 #import "SettingsViewController.h"
+#import <MessageUI/MessageUI.h>
 
-@interface SettingsViewController ()
-
+@interface SettingsViewController ()<MFMailComposeViewControllerDelegate>
+@property (nonatomic, strong) MFMailComposeViewController *globalMailComposer;
 @end
 
 @implementation SettingsViewController
@@ -17,6 +18,8 @@
 {
     [super viewDidLoad];
     
+    self.globalMailComposer = [[MFMailComposeViewController alloc] init];
+    self.globalMailComposer.mailComposeDelegate = self;
     
 }
 
@@ -136,8 +139,12 @@
         }
         else if (indexPath.row == 1)
         {
-#warning Osama add code here:
-            NSLog(@"Contact Us");
+            NSString *emailTitle = @"دورلي - الدعم الفني";
+            NSArray *toRecipents = [NSArray arrayWithObject:@"Arabdevs0@gmail.com"];
+            [self.globalMailComposer setSubject:emailTitle];
+            [self.globalMailComposer setMessageBody:@"" isHTML:NO];
+            [self.globalMailComposer setToRecipients:toRecipents];
+            [self presentViewController:self.globalMailComposer animated:YES completion:NULL];
         }
         else
         {
@@ -157,5 +164,19 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+#pragma mark mail delegate
+-(void)mailComposeController:(MFMailComposeViewController *)controller
+         didFinishWithResult:(MFMailComposeResult)result
+                       error:(NSError *)error
+{
+    [controller dismissViewControllerAnimated:YES completion:^
+     {
+         self.globalMailComposer = [[MFMailComposeViewController alloc] init];
+         self.globalMailComposer.mailComposeDelegate = self;
+     }];
+}
+
 
 @end

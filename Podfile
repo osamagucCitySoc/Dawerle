@@ -10,6 +10,7 @@ pod 'FlatUIKit'
 pod 'FBGlowLabel', :git => 'https://github.com/lyokato/FBGlowLabel.git'
 pod "JJMaterialTextField"
 pod 'OpinionzAlertView'
+pod 'DZNWebViewController'
 
 end
 

@@ -64,7 +64,7 @@
     [tableVieww setDelegate:self];
     [tableVieww setDataSource:self];
     
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"helpDone"])
+    if (![[NSUserDefaults standardUserDefaults] boolForKey:@"helpDone"])
     {
         [NSTimer scheduledTimerWithTimeInterval: 1.0
                                          target: self
@@ -74,8 +74,6 @@
 }
 
 -(void)showHelp:(NSTimer *)timer {
-#warning Osama the app will crash here and i don't know why !! only if you call this from didLoad or didAppear:
-    NSLog(@"SHOW HELP!!");
     [self performSegueWithIdentifier:@"theHelpSeg" sender:self];
 }
 
