@@ -10,6 +10,7 @@
 #import "ShowSearchViewController.h"
 #import "AreaViewController.h"
 #import "SearchesViewController.h"
+#import <OpinionzAlertView/OpinionzAlertView.h>
 
 @interface ViewController ()<UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate>
 
@@ -19,7 +20,6 @@
 {
     __weak IBOutlet UITableView *tableVieww;
     NSMutableArray* dataSource;
-    __weak IBOutlet UIButton *aboutUsButton;
 }
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -200,7 +200,24 @@
         {
             if (actionSheet.tag == 11)
             {
-                [self performSegueWithIdentifier:[[dataSource objectAtIndex:savedInd] objectForKey:@"seg"] sender:self];
+                if([[UIApplication sharedApplication] isRegisteredForRemoteNotifications])
+                {
+                    [self performSegueWithIdentifier:[[dataSource objectAtIndex:savedInd] objectForKey:@"seg"] sender:self];
+                }else
+                {
+                    OpinionzAlertView *alert = [[OpinionzAlertView alloc] initWithTitle:@"خطأ"
+                                                                                message:@"للأسف لم تسمح لنا بإرسال إشعارات لك:( يجب تفعيلها لكي نستطيع تبيلغك عند وجود إعلان يهمك"
+                                                                      cancelButtonTitle:@"إلغاء"              otherButtonTitles:@[@"تفعيل"]          usingBlockWhenTapButton:^(OpinionzAlertView *alertView, NSInteger buttonIndex) {
+                                                                                    if(buttonIndex == 1)
+                                                                                    {
+                                                                                        NSURL* settingsURL = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+                                                                                        [[UIApplication sharedApplication] openURL:settingsURL];
+                                                                                    }
+                                                                                }];
+                    alert.iconType = OpinionzAlertIconWarning;
+                    alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
+                    [alert show];
+                }
             }
         }
             break;
@@ -212,12 +229,6 @@
             }
         }
     }
-}
-
-- (IBAction)optionsClicked:(id)sender {
-   
-}
-- (IBAction)aboutAppClicked:(id)sender {
 }
 
 @end

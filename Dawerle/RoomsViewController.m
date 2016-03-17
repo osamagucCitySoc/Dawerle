@@ -7,8 +7,7 @@
 //
 
 #import "RoomsViewController.h"
-#import <KinveyKit/KinveyKit.h>
-#import "searchFlats.h"
+#import <AFNetworking/AFNetworking.h>
 #import "Popup.h"
 #import <FlatUIKit.h>
 #import "FeEqualize.h"
@@ -16,7 +15,6 @@
 #import <OpinionzAlertView/OpinionzAlertView.h>
 
 @interface RoomsViewController ()<UITableViewDelegate,UITableViewDataSource,PopupDelegate,UIAlertViewDelegate>
-@property(nonatomic,strong)KCSAppdataStore* store;
 @property (strong, nonatomic) FeEqualize *equalizer;
 @end
 
@@ -91,7 +89,6 @@
     if(dataSource.count == 0)
     {
         [dataSource addObject:@"غير محدد"];
-        [dataSource addObject:@"ستوديو"];
         for(int i = 1 ; i <= 10 ; i++)
         {
             [dataSource addObject:[NSString stringWithFormat:@"%i",i]];
@@ -113,10 +110,6 @@
 
 #pragma mark button methods
 
-- (IBAction)myFlatSearchClicked:(id)sender {
-    [self performSegueWithIdentifier:@"myFlatSearchSeg" sender:self];
-}
-
 - (IBAction)submitClicked:(id)sender {
     Popup *popup = [[Popup alloc] initWithTitle:@"تحديد السعر"
                                        subTitle:@"قم بإدخال الحد الأعلى للسعر أو أتركه فارغاً ليتم تنبيهك بكل الأسعار"
@@ -131,50 +124,70 @@
                                         [eqHolder setAlpha:1.0];
                                         [_equalizer show];
                                     } completion:NULL];
-
-                                        _store = [KCSAppdataStore storeWithOptions:@{ KCSStoreKeyCollectionName : @"searchFlats",
-                                                                                      KCSStoreKeyCollectionTemplateClass : [searchFlats class]}];
-                                        searchFlats* event = [[searchFlats alloc] init];
-
+                                        
+                                        NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+                                        
                                         NSMutableArray* rooms = [[NSMutableArray alloc]init];
                                         for(int i = 0 ; i < [tableView indexPathsForSelectedRows].count ; i++)
                                         {
-                                            [rooms addObject:[dataSource objectAtIndex:[[tableView.indexPathsForSelectedRows objectAtIndex:i] row]]];
+                                            if([tableView.indexPathsForSelectedRows objectAtIndex:i].row == 0)
+                                            {
+                                                [rooms addObject:@"-1"];
+                                            }else
+                                            {
+                                                [rooms addObject:[dataSource objectAtIndex:[[tableView.indexPathsForSelectedRows objectAtIndex:i] row]]];
+                                            }
                                         }
                                         if(rooms.count == 0)
                                         {
                                             [rooms addObject:@"-1"];
                                         }
-                                        event.rooms = rooms;
-                                        event.keywords = selectedAreas;
+                                        [dict setObject:rooms forKey:@"rooms"];
+                                        [dict setObject:selectedAreas forKey:@"keywords"];
+                                        [dict setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"deviceToken"] forKey:@"token"];
                                         
                                         if([maxPrice isEqualToString:@""])
                                         {
                                             maxPrice = @"-1";
                                         }
-                                        event.price = [NSNumber numberWithInt:[maxPrice intValue]];
+                                        [dict setObject:[NSNumber numberWithInt:[maxPrice intValue]] forKey:@"price"];
                                         if([type isEqualToString:@"flats"])
                                         {
-                                            event.type = @"flat";
+                                            [dict setObject:@"flat" forKey:@"type"];
                                         }else
                                         {
-                                            event.type = @"villas";
+                                            [dict setObject:@"villa" forKey:@"type"];
                                         }
-                                        [_store saveObject:event withCompletionBlock:^(NSArray *objectsOrNil, NSError *errorOrNil) {
-                                            if (errorOrNil != nil) {
-                                                //save failed
-                                                NSLog(@"Save failed, with error: %@", [errorOrNil localizedFailureReason]);
-                                            } else {
-                                                //save was successful
+                                        
+                                        
+                                        
+                                        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+                                        [manager POST:@"http://almasdarapp.com/Dawerle/storeSearchFlat.php" parameters:dict progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+                                            NSString* ID = responseObject[@"res"];
+                                            if([ID containsString:@"ERROR"])
+                                            {
+                                                OpinionzAlertView *alert = [[OpinionzAlertView alloc]initWithTitle:@"حدث خلل" message:@"يرجى المحاولة مرة أحرى" cancelButtonTitle:@"OK" otherButtonTitles:@[]];
+                                                alert.iconType = OpinionzAlertIconWarning;
+                                                alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
+                                                
+                                                [UIView transitionWithView:eqHolder
+                                                                  duration:0.2f
+                                                                   options:UIViewAnimationOptionTransitionCrossDissolve
+                                                                animations:^{
+                                                                    [eqHolder setAlpha:0.0];
+                                                                    [_equalizer dismiss];
+                                                                } completion:^(BOOL finished){
+                                                                    [alert show];
+                                                                }];
+                                            }else
+                                            {
                                                 if([type isEqualToString:@"flats"])
                                                 {
-                                                    NSString* ID = [objectsOrNil[0] kinveyObjectId];
                                                     NSMutableArray* searchFlats = [[NSMutableArray alloc] initWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"flatSearch"]];
                                                     [searchFlats addObject:ID];
                                                     [[NSUserDefaults standardUserDefaults]setObject:searchFlats forKey:@"flatSearch"];
                                                 }else
                                                 {
-                                                    NSString* ID = [objectsOrNil[0] kinveyObjectId];
                                                     NSMutableArray* searchFlats = [[NSMutableArray alloc] initWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"villaSearch"]];
                                                     [searchFlats addObject:ID];
                                                     [[NSUserDefaults standardUserDefaults]setObject:searchFlats forKey:@"villaSearch"];
@@ -192,7 +205,7 @@
                                                                                                             }];
                                                 alert.iconType = OpinionzAlertIconSuccess;
                                                 alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
-
+                                                
                                                 
                                                 [UIView transitionWithView:eqHolder
                                                                   duration:0.2f
@@ -202,9 +215,23 @@
                                                                     [_equalizer dismiss];
                                                                 } completion:^(BOOL finished){
                                                                     [alert show];
-                                                 }];
+                                                                }];
                                             }
-                                        } withProgressBlock:nil];
+                                        } failure:^(NSURLSessionTask *operation, NSError *error) {
+                                            OpinionzAlertView *alert = [[OpinionzAlertView alloc]initWithTitle:@"حدث خلل" message:@"يرجى المحاولة مرة أحرى" cancelButtonTitle:@"OK" otherButtonTitles:@[]];
+                                            alert.iconType = OpinionzAlertIconWarning;
+                                            alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
+                                            
+                                            [UIView transitionWithView:eqHolder
+                                                              duration:0.2f
+                                                               options:UIViewAnimationOptionTransitionCrossDissolve
+                                                            animations:^{
+                                                                [eqHolder setAlpha:0.0];
+                                                                [_equalizer dismiss];
+                                                            } completion:^(BOOL finished){
+                                                                [alert show];
+                                                            }];
+                                        }];
                                     }];
     [popup setKeyboardTypeForTextFields:@[@"NUMBER"]];
     [popup setBackgroundBlurType:PopupBackGroundBlurTypeDark];

@@ -5,12 +5,12 @@
 
 target 'Dawerle' do
 
-pod 'KinveyKit'
 pod 'FlatUIKit'
 pod 'FBGlowLabel', :git => 'https://github.com/lyokato/FBGlowLabel.git'
 pod "JJMaterialTextField"
 pod 'OpinionzAlertView'
 pod 'DZNWebViewController'
+pod 'AFNetworking', '~> 3.0'
 
 end
 

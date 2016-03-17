@@ -7,15 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <KinveyKit/KinveyKit.h>
-#import "searchFlats.h"
-#import "searchCars.h"
-#import "searchJobs.h"
-#import "searchParent.h"
 
 @interface ExploreTableViewController : UIViewController
 
 @property(nonatomic,strong) NSString* className;
-@property(nonatomic,strong) searchParent* searchingParams;
+@property(nonatomic,strong) NSDictionary* searchingParams;
 
 @end

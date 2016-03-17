@@ -7,17 +7,13 @@
 //
 
 #import "SearchesViewController.h"
-#import <KinveyKit/KinveyKit.h>
-#import "searchFlats.h"
-#import "searchCars.h"
-#import "searchJobs.h"
 #import "ExploreTableViewController.h"
 #import <FlatUIKit.h>
 #import "FeEqualize.h"
 #import <OpinionzAlertView/OpinionzAlertView.h>
+#import <AFNetworking/AFNetworking.h>
 
 @interface SearchesViewController ()<UITableViewDataSource,UITableViewDelegate>
-@property(nonatomic,strong)KCSAppdataStore* store;
 @property (strong, nonatomic) FeEqualize *equalizer;
 @end
 
@@ -26,6 +22,7 @@
     NSMutableArray* dataSource;
     NSString* localID;
     NSString* parseID;
+    NSString* deleteID;
     __weak IBOutlet UIView *eqHolder;
     __weak IBOutlet UITableView *tableView;
     NSIndexPath* selected;
@@ -54,7 +51,7 @@
         _equalizer = [[FeEqualize alloc] initWithView:eqHolder title:@"جاري التحميل.."];
         CGRect frame = CGRectMake(0, 0, 70, 70);
         [_equalizer setFrame:frame];
-
+        
         [_equalizer setBackgroundColor:[UIColor clearColor]];
         [eqHolder setBackgroundColor:[UIColor clearColor]];
         [eqHolder addSubview:_equalizer];
@@ -76,21 +73,19 @@
                                                                         message:@"لا يوجد أي عمليات بحث مسجلة من قبل."
                                                               cancelButtonTitle:@"OK"              otherButtonTitles:nil          usingBlockWhenTapButton:^(OpinionzAlertView *alertView, NSInteger buttonIndex) {
                                                                   [self.navigationController popViewControllerAnimated:YES];
-                                                                        }];
+                                                              }];
             alert.iconType = OpinionzAlertIconInfo;
             alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
             [alert show];
-        }
-        
-        [_store loadObjectWithID:[[NSUserDefaults standardUserDefaults] objectForKey:localID] withCompletionBlock:^(NSArray *objectsOrNil, NSError *errorOrNil) {
-            if (errorOrNil == nil) {
-                if(objectsOrNil)
-                {
-                    dataSource = [[NSMutableArray alloc] initWithArray:objectsOrNil];
-                }else
-                {
-                    dataSource = [[NSMutableArray alloc]init];
-                }
+        }else
+        {
+            NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+            [dict setObject:[[NSUserDefaults standardUserDefaults] objectForKey:localID] forKey:@"ids"];
+            
+            AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+            manager.responseSerializer = [AFJSONResponseSerializer serializerWithReadingOptions:NSJSONReadingAllowFragments];
+            [manager POST:parseID parameters:dict progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+                dataSource = [[NSMutableArray alloc]initWithArray:responseObject copyItems:YES];
                 dispatch_async( dispatch_get_main_queue(), ^{
                     NSMutableIndexSet* indices = [[NSMutableIndexSet alloc]init];
                     
@@ -101,25 +96,38 @@
                     
                     [tableView insertSections:indices withRowAnimation:UITableViewRowAnimationTop];
                 });
-            } else {
-                NSLog(@"error occurred: %@", errorOrNil);
-            }
-            
-            [UIView transitionWithView:eqHolder
-                              duration:0.2f
-                               options:UIViewAnimationOptionTransitionCrossDissolve
-                            animations:^{
-                                [eqHolder setAlpha:0.0];
-                                [_resView setHidden:NO];
-                                [_equalizer dismiss];
-                            } completion:nil];
-        } withProgressBlock:nil];
+                [UIView transitionWithView:eqHolder
+                                  duration:0.2f
+                                   options:UIViewAnimationOptionTransitionCrossDissolve
+                                animations:^{
+                                    [eqHolder setAlpha:0.0];
+                                    [_resView setHidden:NO];
+                                    [_equalizer dismiss];
+                                } completion:nil];
+                
+            } failure:^(NSURLSessionTask *operation, NSError *error) {
+                NSLog(@"%@",[operation response]);
+                OpinionzAlertView *alert = [[OpinionzAlertView alloc] initWithTitle:@"خطأ"
+                                                                            message:@"حدث خطأ. يرجى المحاولة بعد قليل"
+                                                                  cancelButtonTitle:@"OK"              otherButtonTitles:@[]          usingBlockWhenTapButton:^(OpinionzAlertView *alertView, NSInteger buttonIndex) {
+                                                                      [self.navigationController popViewControllerAnimated:YES];
+                                                                  }];
+                alert.iconType = OpinionzAlertIconWarning;
+                alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
+                [alert show];
+                
+                [UIView transitionWithView:eqHolder
+                                  duration:0.2f
+                                   options:UIViewAnimationOptionTransitionCrossDissolve
+                                animations:^{
+                                    [eqHolder setAlpha:0.0];
+                                    [_resView setHidden:NO];
+                                    [_equalizer dismiss];
+                                } completion:nil];
+                
+            }];
+        }
     }
-    
-    
-    
-    
-    
 }
 
 - (void)viewDidLoad {
@@ -129,33 +137,28 @@
     if([dataID isEqualToString:@"flats"])
     {
         localID = @"flatSearch";
-        parseID = @"searchFlats";
-        _store = [KCSAppdataStore storeWithOptions:@{ KCSStoreKeyCollectionName : parseID,
-                                                      KCSStoreKeyCollectionTemplateClass : [searchFlats class]}];
+        parseID = @"http://almasdarapp.com/Dawerle/getSearchFlat.php";
+        deleteID = @"http://almasdarapp.com/Dawerle/deleteSearchFlat.php";
     }else if([dataID isEqualToString:@"villas"])
     {
         localID = @"villaSearch";
-        parseID = @"searchFlats";
-        _store = [KCSAppdataStore storeWithOptions:@{ KCSStoreKeyCollectionName : parseID,
-                                                      KCSStoreKeyCollectionTemplateClass : [searchFlats class]}];
+        parseID = @"http://almasdarapp.com/Dawerle/getSearchFlat.php";
+        deleteID = @"http://almasdarapp.com/Dawerle/deleteSearchFlat.php";
     }else if([dataID isEqualToString:@"stores"])
     {
         localID = @"storeSearch";
-        parseID = @"searchFlats";
-        _store = [KCSAppdataStore storeWithOptions:@{ KCSStoreKeyCollectionName : parseID,
-                                                      KCSStoreKeyCollectionTemplateClass : [searchFlats class]}];
+        parseID = @"http://almasdarapp.com/Dawerle/getSearchFlat.php";
+        deleteID = @"http://almasdarapp.com/Dawerle/deleteSearchFlat.php";
     }else if([dataID isEqualToString:@"cars"])
     {
         localID = @"carSearch";
-        parseID = @"searchCars";
-        _store = [KCSAppdataStore storeWithOptions:@{ KCSStoreKeyCollectionName : parseID,
-                                                      KCSStoreKeyCollectionTemplateClass : [searchCars class]}];
+        parseID = @"http://almasdarapp.com/Dawerle/getSearchCar.php";
+        deleteID = @"http://almasdarapp.com/Dawerle/deleteSearchCar.php";
     }else if([dataID isEqualToString:@"jobs"])
     {
         localID = @"jobSearch";
-        parseID = @"searchJobs";
-        _store = [KCSAppdataStore storeWithOptions:@{ KCSStoreKeyCollectionName : parseID,
-                                                      KCSStoreKeyCollectionTemplateClass : [searchJobs class]}];
+        parseID = @"http://almasdarapp.com/Dawerle/getSearchJob.php";
+        deleteID = @"http://almasdarapp.com/Dawerle/deleteSearchJob.php";
     }
     
     
@@ -231,21 +234,22 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
     
-//    if (dataSource.count == (indexPath.row+1))
-//    {
-//        [(UILabel*)[cell viewWithTag:4]setHidden:YES];
-//    }
+    //    if (dataSource.count == (indexPath.row+1))
+    //    {
+    //        [(UILabel*)[cell viewWithTag:4]setHidden:YES];
+    //    }
     
     ((FUIButton*)[cell viewWithTag:2]).alpha = 0.0f;
     ((FUIButton*)[cell viewWithTag:4]).alpha = 0.0f;
     ((UIView*)[cell viewWithTag:3]).alpha = 0.0f;
     
+    NSDictionary* dict = [dataSource objectAtIndex:indexPath.section];
+    
     if([dataID isEqualToString:@"villas"] || [dataID isEqualToString:@"flats"])
     {
-        searchFlats* object = [dataSource objectAtIndex:indexPath.section];
-        NSString* keywords = [object.keywords componentsJoinedByString:@" ، "];
-        int maxPrice  = [object.price intValue];
-        NSString* rooms = [object.rooms componentsJoinedByString:@" ، "];
+        NSString* keywords = [dict objectForKey:@"locs"];
+        int maxPrice  = [[dict objectForKey:@"price"] intValue];
+        NSString* rooms = [dict objectForKey:@"rooms"];
         
         
         NSString* string = @"";
@@ -288,9 +292,8 @@
         [(UILabel*)[cell viewWithTag:1] setText:string];
     }else if([dataID isEqualToString:@"stores"])
     {
-        searchFlats* object = [dataSource objectAtIndex:indexPath.section];
-        NSString* keywords = [object.keywords componentsJoinedByString:@" ، "];
-        int maxPrice  = [object.price intValue];
+        NSString* keywords = [dict objectForKey:@"locs"];
+        int maxPrice  = [[dict objectForKey:@"price"] intValue];
         
         NSString* string = @"";
         if(indexPath.row == 0)
@@ -311,7 +314,7 @@
             ((FUIButton*)[cell viewWithTag:2]).shadowColor = [UIColor greenSeaColor];
             ((FUIButton*)[cell viewWithTag:2]).shadowHeight = 0.0f;
             ((FUIButton*)[cell viewWithTag:2]).cornerRadius = 0.0f;
-        
+            
             ((FUIButton*)[cell viewWithTag:4]).buttonColor = [UIColor colorFromHexCode:@"FF2C26"];
             ((FUIButton*)[cell viewWithTag:4]).shadowColor = [UIColor greenSeaColor];
             ((FUIButton*)[cell viewWithTag:4]).shadowHeight = 0.0f;
@@ -323,18 +326,17 @@
             
             [(FUIButton*)[cell viewWithTag:2] addTarget:self
                                                  action:@selector(exploreClicked:) forControlEvents:UIControlEventTouchUpInside];
-
+            
             [(FUIButton*)[cell viewWithTag:4] addTarget:self
                                                  action:@selector(deleteClicked:) forControlEvents:UIControlEventTouchUpInside];
         }
         [(UILabel*)[cell viewWithTag:1] setText:string];
     }else if([dataID isEqualToString:@"cars"])
     {
-        searchCars* object = [dataSource objectAtIndex:indexPath.section];
-        NSString* brands = [object.brands componentsJoinedByString:@" ، "];
-        NSString* sub = [object.sub componentsJoinedByString:@" ، "];
-        int maxPrice  = [object.price intValue];
-        int year  = [object.year intValue];
+        NSString* brands = [dict objectForKey:@"brands"];
+        NSString* sub = [dict objectForKey:@"subs"];
+        int maxPrice  = [[dict objectForKey:@"price"] intValue];
+        int year  = [[dict objectForKey:@"year"] intValue];
         
         NSString* string = @"";
         if(indexPath.row == 0)
@@ -363,12 +365,12 @@
             }
         }else
         {
-           ((FUIButton*)[cell viewWithTag:2]).buttonColor = [UIColor colorFromHexCode:@"39C73C"];
+            ((FUIButton*)[cell viewWithTag:2]).buttonColor = [UIColor colorFromHexCode:@"39C73C"];
             ((FUIButton*)[cell viewWithTag:2]).shadowColor = [UIColor greenSeaColor];
             ((FUIButton*)[cell viewWithTag:2]).shadowHeight = 0.0f;
             ((FUIButton*)[cell viewWithTag:2]).cornerRadius = 0.0f;
             
-           ((FUIButton*)[cell viewWithTag:4]).buttonColor = [UIColor colorFromHexCode:@"FF2C26"];
+            ((FUIButton*)[cell viewWithTag:4]).buttonColor = [UIColor colorFromHexCode:@"FF2C26"];
             ((FUIButton*)[cell viewWithTag:4]).shadowColor = [UIColor greenSeaColor];
             ((FUIButton*)[cell viewWithTag:4]).shadowHeight = 0.0f;
             ((FUIButton*)[cell viewWithTag:4]).cornerRadius = 0.0f;
@@ -379,41 +381,40 @@
             
             [(FUIButton*)[cell viewWithTag:2] addTarget:self
                                                  action:@selector(exploreClicked:) forControlEvents:UIControlEventTouchUpInside];
-
+            
             [(FUIButton*)[cell viewWithTag:4] addTarget:self
                                                  action:@selector(deleteClicked:) forControlEvents:UIControlEventTouchUpInside];
         }
         [(UILabel*)[cell viewWithTag:1] setText:string];
     }else if([dataID isEqualToString:@"jobs"])
-      {
-          searchJobs* object = [dataSource objectAtIndex:indexPath.section];
-          NSString* string = @"";
-          if(indexPath.row == 0)
-          {
-              string = [NSString stringWithFormat:@"%@ : %@",@"الكلمات الدالة",[object.keywords componentsJoinedByString:@" ، "]];
-          }else
-          {
-             ((FUIButton*)[cell viewWithTag:2]).buttonColor = [UIColor colorFromHexCode:@"39C73C"];
-              ((FUIButton*)[cell viewWithTag:2]).shadowColor = [UIColor greenSeaColor];
-              ((FUIButton*)[cell viewWithTag:2]).shadowHeight = 0.0f;
-              ((FUIButton*)[cell viewWithTag:2]).cornerRadius = 0.0f;
-              
-             ((FUIButton*)[cell viewWithTag:4]).buttonColor = [UIColor colorFromHexCode:@"FF2C26"];
-              ((FUIButton*)[cell viewWithTag:4]).shadowColor = [UIColor greenSeaColor];
-              ((FUIButton*)[cell viewWithTag:4]).shadowHeight = 0.0f;
-              ((FUIButton*)[cell viewWithTag:4]).cornerRadius = 0.0f;
-              
-              ((FUIButton*)[cell viewWithTag:2]).alpha = 1.0f;
-              ((FUIButton*)[cell viewWithTag:4]).alpha = 1.0f;
-              
-              [(FUIButton*)[cell viewWithTag:2] addTarget:self
-                                                   action:@selector(exploreClicked:) forControlEvents:UIControlEventTouchUpInside];
-
-              [(FUIButton*)[cell viewWithTag:4] addTarget:self
-                                                   action:@selector(deleteClicked:) forControlEvents:UIControlEventTouchUpInside];
-          }
-          [(UILabel*)[cell viewWithTag:1] setText:string];
-      }
+    {
+        NSString* string = @"";
+        if(indexPath.row == 0)
+        {
+            string = [NSString stringWithFormat:@"%@ : %@",@"الكلمات الدالة",[dict objectForKey:@"keywords"]];
+        }else
+        {
+            ((FUIButton*)[cell viewWithTag:2]).buttonColor = [UIColor colorFromHexCode:@"39C73C"];
+            ((FUIButton*)[cell viewWithTag:2]).shadowColor = [UIColor greenSeaColor];
+            ((FUIButton*)[cell viewWithTag:2]).shadowHeight = 0.0f;
+            ((FUIButton*)[cell viewWithTag:2]).cornerRadius = 0.0f;
+            
+            ((FUIButton*)[cell viewWithTag:4]).buttonColor = [UIColor colorFromHexCode:@"FF2C26"];
+            ((FUIButton*)[cell viewWithTag:4]).shadowColor = [UIColor greenSeaColor];
+            ((FUIButton*)[cell viewWithTag:4]).shadowHeight = 0.0f;
+            ((FUIButton*)[cell viewWithTag:4]).cornerRadius = 0.0f;
+            
+            ((FUIButton*)[cell viewWithTag:2]).alpha = 1.0f;
+            ((FUIButton*)[cell viewWithTag:4]).alpha = 1.0f;
+            
+            [(FUIButton*)[cell viewWithTag:2] addTarget:self
+                                                 action:@selector(exploreClicked:) forControlEvents:UIControlEventTouchUpInside];
+            
+            [(FUIButton*)[cell viewWithTag:4] addTarget:self
+                                                 action:@selector(deleteClicked:) forControlEvents:UIControlEventTouchUpInside];
+        }
+        [(UILabel*)[cell viewWithTag:1] setText:string];
+    }
     
     return cell;
 }
@@ -453,30 +454,50 @@
                             [_resView setHidden:YES];
                             [_equalizer show];
                         } completion:nil];
-
-        [_store removeObject:[dataSource objectAtIndex:indexPath.section] withDeletionBlock:^(NSDictionary* deletionDictOrNil, NSError *errorOrNil) {
-            if (errorOrNil) {
-            } else {
-                NSMutableArray* array = [[NSMutableArray alloc]initWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:localID]];
-                [array removeObjectAtIndex:indexPath.section];
-                [[NSUserDefaults standardUserDefaults]setObject:array forKey:localID];
-                [[NSUserDefaults standardUserDefaults]synchronize];
-                [UIView transitionWithView:eqHolder
-                                  duration:0.2f
-                                   options:UIViewAnimationOptionTransitionCrossDissolve
-                                animations:^{
-                                    [eqHolder setAlpha:0.0];
-                                    [_resView setHidden:NO];
-                                    [_equalizer dismiss];
-                                } completion:^(BOOL finished){
-                                    dispatch_async( dispatch_get_main_queue(), ^{
-                                        [dataSource removeObjectAtIndex:indexPath.section];
-                                        NSIndexSet* indexSet = [NSIndexSet indexSetWithIndex:indexPath.section];
-                                        [tableView deleteSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
-                                    });
-                                }];
-            }
-        } withProgressBlock:nil];
+        
+        
+        
+        
+        NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+        [dict setObject:[[dataSource objectAtIndex:indexPath.section] objectForKey:@"idd"] forKey:@"id"];
+        
+        
+        
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        [manager POST:deleteID parameters:dict progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+            NSMutableArray* array = [[NSMutableArray alloc]initWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:localID]];
+            [array removeObjectAtIndex:indexPath.section];
+            [[NSUserDefaults standardUserDefaults]setObject:array forKey:localID];
+            [[NSUserDefaults standardUserDefaults]synchronize];
+            [UIView transitionWithView:eqHolder
+                              duration:0.2f
+                               options:UIViewAnimationOptionTransitionCrossDissolve
+                            animations:^{
+                                [eqHolder setAlpha:0.0];
+                                [_resView setHidden:NO];
+                                [_equalizer dismiss];
+                            } completion:^(BOOL finished){
+                                dispatch_async( dispatch_get_main_queue(), ^{
+                                    [dataSource removeObjectAtIndex:indexPath.section];
+                                    NSIndexSet* indexSet = [NSIndexSet indexSetWithIndex:indexPath.section];
+                                    [tableView deleteSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
+                                });
+                            }];
+        } failure:^(NSURLSessionTask *operation, NSError *error) {
+            OpinionzAlertView *alert = [[OpinionzAlertView alloc]initWithTitle:@"حدث خلل" message:@"يرجى المحاولة مرة أحرى" cancelButtonTitle:@"OK" otherButtonTitles:@[]];
+            alert.iconType = OpinionzAlertIconWarning;
+            alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
+            
+            [UIView transitionWithView:eqHolder
+                              duration:0.2f
+                               options:UIViewAnimationOptionTransitionCrossDissolve
+                            animations:^{
+                                [eqHolder setAlpha:0.0];
+                                [_equalizer dismiss];
+                            } completion:^(BOOL finished){
+                                [alert show];
+                            }];
+        }];
     }
 }
 

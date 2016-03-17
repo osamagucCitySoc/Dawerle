@@ -8,8 +8,7 @@
 
 #import "CarsBrandsViewController.h"
 #import "Popup.h"
-#import <Parse/Parse.h>
-#import "searchCars.h"
+#import <AFNetworking/AFNetworking.h>
 #import "SearchesViewController.h"
 #import <FlatUIKit.h>
 #import "FeEqualize.h"
@@ -17,7 +16,6 @@
 #import <OpinionzAlertView/OpinionzAlertView.h>
 
 @interface CarsBrandsViewController ()<UITableViewDataSource,UITableViewDelegate,PopupDelegate,UISearchBarDelegate,UIAlertViewDelegate>
-@property(nonatomic,strong)KCSAppdataStore* store;
 @property (strong, nonatomic) FeEqualize *equalizer;
 @end
 
@@ -268,6 +266,7 @@
         NSMutableArray* subBrands = [[NSMutableArray alloc]init];
         
         
+    #warning OSAMA add a string for the ONLY selected labels :) no need to show the mapping ;)
         for(NSIndexPath* index in [tableVieww indexPathsForSelectedRows])
         {
             [brands addObjectsFromArray:[[dataSource objectAtIndex:index.section] objectForKey:@"all"]];
@@ -280,26 +279,39 @@
         NSNumber* pr = [NSNumber numberWithInt:[price intValue]];
         NSNumber* yr = [NSNumber numberWithInt:[year intValue]];
         
-        _store = [KCSAppdataStore storeWithOptions:@{ KCSStoreKeyCollectionName : @"searchCars",
-                                                      KCSStoreKeyCollectionTemplateClass : [searchCars class]}];
-        searchCars* event = [[searchCars alloc] init];
-        event.brands = brands;
-        event.sub = subBrands;
-        event.price = pr;
-        event.year = yr;
+        NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+        [dict setObject:brands forKey:@"brands"];
+        [dict setObject:subBrands forKey:@"subs"];
+        [dict setObject:pr forKey:@"price"];
+        [dict setObject:yr forKey:@"year"];
+        [dict setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"deviceToken"] forKey:@"token"];
         
-        [_store saveObject:event withCompletionBlock:^(NSArray *objectsOrNil, NSError *errorOrNil) {
-            if (errorOrNil != nil) {
-                //save failed
-                NSLog(@"Save failed, with error: %@", [errorOrNil localizedFailureReason]);
-            } else {
-                //save was successful
-                NSString* ID = [objectsOrNil[0] kinveyObjectId];
+        
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        [manager POST:@"http://almasdarapp.com/Dawerle/storeSearchCar.php" parameters:dict progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+            NSString* ID = responseObject[@"res"];
+            if([ID containsString:@"ERROR"])
+            {
+                OpinionzAlertView *alert = [[OpinionzAlertView alloc]initWithTitle:@"حدث خلل" message:@"يرجى المحاولة مرة أحرى" cancelButtonTitle:@"OK" otherButtonTitles:@[]];
+                alert.iconType = OpinionzAlertIconWarning;
+                alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
+                
+                [UIView transitionWithView:eqHolder
+                                  duration:0.2f
+                                   options:UIViewAnimationOptionTransitionCrossDissolve
+                                animations:^{
+                                    [eqHolder setAlpha:0.0];
+                                    [_equalizer dismiss];
+                                } completion:^(BOOL finished){
+                                    [alert show];
+                                }];
+            }else
+            {
                 NSMutableArray* searchFlats = [[NSMutableArray alloc] initWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"carSearch"]];
                 [searchFlats addObject:ID];
                 [[NSUserDefaults standardUserDefaults]setObject:searchFlats forKey:@"carSearch"];
                 [[NSUserDefaults standardUserDefaults] synchronize];
-               
+                
                 OpinionzAlertView *alert = [[OpinionzAlertView alloc] initWithTitle:@"Wohoo"
                                                                             message:@"الأن إستريح و دورلي سيقوم بالبحث بدلاً عنك ;)" cancelButtonTitle:@"(Y)"              otherButtonTitles:nil          usingBlockWhenTapButton:^(OpinionzAlertView *alertView, NSInteger buttonIndex) {
                                                                                 NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
@@ -322,8 +334,23 @@
                                     [alert show];
                                 }];
             }
-        } withProgressBlock:nil];
+        } failure:^(NSURLSessionTask *operation, NSError *error) {
+            OpinionzAlertView *alert = [[OpinionzAlertView alloc]initWithTitle:@"حدث خلل" message:@"يرجى المحاولة مرة أحرى" cancelButtonTitle:@"OK" otherButtonTitles:@[]];
+            alert.iconType = OpinionzAlertIconWarning;
+            alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
+            
+            [UIView transitionWithView:eqHolder
+                              duration:0.2f
+                               options:UIViewAnimationOptionTransitionCrossDissolve
+                            animations:^{
+                                [eqHolder setAlpha:0.0];
+                                [_equalizer dismiss];
+                            } completion:^(BOOL finished){
+                                [alert show];
+                            }];
+        }];
     }];
+    
     [popup setKeyboardTypeForTextFields:@[@"NUMBER",@"NUMBER"]];
     [popup setBackgroundBlurType:PopupBackGroundBlurTypeDark];
     [popup setIncomingTransition:PopupIncomingTransitionTypeBounceFromCenter];
@@ -355,10 +382,6 @@
         year = @"-1";
     }
 }
-- (IBAction)myCarSearchClicked:(id)sender {
-    [self performSegueWithIdentifier:@"showRecordedSearch" sender:self];
-}
-
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
 {

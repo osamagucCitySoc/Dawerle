@@ -170,9 +170,6 @@
 		E81DB8DE1C8B8D4500826EFE /* FeEqualize.m in Sources */ = {isa = PBXBuildFile; fileRef = E81DB8DD1C8B8D4500826EFE /* FeEqualize.m */; };
 		E81DB8E31C8B8D5D00826EFE /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = E81DB8E01C8B8D5D00826EFE /* FXBlurView.m */; };
 		E81DB8E41C8B8D5D00826EFE /* UIColor+flat.m in Sources */ = {isa = PBXBuildFile; fileRef = E81DB8E21C8B8D5D00826EFE /* UIColor+flat.m */; };
-		E84773021C87175600F6DEC1 /* Cars.m in Sources */ = {isa = PBXBuildFile; fileRef = E84773011C87175600F6DEC1 /* Cars.m */; };
-		E84773051C874A2600F6DEC1 /* searchCars.m in Sources */ = {isa = PBXBuildFile; fileRef = E84773041C874A2600F6DEC1 /* searchCars.m */; };
-		E84773081C874C3100F6DEC1 /* searchParent.m in Sources */ = {isa = PBXBuildFile; fileRef = E84773071C874C3100F6DEC1 /* searchParent.m */; };
 		E8529B801C6EB56000D71623 /* ExploreTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8529B7F1C6EB56000D71623 /* ExploreTableViewController.m */; };
 		E8529B831C6F2F7B00D71623 /* DownloaderClass.m in Sources */ = {isa = PBXBuildFile; fileRef = E8529B821C6F2F7B00D71623 /* DownloaderClass.m */; };
 		E859266E1C5A650B00560C02 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E859266C1C5A650B00560C02 /* Bolts.framework */; };
@@ -194,8 +191,6 @@
 		E87710DE1C5A61120079BF0D /* carsSooq.json in Resources */ = {isa = PBXBuildFile; fileRef = E87710DB1C5A61120079BF0D /* carsSooq.json */; };
 		E87710DF1C5A61120079BF0D /* carsWaset.json in Resources */ = {isa = PBXBuildFile; fileRef = E87710DC1C5A61120079BF0D /* carsWaset.json */; };
 		E87710E11C5A611B0079BF0D /* carsQ8.json in Resources */ = {isa = PBXBuildFile; fileRef = E87710E01C5A611B0079BF0D /* carsQ8.json */; };
-		E878D1921C85B1140068D22C /* searchFlats.m in Sources */ = {isa = PBXBuildFile; fileRef = E878D1911C85B1140068D22C /* searchFlats.m */; };
-		E878D1951C85BBBB0068D22C /* Flats.m in Sources */ = {isa = PBXBuildFile; fileRef = E878D1941C85BBBB0068D22C /* Flats.m */; };
 		E8B54D151C56B2B100C2249F /* RoomsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B54D141C56B2B100C2249F /* RoomsViewController.m */; };
 		E8B54D181C56B6F300C2249F /* Popup.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B54D171C56B6F300C2249F /* Popup.m */; };
 		E8D9E35F1C56405400D7F5E1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D9E35E1C56405400D7F5E1 /* main.m */; };
@@ -206,8 +201,6 @@
 		E8D9E36D1C56405500D7F5E1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E8D9E36B1C56405500D7F5E1 /* LaunchScreen.storyboard */; };
 		E8D9E3761C56406300D7F5E1 /* AreaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D9E3751C56406300D7F5E1 /* AreaViewController.m */; };
 		E8D9E3781C56411B00D7F5E1 /* combinedAreas.json in Resources */ = {isa = PBXBuildFile; fileRef = E8D9E3771C56411B00D7F5E1 /* combinedAreas.json */; };
-		E8DB71911C8DA9230054B20C /* searchJobs.m in Sources */ = {isa = PBXBuildFile; fileRef = E8DB71901C8DA9230054B20C /* searchJobs.m */; };
-		E8DB71941C8DAD3F0054B20C /* Jobs.m in Sources */ = {isa = PBXBuildFile; fileRef = E8DB71931C8DAD3F0054B20C /* Jobs.m */; };
 		E8DFC12E1C80AB3300EE29DD /* n.caf in Resources */ = {isa = PBXBuildFile; fileRef = E8DFC12D1C80AB3300EE29DD /* n.caf */; };
 		E8E29BD11C58D8DF00919710 /* ShowSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8E29BD01C58D8DF00919710 /* ShowSearchViewController.m */; };
 /* End PBXBuildFile section */
@@ -385,12 +378,6 @@
 		E81DB8E01C8B8D5D00826EFE /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
 		E81DB8E11C8B8D5D00826EFE /* UIColor+flat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+flat.h"; sourceTree = "<group>"; };
 		E81DB8E21C8B8D5D00826EFE /* UIColor+flat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+flat.m"; sourceTree = "<group>"; };
-		E84773001C87175600F6DEC1 /* Cars.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cars.h; sourceTree = "<group>"; };
-		E84773011C87175600F6DEC1 /* Cars.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cars.m; sourceTree = "<group>"; };
-		E84773031C874A2600F6DEC1 /* searchCars.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = searchCars.h; sourceTree = "<group>"; };
-		E84773041C874A2600F6DEC1 /* searchCars.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = searchCars.m; sourceTree = "<group>"; };
-		E84773061C874C3100F6DEC1 /* searchParent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = searchParent.h; sourceTree = "<group>"; };
-		E84773071C874C3100F6DEC1 /* searchParent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = searchParent.m; sourceTree = "<group>"; };
 		E8529B7E1C6EB56000D71623 /* ExploreTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExploreTableViewController.h; sourceTree = "<group>"; };
 		E8529B7F1C6EB56000D71623 /* ExploreTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExploreTableViewController.m; sourceTree = "<group>"; };
 		E8529B811C6F2F7B00D71623 /* DownloaderClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloaderClass.h; sourceTree = "<group>"; };
@@ -418,10 +405,6 @@
 		E87710DB1C5A61120079BF0D /* carsSooq.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = carsSooq.json; sourceTree = "<group>"; };
 		E87710DC1C5A61120079BF0D /* carsWaset.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = carsWaset.json; sourceTree = "<group>"; };
 		E87710E01C5A611B0079BF0D /* carsQ8.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = carsQ8.json; sourceTree = "<group>"; };
-		E878D1901C85B1140068D22C /* searchFlats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = searchFlats.h; sourceTree = "<group>"; };
-		E878D1911C85B1140068D22C /* searchFlats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = searchFlats.m; sourceTree = "<group>"; };
-		E878D1931C85BBBB0068D22C /* Flats.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Flats.h; sourceTree = "<group>"; };
-		E878D1941C85BBBB0068D22C /* Flats.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Flats.m; sourceTree = "<group>"; };
 		E8B54D131C56B2B100C2249F /* RoomsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoomsViewController.h; sourceTree = "<group>"; };
 		E8B54D141C56B2B100C2249F /* RoomsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomsViewController.m; sourceTree = "<group>"; };
 		E8B54D161C56B6F300C2249F /* Popup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Popup.h; sourceTree = "<group>"; };
@@ -439,10 +422,6 @@
 		E8D9E3741C56406300D7F5E1 /* AreaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AreaViewController.h; sourceTree = "<group>"; };
 		E8D9E3751C56406300D7F5E1 /* AreaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AreaViewController.m; sourceTree = "<group>"; };
 		E8D9E3771C56411B00D7F5E1 /* combinedAreas.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = combinedAreas.json; sourceTree = "<group>"; };
-		E8DB718F1C8DA9230054B20C /* searchJobs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = searchJobs.h; sourceTree = "<group>"; };
-		E8DB71901C8DA9230054B20C /* searchJobs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = searchJobs.m; sourceTree = "<group>"; };
-		E8DB71921C8DAD3F0054B20C /* Jobs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Jobs.h; sourceTree = "<group>"; };
-		E8DB71931C8DAD3F0054B20C /* Jobs.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Jobs.m; sourceTree = "<group>"; };
 		E8DFC12D1C80AB3300EE29DD /* n.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = n.caf; sourceTree = "<group>"; };
 		E8E29BCF1C58D8DF00919710 /* ShowSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowSearchViewController.h; sourceTree = "<group>"; };
 		E8E29BD01C58D8DF00919710 /* ShowSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowSearchViewController.m; sourceTree = "<group>"; };
@@ -556,27 +535,6 @@
 				E81DB8A91C8AE4B900826EFE /* Info-500.png */,
 			);
 			name = icons;
-			sourceTree = "<group>";
-		};
-		E878D18F1C85B1030068D22C /* KinveyStore */ = {
-			isa = PBXGroup;
-			children = (
-				E878D1901C85B1140068D22C /* searchFlats.h */,
-				E878D1911C85B1140068D22C /* searchFlats.m */,
-				E878D1931C85BBBB0068D22C /* Flats.h */,
-				E878D1941C85BBBB0068D22C /* Flats.m */,
-				E84773001C87175600F6DEC1 /* Cars.h */,
-				E84773011C87175600F6DEC1 /* Cars.m */,
-				E84773031C874A2600F6DEC1 /* searchCars.h */,
-				E84773041C874A2600F6DEC1 /* searchCars.m */,
-				E84773061C874C3100F6DEC1 /* searchParent.h */,
-				E84773071C874C3100F6DEC1 /* searchParent.m */,
-				E8DB718F1C8DA9230054B20C /* searchJobs.h */,
-				E8DB71901C8DA9230054B20C /* searchJobs.m */,
-				E8DB71921C8DAD3F0054B20C /* Jobs.h */,
-				E8DB71931C8DAD3F0054B20C /* Jobs.m */,
-			);
-			name = KinveyStore;
 			sourceTree = "<group>";
 		};
 		E8875A4D1C7F9D3700156A4E /* cars */ = {
@@ -713,7 +671,6 @@
 			children = (
 				1E59C1F41C8EDEDE00B229A2 /* Images */,
 				E81DB8AB1C8AE4C300826EFE /* icons */,
-				E878D18F1C85B1030068D22C /* KinveyStore */,
 				E8DFC12D1C80AB3300EE29DD /* n.caf */,
 				E8875A4D1C7F9D3700156A4E /* cars */,
 				E8D9E3601C56405400D7F5E1 /* AppDelegate.h */,
@@ -1065,31 +1022,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E878D1921C85B1140068D22C /* searchFlats.m in Sources */,
 				E81DB8E31C8B8D5D00826EFE /* FXBlurView.m in Sources */,
 				E8B54D181C56B6F300C2249F /* Popup.m in Sources */,
 				E862BD591C8C25BC00541240 /* SearchesViewController.m in Sources */,
-				E8DB71941C8DAD3F0054B20C /* Jobs.m in Sources */,
 				E81DB8E41C8B8D5D00826EFE /* UIColor+flat.m in Sources */,
 				E87710D91C5A558A0079BF0D /* CarsBrandsViewController.m in Sources */,
 				E81DB8DE1C8B8D4500826EFE /* FeEqualize.m in Sources */,
 				E8529B801C6EB56000D71623 /* ExploreTableViewController.m in Sources */,
 				1E1C58DC1C95A2FD009BD677 /* HelpViewController.m in Sources */,
 				E862BD5E1C8C4C7C00541240 /* SplashScreenViewController.m in Sources */,
-				E84773021C87175600F6DEC1 /* Cars.m in Sources */,
-				E84773051C874A2600F6DEC1 /* searchCars.m in Sources */,
 				E8D9E3651C56405400D7F5E1 /* ViewController.m in Sources */,
 				E8529B831C6F2F7B00D71623 /* DownloaderClass.m in Sources */,
-				E8DB71911C8DA9230054B20C /* searchJobs.m in Sources */,
 				E81BA6B41C6E15E1000FF703 /* JobSearchViewController.m in Sources */,
 				E8E29BD11C58D8DF00919710 /* ShowSearchViewController.m in Sources */,
 				E8D9E3621C56405400D7F5E1 /* AppDelegate.m in Sources */,
 				1E59C2271C901A2200B229A2 /* AboutViewController.m in Sources */,
 				E8B54D151C56B2B100C2249F /* RoomsViewController.m in Sources */,
-				E84773081C874C3100F6DEC1 /* searchParent.m in Sources */,
 				E8D9E35F1C56405400D7F5E1 /* main.m in Sources */,
 				1E1C58AF1C91A77E009BD677 /* SettingsViewController.m in Sources */,
-				E878D1951C85BBBB0068D22C /* Flats.m in Sources */,
 				E8D9E3761C56406300D7F5E1 /* AreaViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

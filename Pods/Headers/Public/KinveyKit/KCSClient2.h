@@ -1,1 +1,0 @@
-../../../KinveyKit/KinveyKit-1.40.5/include/KinveyKit/KCSClient2.h

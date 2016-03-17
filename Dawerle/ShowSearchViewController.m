@@ -27,10 +27,10 @@
     [super viewDidLoad];
     if(!self.link)
     {
-        NSURL* url = [NSURL URLWithString:[searchItem objectForKey:@"i"]];
+        NSURL* url = [NSURL URLWithString:[[searchItem objectForKey:@"aps"] objectForKey:@"i"]];
         if(!url)
         {
-            url = [NSURL URLWithString:[[searchItem objectForKey:@"i"]stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+            url = [NSURL URLWithString:[[[searchItem objectForKey:@"aps"] objectForKey:@"i"]stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
         }
         NSURLRequest* req = [[NSURLRequest alloc]initWithURL:url];
         [webView loadRequest:req];

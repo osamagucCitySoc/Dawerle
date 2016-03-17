@@ -9,16 +9,13 @@
 #import "JobSearchViewController.h"
 #import "SearchesViewController.h"
 #import "JJMaterialTextfield.h"
-#import <KinveyKit/KinveyKit.h>
-#import "searchJobs.h"
 #import <FlatUIKit.h>
 #import "FeEqualize.h"
 #import "ViewController.h"
 #import <OpinionzAlertView/OpinionzAlertView.h>
-
+#import <AFNetworking/AFNetworking.h>
 
 @interface JobSearchViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIAlertViewDelegate>
-@property(nonatomic,strong)KCSAppdataStore* store;
 @property (strong, nonatomic) FeEqualize *equalizer;
 @end
 
@@ -201,18 +198,31 @@
                     } completion:NULL];
 
     
-    _store = [KCSAppdataStore storeWithOptions:@{ KCSStoreKeyCollectionName : @"searchJobs",
-                                                  KCSStoreKeyCollectionTemplateClass : [searchJobs class]}];
-    searchJobs* event = [[searchJobs alloc] init];
-    event.keywords = dataSource;
+    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+    [dict setObject:dataSource forKey:@"keywords"];
+    [dict setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"deviceToken"] forKey:@"token"];
     
-    [_store saveObject:event withCompletionBlock:^(NSArray *objectsOrNil, NSError *errorOrNil) {
-        if (errorOrNil != nil) {
-            //save failed
-            NSLog(@"Save failed, with error: %@", [errorOrNil localizedFailureReason]);
-        } else {
-            //save was successful
-            NSString* ID = [objectsOrNil[0] kinveyObjectId];
+    
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager POST:@"http://almasdarapp.com/Dawerle/storeSearchCar.php" parameters:dict progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+        NSString* ID = responseObject[@"res"];
+        if([ID containsString:@"ERROR"])
+        {
+            OpinionzAlertView *alert = [[OpinionzAlertView alloc]initWithTitle:@"حدث خلل" message:@"يرجى المحاولة مرة أحرى" cancelButtonTitle:@"OK" otherButtonTitles:@[]];
+            alert.iconType = OpinionzAlertIconWarning;
+            alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
+            
+            [UIView transitionWithView:eqHolder
+                              duration:0.2f
+                               options:UIViewAnimationOptionTransitionCrossDissolve
+                            animations:^{
+                                [eqHolder setAlpha:0.0];
+                                [_equalizer dismiss];
+                            } completion:^(BOOL finished){
+                                [alert show];
+                            }];
+        }else
+        {
             NSMutableArray* searchFlats = [[NSMutableArray alloc] initWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"jobSearch"]];
             [searchFlats addObject:ID];
             [[NSUserDefaults standardUserDefaults]setObject:searchFlats forKey:@"jobSearch"];
@@ -229,7 +239,7 @@
                                                                         }];
             alert.iconType = OpinionzAlertIconSuccess;
             alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
-
+            
             
             
             [UIView transitionWithView:eqHolder
@@ -241,8 +251,23 @@
                             } completion:^(BOOL finished){
                                 [alert show];
                             }];
+
         }
-    } withProgressBlock:nil];
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        OpinionzAlertView *alert = [[OpinionzAlertView alloc]initWithTitle:@"حدث خلل" message:@"يرجى المحاولة مرة أحرى" cancelButtonTitle:@"OK" otherButtonTitles:@[]];
+        alert.iconType = OpinionzAlertIconWarning;
+        alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
+        
+        [UIView transitionWithView:eqHolder
+                          duration:0.2f
+                           options:UIViewAnimationOptionTransitionCrossDissolve
+                        animations:^{
+                            [eqHolder setAlpha:0.0];
+                            [_equalizer dismiss];
+                        } completion:^(BOOL finished){
+                            [alert show];
+                        }];
+    }];
 }
 - (IBAction)addKeyWordClicked:(id)sender {
     if(keyWordTextField.text.length > 0)
@@ -273,10 +298,6 @@
                                               1.0,
                                               1.0)
                           animated:YES];
-}
-
-- (IBAction)mySearchClicked:(id)sender {
-    [self performSegueWithIdentifier:@"showRecordedSearch" sender:self];
 }
 
 #pragma mark textfield methods

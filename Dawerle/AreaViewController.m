@@ -9,8 +9,7 @@
 #import "AreaViewController.h"
 #import "RoomsViewController.h"
 #import "SearchesViewController.h"
-#import <KinveyKit/KinveyKit.h>
-#import "searchFlats.h"
+#import <AFNetworking/AFNetworking.h>
 #import "Popup.h"
 #import <FlatUIKit.h>
 #import "FeEqualize.h"
@@ -18,7 +17,6 @@
 #import <OpinionzAlertView/OpinionzAlertView.h>
 
 @interface AreaViewController ()<UITableViewDelegate,UITableViewDataSource,PopupDelegate,UIAlertViewDelegate>
-@property(nonatomic,strong)KCSAppdataStore* store;
 @property (strong, nonatomic) FeEqualize *equalizer;
 @end
 
@@ -237,10 +235,6 @@
     [header.textLabel setTextAlignment:NSTextAlignmentRight];
 }
 
-- (IBAction)myFlatSearchClicked:(id)sender {
-    [self performSegueWithIdentifier:@"showRecordedSearch" sender:self];
-}
-
 - (IBAction)submitClicked:(id)sender {
     if([type isEqualToString:@"stores"])
     {
@@ -263,30 +257,48 @@
                                                                 [eqHolder setAlpha:1.0];
                                                                 [_equalizer show];
                                                             } completion:NULL];
-                                            _store = [KCSAppdataStore storeWithOptions:@{ KCSStoreKeyCollectionName : @"searchFlats",
-                                                                                          KCSStoreKeyCollectionTemplateClass : [searchFlats class]}];
-                                            searchFlats* event = [[searchFlats alloc] init];
+                                            
+                                            
+                                            NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+                                            
                                             NSMutableArray* rooms = [[NSMutableArray alloc]init];
                                             if(rooms.count == 0)
                                             {
                                                 [rooms addObject:@"-1"];
                                             }
-                                            event.keywords = keywords;
-                                            event.rooms = rooms;
+                                            [dict setObject:keywords forKey:@"keywords"];
+                                            [dict setObject:rooms forKey:@"rooms"];
                                             
                                             if([maxPrice isEqualToString:@""])
                                             {
                                                 maxPrice = @"-1";
                                             }
-                                            event.price = [NSNumber numberWithInt:[maxPrice intValue]];
-                                            event.type = @"store";
-                                            [_store saveObject:event withCompletionBlock:^(NSArray *objectsOrNil, NSError *errorOrNil) {
-                                                if (errorOrNil != nil) {
-                                                    //save failed
-                                                    NSLog(@"Save failed, with error: %@", [errorOrNil localizedFailureReason]);
-                                                } else {
-                                                    //save was successful
-                                                    NSString* ID = [objectsOrNil[0] kinveyObjectId];
+                                            [dict setObject:[NSNumber numberWithInt:[maxPrice intValue]] forKey:@"price"];
+                                            [dict setObject:@"store" forKey:@"type"];
+                                            [dict setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"deviceToken"] forKey:@"token"];
+                                            
+                                           
+                                            
+                                            AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+                                            [manager POST:@"http://almasdarapp.com/Dawerle/storeSearchFlat.php" parameters:dict progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+                                                NSString* ID = responseObject[@"res"];
+                                                if([ID containsString:@"ERROR"])
+                                                {
+                                                    OpinionzAlertView *alert = [[OpinionzAlertView alloc]initWithTitle:@"حدث خلل" message:@"يرجى المحاولة مرة أحرى" cancelButtonTitle:@"OK" otherButtonTitles:@[]];
+                                                    alert.iconType = OpinionzAlertIconWarning;
+                                                    alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
+                                                    
+                                                    [UIView transitionWithView:eqHolder
+                                                                      duration:0.2f
+                                                                       options:UIViewAnimationOptionTransitionCrossDissolve
+                                                                    animations:^{
+                                                                        [eqHolder setAlpha:0.0];
+                                                                        [_equalizer dismiss];
+                                                                    } completion:^(BOOL finished){
+                                                                        [alert show];
+                                                                    }];
+                                                }else
+                                                {
                                                     NSMutableArray* searchFlats = [[NSMutableArray alloc] initWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"storeSearch"]];
                                                     [searchFlats addObject:ID];
                                                     [[NSUserDefaults standardUserDefaults]setObject:searchFlats forKey:@"storeSearch"];
@@ -294,14 +306,14 @@
                                                     
                                                     
                                                     OpinionzAlertView *alert = [[OpinionzAlertView alloc] initWithTitle:@"Wohoo"
-                                                                                                               message:@"الأن إستريح و دورلي سيقوم بالبحث بدلاً عنك ;)" cancelButtonTitle:@"(Y)"              otherButtonTitles:nil          usingBlockWhenTapButton:^(OpinionzAlertView *alertView, NSInteger buttonIndex) {
-                                                                                                                   NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
-                                                                                                                   for (UIViewController *aViewController in allViewControllers) {
-                                                                                                                       if ([aViewController isKindOfClass:[ViewController class]]) {
-                                                                                                                           [self.navigationController popToViewController:aViewController animated:YES];
-                                                                                                                       }
-                                                                                                                   }
-                                                                                                }];
+                                                                                                                message:@"الأن إستريح و دورلي سيقوم بالبحث بدلاً عنك ;)" cancelButtonTitle:@"(Y)"              otherButtonTitles:nil          usingBlockWhenTapButton:^(OpinionzAlertView *alertView, NSInteger buttonIndex) {
+                                                                                                                    NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
+                                                                                                                    for (UIViewController *aViewController in allViewControllers) {
+                                                                                                                        if ([aViewController isKindOfClass:[ViewController class]]) {
+                                                                                                                            [self.navigationController popToViewController:aViewController animated:YES];
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                }];
                                                     alert.iconType = OpinionzAlertIconSuccess;
                                                     alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
                                                     
@@ -315,9 +327,22 @@
                                                                     } completion:^(BOOL finished){
                                                                         [alert show];
                                                                     }];
-                                                
                                                 }
-                                            } withProgressBlock:nil];
+                                            } failure:^(NSURLSessionTask *operation, NSError *error) {
+                                                OpinionzAlertView *alert = [[OpinionzAlertView alloc]initWithTitle:@"حدث خلل" message:@"يرجى المحاولة مرة أحرى" cancelButtonTitle:@"OK" otherButtonTitles:@[]];
+                                                alert.iconType = OpinionzAlertIconWarning;
+                                                alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
+                                                
+                                                [UIView transitionWithView:eqHolder
+                                                                  duration:0.2f
+                                                                   options:UIViewAnimationOptionTransitionCrossDissolve
+                                                                animations:^{
+                                                                    [eqHolder setAlpha:0.0];
+                                                                    [_equalizer dismiss];
+                                                                } completion:^(BOOL finished){
+                                                                    [alert show];
+                                                                }];
+                                            }];
                                         }];
         [popup setKeyboardTypeForTextFields:@[@"NUMBER"]];
         [popup setBackgroundBlurType:PopupBackGroundBlurTypeDark];
