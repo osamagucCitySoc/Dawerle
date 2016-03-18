@@ -216,7 +216,7 @@
     
     
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:@"http://almasdarapp.com/Dawerle/storeSearchCar.php" parameters:dict progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+    [manager POST:@"http://almasdarapp.com/Dawerle/storeSearchJob.php" parameters:dict progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSString* ID = responseObject[@"res"];
         if([ID containsString:@"ERROR"])
         {
