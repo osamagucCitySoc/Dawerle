@@ -55,9 +55,14 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="0.94509803921568625" green="0.94509803921568625" blue="0.94509803921568625" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="Dvx-CY-gze">
+                                    <rect key="frame" x="0.0" y="0.0" width="418" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="catCell" rowHeight="80" id="Ysy-3O-Z4W">
-                                        <rect key="frame" x="0.0" y="49.5" width="418" height="80"/>
+                                        <rect key="frame" x="0.0" y="99.5" width="418" height="80"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ysy-3O-Z4W" id="ja6-Mb-Ri3">
                                             <rect key="frame" x="0.0" y="0.0" width="418" height="80"/>
@@ -105,6 +110,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="bannerAdHolder" destination="Dvx-CY-gze" id="Snp-iH-Ws6"/>
                         <outlet property="tableVieww" destination="fD0-mX-ez8" id="ktn-D8-cT4"/>
                         <segue destination="TSk-DX-Pbb" kind="push" identifier="searchWebSeg" id="gfB-64-xcI"/>
                         <segue destination="NNp-cp-Snh" kind="push" identifier="flatSeg" id="efa-xJ-RxG"/>
@@ -133,9 +139,14 @@
                                 <rect key="frame" x="-4" y="64" width="418" height="672"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="0.94509803920000002" green="0.94509803920000002" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="o4u-Wq-QdZ">
+                                    <rect key="frame" x="0.0" y="0.0" width="418" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="areaCell" rowHeight="70" id="Jad-Xv-DRO">
-                                        <rect key="frame" x="0.0" y="49.5" width="418" height="70"/>
+                                        <rect key="frame" x="0.0" y="99.5" width="418" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Jad-Xv-DRO" id="gut-T7-4aZ">
                                             <rect key="frame" x="0.0" y="0.0" width="418" height="70"/>
@@ -186,6 +197,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="N3E-jq-WoN"/>
                     <connections>
+                        <outlet property="bannerAdHolder" destination="o4u-Wq-QdZ" id="1k7-na-iVm"/>
                         <outlet property="eqHolder" destination="CDo-Yc-6bP" id="pca-RM-sux"/>
                         <outlet property="roomesButton" destination="TWY-g2-C7v" id="evy-15-XzF"/>
                         <outlet property="tableView" destination="L2A-6F-GCF" id="gSD-vi-IkJ"/>
@@ -408,9 +420,14 @@
                                 <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="mgy-BI-nfd">
+                                    <rect key="frame" x="0.0" y="0.0" width="418" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="brandsCell" rowHeight="70" id="hdc-js-57p">
-                                        <rect key="frame" x="0.0" y="49.5" width="418" height="70"/>
+                                        <rect key="frame" x="0.0" y="99.5" width="418" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hdc-js-57p" id="buc-TW-DyO">
                                             <rect key="frame" x="0.0" y="0.0" width="418" height="70"/>
@@ -463,6 +480,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="XuA-dZ-HPe"/>
                     <connections>
+                        <outlet property="bannerAdHolder" destination="mgy-BI-nfd" id="Gbf-Q9-bKc"/>
                         <outlet property="eqHolder" destination="LEB-ea-Ozb" id="rBX-l8-xtI"/>
                         <outlet property="headerView" destination="8dR-vp-Uxt" id="Dz3-Ge-Snl"/>
                         <outlet property="roomesButton" destination="KB1-MI-xEy" id="oKH-IU-SGW"/>
@@ -620,9 +638,14 @@
                                 <color key="backgroundColor" red="0.94509803920000002" green="0.94509803920000002" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" red="0.94509803920000002" green="0.94509803920000002" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="GjK-0K-tMI">
+                                    <rect key="frame" x="0.0" y="0.0" width="418" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="roomCell" rowHeight="70" id="vMq-45-6eU">
-                                        <rect key="frame" x="0.0" y="49.5" width="418" height="70"/>
+                                        <rect key="frame" x="0.0" y="99.5" width="418" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vMq-45-6eU" id="jJY-AJ-Je2">
                                             <rect key="frame" x="0.0" y="0.0" width="418" height="70"/>
@@ -676,6 +699,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="efd-Cj-ug9"/>
                     <connections>
+                        <outlet property="bannerAdHolder" destination="GjK-0K-tMI" id="k4S-eE-mtK"/>
                         <outlet property="eqHolder" destination="6Yv-lD-aLa" id="W7H-xO-PIu"/>
                         <outlet property="roomesButton" destination="h2U-lj-V4S" id="uMt-b3-G0f"/>
                         <outlet property="tableView" destination="Ia3-VH-Nf7" id="xfO-p6-1eB"/>
@@ -871,9 +895,14 @@
                                 <rect key="frame" x="0.0" y="64" width="414" height="672"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" red="0.94509803920000002" green="0.94509803920000002" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="Yys-FO-8HT">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="50"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="searchCell" rowHeight="70" id="Tsx-LV-E2w">
-                                        <rect key="frame" x="0.0" y="49.5" width="414" height="70"/>
+                                        <rect key="frame" x="0.0" y="99.5" width="414" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Tsx-LV-E2w" id="1yo-qp-ZJc">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="69.5"/>
@@ -915,6 +944,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="IvZ-ab-X9y"/>
                     <connections>
+                        <outlet property="bannerAdHolder" destination="Yys-FO-8HT" id="2tf-xA-85e"/>
                         <outlet property="eqHolder" destination="1mk-cu-cUO" id="Ae2-o5-F6W"/>
                         <outlet property="tableView" destination="yIO-FQ-RFD" id="x40-7A-8hR"/>
                         <segue destination="Us2-xO-cQJ" kind="push" identifier="exploreSeg" id="7l6-gT-Bjq"/>
@@ -1005,8 +1035,8 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="efa-xJ-RxG"/>
-        <segue reference="gfB-64-xcI"/>
         <segue reference="Ndx-2i-aPz"/>
-        <segue reference="DCZ-UF-Ul3"/>
+        <segue reference="0A0-ai-ceb"/>
+        <segue reference="W1J-xp-4I0"/>
     </inferredMetricsTieBreakers>
 </document>

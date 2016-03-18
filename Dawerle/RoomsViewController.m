@@ -13,6 +13,7 @@
 #import "FeEqualize.h"
 #import "ViewController.h"
 #import <OpinionzAlertView/OpinionzAlertView.h>
+@import GoogleMobileAds;
 
 @interface RoomsViewController ()<UITableViewDelegate,UITableViewDataSource,PopupDelegate,UIAlertViewDelegate>
 @property (strong, nonatomic) FeEqualize *equalizer;
@@ -20,6 +21,8 @@
 
 @implementation RoomsViewController
 {
+    __weak IBOutlet UIView *bannerAdHolder;
+    GADBannerView* bannerView;
     __weak IBOutlet UITableView *tableView;
     NSMutableArray* dataSource;
     NSString* maxPrice;
@@ -71,6 +74,15 @@
     [tableView setDelegate:self];
     [tableView setDataSource:self];
     
+    
+    bannerView = [[GADBannerView alloc]initWithAdSize:kGADAdSizeBanner];
+    bannerView.adUnitID = @"ca-app-pub-3916999996422088/5493912657";
+    bannerView.rootViewController = self;
+    GADRequest* request = [[GADRequest alloc]init];
+    request.testDevices = @[ @"c89d60e378a6e6f767031c551ca757a7" ];
+    [bannerView loadRequest:request];
+    [bannerAdHolder addSubview:bannerView];
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -101,6 +113,11 @@
         }
         [tableView insertRowsAtIndexPaths:indices withRowAnimation:UITableViewRowAnimationTop];
     }
+    
+    CGRect frame1 = bannerView.frame;
+    CGRect frame2 = bannerAdHolder.frame;
+    frame1.origin.x = (frame2.size.width/2)-160;
+    [bannerView setFrame:frame1];
 }
 
 - (void)didReceiveMemoryWarning {

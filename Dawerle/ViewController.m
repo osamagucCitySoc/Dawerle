@@ -11,6 +11,7 @@
 #import "AreaViewController.h"
 #import "SearchesViewController.h"
 #import <OpinionzAlertView/OpinionzAlertView.h>
+@import GoogleMobileAds;
 
 @interface ViewController ()<UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate>
 
@@ -18,6 +19,8 @@
 
 @implementation ViewController
 {
+    __weak IBOutlet UIView *bannerAdHolder;
+    GADBannerView* bannerView;
     __weak IBOutlet UITableView *tableVieww;
     NSMutableArray* dataSource;
 }
@@ -71,6 +74,15 @@
                                        selector:@selector(showHelp:)
                                        userInfo: nil repeats:NO];
     }
+    
+    bannerView = [[GADBannerView alloc]initWithAdSize:kGADAdSizeBanner];
+    bannerView.adUnitID = @"ca-app-pub-3916999996422088/5493912657";
+    bannerView.rootViewController = self;
+    GADRequest* request = [[GADRequest alloc]init];
+    request.testDevices = @[ @"c89d60e378a6e6f767031c551ca757a7" ];
+    [bannerView loadRequest:request];
+    [bannerAdHolder addSubview:bannerView];
+    
 }
 
 -(void)showHelp:(NSTimer *)timer {
@@ -91,6 +103,12 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    
+    CGRect frame1 = bannerView.frame;
+    CGRect frame2 = bannerAdHolder.frame;
+    frame1.origin.x = (frame2.size.width/2)-160;
+    [bannerView setFrame:frame1];
     
     if(dataSource.count == 0)
     {

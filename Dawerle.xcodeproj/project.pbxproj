@@ -774,6 +774,7 @@
 				TargetAttributes = {
 					E8D9E3591C56405400D7F5E1 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = F3KFXCXQ7F;
 					};
 				};
 			};
@@ -1083,8 +1084,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Musaed Alazmi (V4668H5U74)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Musaed Alazmi (V4668H5U74)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: HESHAM ALMENAYYE (PW2L4N8855)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: HESHAM ALMENAYYE (PW2L4N8855)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1106,7 +1107,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "315de6c7-2c90-49c1-bdac-de86c96fb27f";
+				PROVISIONING_PROFILE = "cfe84e8f-a5a5-45fd-9414-7f1bb8649fd0";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1128,8 +1129,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Musaed Alazmi (V4668H5U74)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Musaed Alazmi (V4668H5U74)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: HESHAM ALMENAYYE (PW2L4N8855)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: HESHAM ALMENAYYE (PW2L4N8855)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1145,7 +1146,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "315de6c7-2c90-49c1-bdac-de86c96fb27f";
+				PROVISIONING_PROFILE = "cfe84e8f-a5a5-45fd-9414-7f1bb8649fd0";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1156,7 +1157,7 @@
 			baseConfigurationReference = DA92531E76F7F131546836D8 /* Pods-Dawerle.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Musaed Alazmi (V4668H5U74)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: HESHAM ALMENAYYE (PW2L4N8855)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Dawerle",
@@ -1169,9 +1170,9 @@
 					"$(PROJECT_DIR)/Dawerle",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = arabdevs.Dawerle;
+				PRODUCT_BUNDLE_IDENTIFIER = dealcom.dawerle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "315de6c7-2c90-49c1-bdac-de86c96fb27f";
+				PROVISIONING_PROFILE = "cfe84e8f-a5a5-45fd-9414-7f1bb8649fd0";
 			};
 			name = Debug;
 		};
@@ -1180,7 +1181,7 @@
 			baseConfigurationReference = ACA9BE8C26890975B19B7438 /* Pods-Dawerle.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Musaed Alazmi (V4668H5U74)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: HESHAM ALMENAYYE (PW2L4N8855)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Dawerle",
@@ -1193,9 +1194,9 @@
 					"$(PROJECT_DIR)/Dawerle",
 				);
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = arabdevs.Dawerle;
+				PRODUCT_BUNDLE_IDENTIFIER = dealcom.dawerle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "315de6c7-2c90-49c1-bdac-de86c96fb27f";
+				PROVISIONING_PROFILE = "cfe84e8f-a5a5-45fd-9414-7f1bb8649fd0";
 			};
 			name = Release;
 		};
