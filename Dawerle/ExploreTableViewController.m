@@ -331,11 +331,8 @@
 {
     
     NSDictionary* dict = [dataSource objectAtIndex:section];
-    NSDateFormatter* formatter2 = [[NSDateFormatter alloc]init];
-    [formatter2 setDateFormat:@"dd/MM"];
-    return [NSString stringWithFormat:@"في %@",[formatter2 stringFromDate:[dict objectForKey:@"addedOn"]]];
-
-    return @"";
+    NSLog(@"%@",[dict objectForKey:@"addedOn"]);
+    return [NSString stringWithFormat:@"في %@",[dict objectForKey:@"addedOn"]];
 }
 
 

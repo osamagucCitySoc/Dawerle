@@ -140,7 +140,7 @@
         else if (indexPath.row == 1)
         {
             NSString *emailTitle = @"دورلي - الدعم الفني";
-            NSArray *toRecipents = [NSArray arrayWithObject:@"Arabdevs0@gmail.com"];
+            NSArray *toRecipents = [NSArray arrayWithObject:@"dealcomq8@gmail.com"];
             [self.globalMailComposer setSubject:emailTitle];
             [self.globalMailComposer setMessageBody:@"" isHTML:NO];
             [self.globalMailComposer setToRecipients:toRecipents];

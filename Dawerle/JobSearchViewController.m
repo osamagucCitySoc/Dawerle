@@ -42,8 +42,15 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
+    
+    
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(resignOnTap:)];
+    [singleTap setNumberOfTapsRequired:1];
+    [singleTap setNumberOfTouchesRequired:1];
+    [self.view addGestureRecognizer:singleTap];
+    [tableView addGestureRecognizer:singleTap];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidShow:) name:UIKeyboardDidShowNotification object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardDidHide:) name:UIKeyboardDidHideNotification object:nil];
     
     
     [self.navigationController.navigationBar setTitleTextAttributes:
@@ -83,6 +90,11 @@
     roomesButton.alpha = 0.0f;
 
     
+}
+
+
+- (void)resignOnTap:(id)sender {
+    [keyWordTextField resignFirstResponder];
 }
 
 - (void)keyboardDidShow:(NSNotification *)notification
@@ -303,7 +315,7 @@
 #pragma mark textfield methods
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    [self addKeyWordClicked:nil];
+    //[self addKeyWordClicked:nil];
     [textField resignFirstResponder];
     return YES;
 }
