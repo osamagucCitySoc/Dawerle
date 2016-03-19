@@ -1,6 +1,6 @@
 //
 //  ExploreTableViewController.m
-//  Dawerle
+//
 //
 //  Created by Osama Rabie on 2/13/16.
 //  Copyright © 2016 Osama Rabie. All rights reserved.
@@ -199,6 +199,7 @@
     }
     
     ((FUIButton*)[cell viewWithTag:2]).alpha = 0.0f;
+    ((FUIButton*)[cell viewWithTag:3]).alpha = 0.0f;
     
     NSDictionary* dict = [dataSource objectAtIndex:indexPath.section];
     
@@ -234,6 +235,9 @@
             ((FUIButton*)[cell viewWithTag:2]).alpha = 1.0f;
             [(FUIButton*)[cell viewWithTag:2] addTarget:self
                                                  action:@selector(exploreClicked:) forControlEvents:UIControlEventTouchUpInside];
+            ((FUIButton*)[cell viewWithTag:3]).alpha = 1.0f;
+            [(FUIButton*)[cell viewWithTag:3] addTarget:self
+                                                 action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
         }
     }else if([className isEqualToString:@"flats"] || [className isEqualToString:@"villas"] || [className isEqualToString:@"stores"])
     {
@@ -281,6 +285,9 @@
             ((FUIButton*)[cell viewWithTag:2]).alpha = 1.0f;
             [(FUIButton*)[cell viewWithTag:2] addTarget:self
                                                  action:@selector(exploreClicked:) forControlEvents:UIControlEventTouchUpInside];
+            ((FUIButton*)[cell viewWithTag:3]).alpha = 1.0f;
+            [(FUIButton*)[cell viewWithTag:3] addTarget:self
+                                                 action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
             
         }
     }else if([className isEqualToString:@"jobs"])
@@ -300,6 +307,9 @@
             ((FUIButton*)[cell viewWithTag:2]).alpha = 1.0f;
             [(FUIButton*)[cell viewWithTag:2] addTarget:self
                                                  action:@selector(exploreClicked:) forControlEvents:UIControlEventTouchUpInside];
+            ((FUIButton*)[cell viewWithTag:3]).alpha = 1.0f;
+            [(FUIButton*)[cell viewWithTag:3] addTarget:self
+                                                 action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
         }
     }
     return cell;
@@ -344,6 +354,36 @@
     {
         selected = indexPath;
         [self performSegueWithIdentifier:@"searchWebSeg" sender:self];
+    }
+}
+- (void)shareClicked:(id)sender
+{
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:self.tableView];
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:buttonPosition];
+    if (indexPath != nil)
+    {
+        NSString *textToShare = @"";
+        if([className isEqualToString:@"cars"])
+        {
+            textToShare = @"إعلان سيارة للبيع :";
+        }else if([className isEqualToString:@"flats"])
+        {
+            textToShare = @"إعلان شقة للإيجار :";
+        }else if([className isEqualToString:@"villas"])
+        {
+            textToShare = @"إعلان فيلا للإيجار :";
+        }else if([className isEqualToString:@"stores"])
+        {
+            textToShare = @"إعلان محل للإيجار";
+        }else if([className isEqualToString:@"jobs"])
+        {
+            textToShare = @"إعلان وظيفة :";
+        }
+        NSDictionary* dict = [dataSource objectAtIndex:indexPath.section];
+        textToShare = [NSString stringWithFormat:@"%@\n%@\n%@\n. تابع كل إعلانات الكويت في مكان واحد من خلال تطبيق دورلي للأيفون : %@",textToShare,[dict objectForKey:@"title"],[dict objectForKey:@"descc"],@"https://goo.gl/G4qzzk"];
+        UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[textToShare] applicationActivities:nil];
+        activityVC.excludedActivityTypes = @[UIActivityTypeSaveToCameraRoll]; //Exclude whichever aren't relevant
+        [self presentViewController:activityVC animated:YES completion:nil];
     }
 }
 @end

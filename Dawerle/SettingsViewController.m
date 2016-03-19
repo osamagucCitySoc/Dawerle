@@ -148,7 +148,12 @@
         }
         else
         {
-#warning Osama add code here:
+            NSString *templateReviewURLiOS8 = @"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=APP_ID&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&type=Purple+Software";
+            
+            NSString *reviewURL = [templateReviewURLiOS8 stringByReplacingOccurrencesOfString:@"APP_ID" withString:[NSString stringWithFormat:@"%d", 1094778160]];
+
+            [[UIApplication sharedApplication] openURL:[NSURL URLWithString: reviewURL]];
+            
             NSLog(@"Rate the App!");
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
         }

@@ -39,6 +39,7 @@
             <string>DroidArabicKufi</string>
             <string>DroidArabicKufi</string>
             <string>DroidArabicKufi</string>
+            <string>DroidArabicKufi</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -982,12 +983,22 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="eBA-rc-Rlc" customClass="FUIButton">
-                                                    <rect key="frame" x="19" y="10" width="381" height="49"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                    <rect key="frame" x="107" y="10" width="293" height="49"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES"/>
                                                     <fontDescription key="fontDescription" name="DroidArabicKufi" family="Droid Arabic Kufi" pointSize="17"/>
                                                     <state key="normal" title="المزيد على الموقع الرسمي.."/>
                                                     <connections>
                                                         <action selector="submitClicked:" destination="KQL-6N-5dk" eventType="touchUpInside" id="w2U-da-rDr"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Dgd-e2-edS" customClass="FUIButton">
+                                                    <rect key="frame" x="19" y="10" width="80" height="49"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES"/>
+                                                    <color key="backgroundColor" red="1" green="0.17254901959999999" blue="0.14901960780000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" name="DroidArabicKufi" family="Droid Arabic Kufi" pointSize="17"/>
+                                                    <state key="normal" title="مشاركة"/>
+                                                    <connections>
+                                                        <action selector="submitClicked:" destination="KQL-6N-5dk" eventType="touchUpInside" id="pQ6-xX-V3X"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -1037,6 +1048,6 @@
         <segue reference="efa-xJ-RxG"/>
         <segue reference="Ndx-2i-aPz"/>
         <segue reference="0A0-ai-ceb"/>
-        <segue reference="W1J-xp-4I0"/>
+        <segue reference="Xoy-Bt-13L"/>
     </inferredMetricsTieBreakers>
 </document>
