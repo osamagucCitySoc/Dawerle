@@ -463,58 +463,70 @@
     NSIndexPath *indexPath = [tableView indexPathForRowAtPoint:buttonPosition];
     if (indexPath != nil)
     {
-        [UIView transitionWithView:eqHolder
-                          duration:0.2f
-                           options:UIViewAnimationOptionTransitionCrossDissolve
-                        animations:^{
-                            [eqHolder setAlpha:1.0];
-                            [_resView setHidden:YES];
-                            [_equalizer show];
-                        } completion:nil];
-        
-        
-        
-        
-        NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-        [dict setObject:[[dataSource objectAtIndex:indexPath.section] objectForKey:@"idd"] forKey:@"id"];
-        
-        
-        
-        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-        [manager POST:deleteID parameters:dict progress:nil success:^(NSURLSessionTask *task, id responseObject) {
-            NSMutableArray* array = [[NSMutableArray alloc]initWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:localID]];
-            [array removeObjectAtIndex:indexPath.section];
-            [[NSUserDefaults standardUserDefaults]setObject:array forKey:localID];
-            [[NSUserDefaults standardUserDefaults]synchronize];
-            [UIView transitionWithView:eqHolder
-                              duration:0.2f
-                               options:UIViewAnimationOptionTransitionCrossDissolve
-                            animations:^{
-                                [eqHolder setAlpha:0.0];
-                                [_resView setHidden:NO];
-                                [_equalizer dismiss];
-                            } completion:^(BOOL finished){
-                                dispatch_async( dispatch_get_main_queue(), ^{
-                                    [dataSource removeObjectAtIndex:indexPath.section];
-                                    NSIndexSet* indexSet = [NSIndexSet indexSetWithIndex:indexPath.section];
-                                    [tableView deleteSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
-                                });
-                            }];
-        } failure:^(NSURLSessionTask *operation, NSError *error) {
-            OpinionzAlertView *alert = [[OpinionzAlertView alloc]initWithTitle:@"حدث خلل" message:@"يرجى المحاولة مرة أحرى" cancelButtonTitle:@"OK" otherButtonTitles:@[]];
-            alert.iconType = OpinionzAlertIconWarning;
-            alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
-            
-            [UIView transitionWithView:eqHolder
-                              duration:0.2f
-                               options:UIViewAnimationOptionTransitionCrossDissolve
-                            animations:^{
-                                [eqHolder setAlpha:0.0];
-                                [_equalizer dismiss];
-                            } completion:^(BOOL finished){
-                                [alert show];
-                            }];
-        }];
+        OpinionzAlertView *alert = [[OpinionzAlertView alloc] initWithTitle:@"أكيد؟"
+                                                                    message:@"لن تستطيع الحصول على إشعارات عند نزول إعلانات جديدة؟"
+                                                          cancelButtonTitle:@"إلغاء"              otherButtonTitles:@[@"مسح"]          usingBlockWhenTapButton:^(OpinionzAlertView *alertView, NSInteger buttonIndex) {
+                                                              if(buttonIndex == 1)
+                                                              {
+                                                                  
+                                                                  [UIView transitionWithView:eqHolder
+                                                                                    duration:0.2f
+                                                                                     options:UIViewAnimationOptionTransitionCrossDissolve
+                                                                                  animations:^{
+                                                                                      [eqHolder setAlpha:1.0];
+                                                                                      [_resView setHidden:YES];
+                                                                                      [_equalizer show];
+                                                                                  } completion:nil];
+                                                                  
+                                                                  
+                                                                  
+                                                                  
+                                                                  NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+                                                                  [dict setObject:[[dataSource objectAtIndex:indexPath.section] objectForKey:@"idd"] forKey:@"id"];
+                                                                  
+                                                                  
+                                                                  
+                                                                  AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+                                                                  [manager POST:deleteID parameters:dict progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+                                                                      NSMutableArray* array = [[NSMutableArray alloc]initWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:localID]];
+                                                                      [array removeObjectAtIndex:indexPath.section];
+                                                                      [[NSUserDefaults standardUserDefaults]setObject:array forKey:localID];
+                                                                      [[NSUserDefaults standardUserDefaults]synchronize];
+                                                                      [UIView transitionWithView:eqHolder
+                                                                                        duration:0.2f
+                                                                                         options:UIViewAnimationOptionTransitionCrossDissolve
+                                                                                      animations:^{
+                                                                                          [eqHolder setAlpha:0.0];
+                                                                                          [_resView setHidden:NO];
+                                                                                          [_equalizer dismiss];
+                                                                                      } completion:^(BOOL finished){
+                                                                                          dispatch_async( dispatch_get_main_queue(), ^{
+                                                                                              [dataSource removeObjectAtIndex:indexPath.section];
+                                                                                              NSIndexSet* indexSet = [NSIndexSet indexSetWithIndex:indexPath.section];
+                                                                                              [tableView deleteSections:indexSet withRowAnimation:UITableViewRowAnimationFade];
+                                                                                          });
+                                                                                      }];
+                                                                  } failure:^(NSURLSessionTask *operation, NSError *error) {
+                                                                      OpinionzAlertView *alert = [[OpinionzAlertView alloc]initWithTitle:@"حدث خلل" message:@"يرجى المحاولة مرة أحرى" cancelButtonTitle:@"OK" otherButtonTitles:@[]];
+                                                                      alert.iconType = OpinionzAlertIconWarning;
+                                                                      alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
+                                                                      
+                                                                      [UIView transitionWithView:eqHolder
+                                                                                        duration:0.2f
+                                                                                         options:UIViewAnimationOptionTransitionCrossDissolve
+                                                                                      animations:^{
+                                                                                          [eqHolder setAlpha:0.0];
+                                                                                          [_equalizer dismiss];
+                                                                                      } completion:^(BOOL finished){
+                                                                                          [alert show];
+                                                                                      }];
+                                                                  }];
+
+                                                              }
+                                                          }];
+        alert.iconType = OpinionzAlertIconInfo;
+        alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
+        [alert show];
     }
 }
 
