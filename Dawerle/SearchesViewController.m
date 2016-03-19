@@ -468,7 +468,6 @@
                                                           cancelButtonTitle:@"إلغاء"              otherButtonTitles:@[@"مسح"]          usingBlockWhenTapButton:^(OpinionzAlertView *alertView, NSInteger buttonIndex) {
                                                               if(buttonIndex == 1)
                                                               {
-                                                                  
                                                                   [UIView transitionWithView:eqHolder
                                                                                     duration:0.2f
                                                                                      options:UIViewAnimationOptionTransitionCrossDissolve

@@ -193,6 +193,7 @@
 		E87710E11C5A611B0079BF0D /* carsQ8.json in Resources */ = {isa = PBXBuildFile; fileRef = E87710E01C5A611B0079BF0D /* carsQ8.json */; };
 		E8B54D151C56B2B100C2249F /* RoomsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B54D141C56B2B100C2249F /* RoomsViewController.m */; };
 		E8B54D181C56B6F300C2249F /* Popup.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B54D171C56B6F300C2249F /* Popup.m */; };
+		E8D8CB921C9D1CD900DEFB2D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E8D8CB911C9D1CD900DEFB2D /* GoogleService-Info.plist */; };
 		E8D9E35F1C56405400D7F5E1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D9E35E1C56405400D7F5E1 /* main.m */; };
 		E8D9E3621C56405400D7F5E1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D9E3611C56405400D7F5E1 /* AppDelegate.m */; };
 		E8D9E3651C56405400D7F5E1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D9E3641C56405400D7F5E1 /* ViewController.m */; };
@@ -409,6 +410,7 @@
 		E8B54D141C56B2B100C2249F /* RoomsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomsViewController.m; sourceTree = "<group>"; };
 		E8B54D161C56B6F300C2249F /* Popup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Popup.h; sourceTree = "<group>"; };
 		E8B54D171C56B6F300C2249F /* Popup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Popup.m; sourceTree = "<group>"; };
+		E8D8CB911C9D1CD900DEFB2D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E8D9E35A1C56405400D7F5E1 /* Dawerle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dawerle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8D9E35E1C56405400D7F5E1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		E8D9E3601C56405400D7F5E1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -669,6 +671,7 @@
 		E8D9E35C1C56405400D7F5E1 /* Dawerle */ = {
 			isa = PBXGroup;
 			children = (
+				E8D8CB911C9D1CD900DEFB2D /* GoogleService-Info.plist */,
 				1E59C1F41C8EDEDE00B229A2 /* Images */,
 				E81DB8AB1C8AE4C300826EFE /* icons */,
 				E8DFC12D1C80AB3300EE29DD /* n.caf */,
@@ -908,6 +911,7 @@
 				1E1E8FA81C917396007E0700 /* AstonMartin@2x.png in Resources */,
 				1E1E90041C91792F007E0700 /* close-circular-button-of-a-cross.png in Resources */,
 				1E1C58B91C91ABC2009BD677 /* contact-us-icon.png in Resources */,
+				E8D8CB921C9D1CD900DEFB2D /* GoogleService-Info.plist in Resources */,
 				1E1E8FDF1C917396007E0700 /* honda@3x.png in Resources */,
 				1E59C2161C8F0F8500B229A2 /* search-icon.png in Resources */,
 				1E1C58D21C959AF3009BD677 /* help-1@2x.png in Resources */,
@@ -1158,6 +1162,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: HESHAM ALMENAYYE (PW2L4N8855)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Dawerle",
@@ -1182,6 +1187,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer: HESHAM ALMENAYYE (PW2L4N8855)";
+				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Dawerle",

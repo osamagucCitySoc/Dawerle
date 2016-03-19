@@ -11,6 +11,7 @@
 #import "AreaViewController.h"
 #import "SearchesViewController.h"
 #import <OpinionzAlertView/OpinionzAlertView.h>
+#import <Google/Analytics.h>
 @import GoogleMobileAds;
 
 @interface ViewController ()<UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate>
@@ -23,6 +24,7 @@
     GADBannerView* bannerView;
     __weak IBOutlet UITableView *tableVieww;
     NSMutableArray* dataSource;
+    id<GAITracker> tracker;
 }
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -40,6 +42,8 @@
         {
             [dst setType:@"villas"];
         }
+        NSDictionary *dataToSendGoogleAnalytics = [[NSDictionary alloc]initWithObjects:@[[dst type]] forKeys:@[@"message"]];
+        [tracker send:dataToSendGoogleAnalytics];
     }else if([[segue identifier]isEqualToString:@"showRecordedSearch"])
     {
         SearchesViewController* dst = (SearchesViewController*)[segue destinationViewController];
@@ -82,6 +86,8 @@
     request.testDevices = @[ @"c89d60e378a6e6f767031c551ca757a7" ];
     [bannerView loadRequest:request];
     [bannerAdHolder addSubview:bannerView];
+    tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"ViewController"];
     
 }
 
@@ -94,6 +100,7 @@
     [super viewWillAppear:animated];
     
     [tableVieww deselectRowAtIndexPath:tableVieww.indexPathForSelectedRow animated:animated];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 }
 
 - (IBAction)openSettings:(id)sender {
@@ -125,6 +132,8 @@
         }
         
         [tableVieww insertRowsAtIndexPaths:indecies withRowAnimation:UITableViewRowAnimationTop];
+        NSDictionary *dataToSendGoogleAnalytics = [[NSDictionary alloc]initWithObjects:@[@"items loaded"] forKeys:@[@"message"]];
+        [tracker send:dataToSendGoogleAnalytics];
     }
 }
 
