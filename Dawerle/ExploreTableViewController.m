@@ -380,7 +380,7 @@
             textToShare = @"إعلان وظيفة :";
         }
         NSDictionary* dict = [dataSource objectAtIndex:indexPath.section];
-        textToShare = [NSString stringWithFormat:@"%@\n%@\n%@\n. تابع كل إعلانات الكويت في مكان واحد من خلال تطبيق دورلي للأيفون : %@",textToShare,[dict objectForKey:@"title"],[dict objectForKey:@"descc"],@"https://goo.gl/G4qzzk"];
+        textToShare = [NSString stringWithFormat:@"%@\n%@\n%@\n%@\n. تابع كل إعلانات الكويت في مكان واحد من خلال تطبيق دورلي للأيفون : %@",textToShare,[dict objectForKey:@"title"],[dict objectForKey:@"descc"],[dict objectForKey:@"link"],@"https://goo.gl/G4qzzk"];
         UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:@[textToShare] applicationActivities:nil];
         activityVC.excludedActivityTypes = @[UIActivityTypeSaveToCameraRoll]; //Exclude whichever aren't relevant
         [self presentViewController:activityVC animated:YES completion:nil];
