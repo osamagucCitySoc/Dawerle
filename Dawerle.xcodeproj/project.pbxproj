@@ -193,6 +193,8 @@
 		E87710E11C5A611B0079BF0D /* carsQ8.json in Resources */ = {isa = PBXBuildFile; fileRef = E87710E01C5A611B0079BF0D /* carsQ8.json */; };
 		E8B54D151C56B2B100C2249F /* RoomsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B54D141C56B2B100C2249F /* RoomsViewController.m */; };
 		E8B54D181C56B6F300C2249F /* Popup.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B54D171C56B6F300C2249F /* Popup.m */; };
+		E8BEA7A81C9F1B5500D8A62C /* lexus.png in Resources */ = {isa = PBXBuildFile; fileRef = E8BEA7A61C9F1B5500D8A62C /* lexus.png */; };
+		E8BEA7A91C9F1B5500D8A62C /* lincolin.png in Resources */ = {isa = PBXBuildFile; fileRef = E8BEA7A71C9F1B5500D8A62C /* lincolin.png */; };
 		E8D8CB921C9D1CD900DEFB2D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E8D8CB911C9D1CD900DEFB2D /* GoogleService-Info.plist */; };
 		E8D9E35F1C56405400D7F5E1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D9E35E1C56405400D7F5E1 /* main.m */; };
 		E8D9E3621C56405400D7F5E1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E8D9E3611C56405400D7F5E1 /* AppDelegate.m */; };
@@ -410,6 +412,8 @@
 		E8B54D141C56B2B100C2249F /* RoomsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomsViewController.m; sourceTree = "<group>"; };
 		E8B54D161C56B6F300C2249F /* Popup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Popup.h; sourceTree = "<group>"; };
 		E8B54D171C56B6F300C2249F /* Popup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Popup.m; sourceTree = "<group>"; };
+		E8BEA7A61C9F1B5500D8A62C /* lexus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lexus.png; sourceTree = "<group>"; };
+		E8BEA7A71C9F1B5500D8A62C /* lincolin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lincolin.png; sourceTree = "<group>"; };
 		E8D8CB911C9D1CD900DEFB2D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E8D9E35A1C56405400D7F5E1 /* Dawerle.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Dawerle.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E8D9E35E1C56405400D7F5E1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -632,6 +636,8 @@
 				1E1E8F9E1C917396007E0700 /* LandRover.png */,
 				1E1E8F9F1C917396007E0700 /* LandRover@2x.png */,
 				1E1E8FA01C917396007E0700 /* LandRover@3x.png */,
+				E8BEA7A61C9F1B5500D8A62C /* lexus.png */,
+				E8BEA7A71C9F1B5500D8A62C /* lincolin.png */,
 				1E1E8F451C917125007E0700 /* cars.json */,
 			);
 			name = cars;
@@ -865,6 +871,7 @@
 				1E1E8FA11C917396007E0700 /* acura.png in Resources */,
 				1E1E900B1C918370007E0700 /* settings-icon@2x.png in Resources */,
 				1E1E900A1C918370007E0700 /* settings-icon.png in Resources */,
+				E8BEA7A81C9F1B5500D8A62C /* lexus.png in Resources */,
 				1E1E8FDE1C917396007E0700 /* honda@2x.png in Resources */,
 				1E1E8FCB1C917396007E0700 /* dodge.png in Resources */,
 				1E59C2101C8F09BF00B229A2 /* about-logo.png in Resources */,
@@ -897,6 +904,7 @@
 				1E1E8FF41C917396007E0700 /* kia@3x.png in Resources */,
 				1E1C58BB1C91ABC2009BD677 /* contact-us-icon@3x.png in Resources */,
 				1E1E8FEF1C917396007E0700 /* jeep.png in Resources */,
+				E8BEA7A91C9F1B5500D8A62C /* lincolin.png in Resources */,
 				1E1E8FC71C917396007E0700 /* Daewoo@3x.png in Resources */,
 				1E1E8FBC1C917396007E0700 /* Chrysler.png in Resources */,
 				1E1E8FE71C917396007E0700 /* Infiniti@2x.png in Resources */,
