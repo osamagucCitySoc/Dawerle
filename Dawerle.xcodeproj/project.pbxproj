@@ -209,6 +209,27 @@
 		E82DD4041CA00547008CA31D /* lincolin.png in Resources */ = {isa = PBXBuildFile; fileRef = E82DD4011CA00547008CA31D /* lincolin.png */; };
 		E82DD4051CA00547008CA31D /* lincolin@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E82DD4021CA00547008CA31D /* lincolin@2x.png */; };
 		E82DD4061CA00547008CA31D /* lincolin@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E82DD4031CA00547008CA31D /* lincolin@3x.png */; };
+		E833778E1CA13AEA003A5391 /* renault@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E83377791CA13AEA003A5391 /* renault@3x.png */; };
+		E833778F1CA13AEA003A5391 /* Rolls-Royce-Logo@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E833777A1CA13AEA003A5391 /* Rolls-Royce-Logo@2x.png */; };
+		E83377901CA13AEA003A5391 /* Rolls-Royce-Logo@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E833777B1CA13AEA003A5391 /* Rolls-Royce-Logo@3x.png */; };
+		E83377911CA13AEA003A5391 /* SangYong@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E833777C1CA13AEA003A5391 /* SangYong@3x.png */; };
+		E83377921CA13AEA003A5391 /* seat@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E833777D1CA13AEA003A5391 /* seat@3x.png */; };
+		E83377931CA13AEA003A5391 /* skoda.png in Resources */ = {isa = PBXBuildFile; fileRef = E833777E1CA13AEA003A5391 /* skoda.png */; };
+		E83377941CA13AEA003A5391 /* renault@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E833777F1CA13AEA003A5391 /* renault@2x.png */; };
+		E83377951CA13AEA003A5391 /* Rolls-Royce-Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = E83377801CA13AEA003A5391 /* Rolls-Royce-Logo.png */; };
+		E83377961CA13AEA003A5391 /* skoda@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E83377811CA13AEA003A5391 /* skoda@2x.png */; };
+		E83377971CA13AEA003A5391 /* renault.png in Resources */ = {isa = PBXBuildFile; fileRef = E83377821CA13AEA003A5391 /* renault.png */; };
+		E83377981CA13AEA003A5391 /* skoda@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E83377831CA13AEA003A5391 /* skoda@3x.png */; };
+		E83377991CA13AEA003A5391 /* smart.png in Resources */ = {isa = PBXBuildFile; fileRef = E83377841CA13AEA003A5391 /* smart.png */; };
+		E833779A1CA13AEA003A5391 /* SangYong@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E83377851CA13AEA003A5391 /* SangYong@2x.png */; };
+		E833779B1CA13AEA003A5391 /* seat.png in Resources */ = {isa = PBXBuildFile; fileRef = E83377861CA13AEA003A5391 /* seat.png */; };
+		E833779C1CA13AEA003A5391 /* SangYong.png in Resources */ = {isa = PBXBuildFile; fileRef = E83377871CA13AEA003A5391 /* SangYong.png */; };
+		E833779D1CA13AEA003A5391 /* smart@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E83377881CA13AEA003A5391 /* smart@3x.png */; };
+		E833779E1CA13AEA003A5391 /* Subaru.png in Resources */ = {isa = PBXBuildFile; fileRef = E83377891CA13AEA003A5391 /* Subaru.png */; };
+		E833779F1CA13AEA003A5391 /* seat@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E833778A1CA13AEA003A5391 /* seat@2x.png */; };
+		E83377A01CA13AEA003A5391 /* Subaru@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E833778B1CA13AEA003A5391 /* Subaru@2x.png */; };
+		E83377A11CA13AEA003A5391 /* smart@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = E833778C1CA13AEA003A5391 /* smart@2x.png */; };
+		E83377A21CA13AEA003A5391 /* Subaru@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E833778D1CA13AEA003A5391 /* Subaru@3x.png */; };
 		E8529B801C6EB56000D71623 /* ExploreTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8529B7F1C6EB56000D71623 /* ExploreTableViewController.m */; };
 		E8529B831C6F2F7B00D71623 /* DownloaderClass.m in Sources */ = {isa = PBXBuildFile; fileRef = E8529B821C6F2F7B00D71623 /* DownloaderClass.m */; };
 		E859266E1C5A650B00560C02 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E859266C1C5A650B00560C02 /* Bolts.framework */; };
@@ -457,6 +478,27 @@
 		E82DD4011CA00547008CA31D /* lincolin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lincolin.png; sourceTree = "<group>"; };
 		E82DD4021CA00547008CA31D /* lincolin@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lincolin@2x.png"; sourceTree = "<group>"; };
 		E82DD4031CA00547008CA31D /* lincolin@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lincolin@3x.png"; sourceTree = "<group>"; };
+		E83377791CA13AEA003A5391 /* renault@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "renault@3x.png"; sourceTree = "<group>"; };
+		E833777A1CA13AEA003A5391 /* Rolls-Royce-Logo@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Rolls-Royce-Logo@2x.png"; sourceTree = "<group>"; };
+		E833777B1CA13AEA003A5391 /* Rolls-Royce-Logo@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Rolls-Royce-Logo@3x.png"; sourceTree = "<group>"; };
+		E833777C1CA13AEA003A5391 /* SangYong@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SangYong@3x.png"; sourceTree = "<group>"; };
+		E833777D1CA13AEA003A5391 /* seat@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seat@3x.png"; sourceTree = "<group>"; };
+		E833777E1CA13AEA003A5391 /* skoda.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = skoda.png; sourceTree = "<group>"; };
+		E833777F1CA13AEA003A5391 /* renault@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "renault@2x.png"; sourceTree = "<group>"; };
+		E83377801CA13AEA003A5391 /* Rolls-Royce-Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Rolls-Royce-Logo.png"; sourceTree = "<group>"; };
+		E83377811CA13AEA003A5391 /* skoda@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "skoda@2x.png"; sourceTree = "<group>"; };
+		E83377821CA13AEA003A5391 /* renault.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = renault.png; sourceTree = "<group>"; };
+		E83377831CA13AEA003A5391 /* skoda@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "skoda@3x.png"; sourceTree = "<group>"; };
+		E83377841CA13AEA003A5391 /* smart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = smart.png; sourceTree = "<group>"; };
+		E83377851CA13AEA003A5391 /* SangYong@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "SangYong@2x.png"; sourceTree = "<group>"; };
+		E83377861CA13AEA003A5391 /* seat.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = seat.png; sourceTree = "<group>"; };
+		E83377871CA13AEA003A5391 /* SangYong.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SangYong.png; sourceTree = "<group>"; };
+		E83377881CA13AEA003A5391 /* smart@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "smart@3x.png"; sourceTree = "<group>"; };
+		E83377891CA13AEA003A5391 /* Subaru.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Subaru.png; sourceTree = "<group>"; };
+		E833778A1CA13AEA003A5391 /* seat@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "seat@2x.png"; sourceTree = "<group>"; };
+		E833778B1CA13AEA003A5391 /* Subaru@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Subaru@2x.png"; sourceTree = "<group>"; };
+		E833778C1CA13AEA003A5391 /* smart@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "smart@2x.png"; sourceTree = "<group>"; };
+		E833778D1CA13AEA003A5391 /* Subaru@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Subaru@3x.png"; sourceTree = "<group>"; };
 		E8529B7E1C6EB56000D71623 /* ExploreTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExploreTableViewController.h; sourceTree = "<group>"; };
 		E8529B7F1C6EB56000D71623 /* ExploreTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExploreTableViewController.m; sourceTree = "<group>"; };
 		E8529B811C6F2F7B00D71623 /* DownloaderClass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DownloaderClass.h; sourceTree = "<group>"; };
@@ -749,6 +791,27 @@
 				E82DD4011CA00547008CA31D /* lincolin.png */,
 				E82DD4021CA00547008CA31D /* lincolin@2x.png */,
 				E82DD4031CA00547008CA31D /* lincolin@3x.png */,
+				E83377791CA13AEA003A5391 /* renault@3x.png */,
+				E833777A1CA13AEA003A5391 /* Rolls-Royce-Logo@2x.png */,
+				E833777B1CA13AEA003A5391 /* Rolls-Royce-Logo@3x.png */,
+				E833777C1CA13AEA003A5391 /* SangYong@3x.png */,
+				E833777D1CA13AEA003A5391 /* seat@3x.png */,
+				E833777E1CA13AEA003A5391 /* skoda.png */,
+				E833777F1CA13AEA003A5391 /* renault@2x.png */,
+				E83377801CA13AEA003A5391 /* Rolls-Royce-Logo.png */,
+				E83377811CA13AEA003A5391 /* skoda@2x.png */,
+				E83377821CA13AEA003A5391 /* renault.png */,
+				E83377831CA13AEA003A5391 /* skoda@3x.png */,
+				E83377841CA13AEA003A5391 /* smart.png */,
+				E83377851CA13AEA003A5391 /* SangYong@2x.png */,
+				E83377861CA13AEA003A5391 /* seat.png */,
+				E83377871CA13AEA003A5391 /* SangYong.png */,
+				E83377881CA13AEA003A5391 /* smart@3x.png */,
+				E83377891CA13AEA003A5391 /* Subaru.png */,
+				E833778A1CA13AEA003A5391 /* seat@2x.png */,
+				E833778B1CA13AEA003A5391 /* Subaru@2x.png */,
+				E833778C1CA13AEA003A5391 /* smart@2x.png */,
+				E833778D1CA13AEA003A5391 /* Subaru@3x.png */,
 				1E1E8F451C917125007E0700 /* cars.json */,
 			);
 			name = cars;
@@ -924,10 +987,12 @@
 				E81DB8C31C8B70FB00826EFE /* cars.png in Resources */,
 				1E1C58CD1C91B6EC009BD677 /* about-icon@3x.png in Resources */,
 				1E1E8FE01C917396007E0700 /* hummer.png in Resources */,
+				E83377981CA13AEA003A5391 /* skoda@3x.png in Resources */,
 				1E1E8FCC1C917396007E0700 /* dodge@2x.png in Resources */,
 				1E59C2231C90170400B229A2 /* app-icon@2x.png in Resources */,
 				1E1E8FA21C917396007E0700 /* acura@2x.png in Resources */,
 				E81DB8CB1C8B712200826EFE /* stores.png in Resources */,
+				E83377A21CA13AEA003A5391 /* Subaru@3x.png in Resources */,
 				1E1E8FF21C917396007E0700 /* kia.png in Resources */,
 				1E1E8FB21C917396007E0700 /* bmw@3x.png in Resources */,
 				E82DD3F71CA0045A008CA31D /* mazda.png in Resources */,
@@ -939,6 +1004,7 @@
 				1E1E8FEB1C917396007E0700 /* Isuzu@3x.png in Resources */,
 				E82DD3CB1CA00389008CA31D /* mini@3x.png in Resources */,
 				1E59C1FE1C8EE72D00B229A2 /* app-logo.png in Resources */,
+				E83377991CA13AEA003A5391 /* smart.png in Resources */,
 				1E1E8FA71C917396007E0700 /* AstonMartin.png in Resources */,
 				1E59C1FF1C8EE72D00B229A2 /* app-logo@2x.png in Resources */,
 				1E1E8FD71C917396007E0700 /* geely.png in Resources */,
@@ -946,11 +1012,13 @@
 				1E1E8FDC1C917396007E0700 /* gmc@3x.png in Resources */,
 				E82DD3E21CA0040E008CA31D /* mercury@2x.png in Resources */,
 				1E1E8FC41C917396007E0700 /* cmc@3x.png in Resources */,
+				E83377901CA13AEA003A5391 /* Rolls-Royce-Logo@3x.png in Resources */,
 				1E1C58D11C959AF3009BD677 /* help-1.png in Resources */,
 				1E59C2221C90170400B229A2 /* app-icon.png in Resources */,
 				E82DD3DD1CA0040E008CA31D /* lexus@2x.png in Resources */,
 				1E1E8FBD1C917396007E0700 /* Chrysler@2x.png in Resources */,
 				1E1E8FDB1C917396007E0700 /* gmc@2x.png in Resources */,
+				E833779D1CA13AEA003A5391 /* smart@3x.png in Resources */,
 				1E1E8FDD1C917396007E0700 /* honda.png in Resources */,
 				1E1E8FD31C917396007E0700 /* fiat@3x.png in Resources */,
 				1E1E8FC51C917396007E0700 /* Daewoo.png in Resources */,
@@ -968,6 +1036,7 @@
 				1E59C21D1C90138B00B229A2 /* deal-logo@2x.png in Resources */,
 				E81DB8B21C8AE5FC00826EFE /* DroidKufi-Bold.ttf in Resources */,
 				1E1C58E21C95AE3E009BD677 /* help-3@3x.png in Resources */,
+				E83377941CA13AEA003A5391 /* renault@2x.png in Resources */,
 				1E1C58C61C91AD04009BD677 /* rate-icon@2x.png in Resources */,
 				1E1E8FE11C917396007E0700 /* hummer@2x.png in Resources */,
 				E81DB8B11C8AE5FC00826EFE /* JF.ttf in Resources */,
@@ -976,10 +1045,12 @@
 				E87710DE1C5A61120079BF0D /* carsSooq.json in Resources */,
 				E81DB8B31C8AE5FC00826EFE /* DroidKufi-Regular.ttf in Resources */,
 				1E1E8FF71C917396007E0700 /* Lamborghini@3x.png in Resources */,
+				E83377971CA13AEA003A5391 /* renault.png in Resources */,
 				E81DB8CF1C8B71D700826EFE /* left-arrow-angle.png in Resources */,
 				1E1C58BA1C91ABC2009BD677 /* contact-us-icon@2x.png in Resources */,
 				1E1E8FCD1C917396007E0700 /* dodge@3x.png in Resources */,
 				1E1C58C71C91AD04009BD677 /* rate-icon@3x.png in Resources */,
+				E833779B1CA13AEA003A5391 /* seat.png in Resources */,
 				1E59C2181C8F0F8500B229A2 /* search-icon@3x.png in Resources */,
 				1E1E8FCF1C917396007E0700 /* Ferrari@2x.png in Resources */,
 				1E1E90061C91792F007E0700 /* close-circular-button-of-a-cross@3x.png in Resources */,
@@ -992,6 +1063,8 @@
 				1E1E8FDE1C917396007E0700 /* honda@2x.png in Resources */,
 				1E1E8FCB1C917396007E0700 /* dodge.png in Resources */,
 				1E59C2101C8F09BF00B229A2 /* about-logo.png in Resources */,
+				E83377A01CA13AEA003A5391 /* Subaru@2x.png in Resources */,
+				E833779A1CA13AEA003A5391 /* SangYong@2x.png in Resources */,
 				1E1E8FE21C917396007E0700 /* hummer@3x.png in Resources */,
 				E82DD3FE1CA0045A008CA31D /* opel.png in Resources */,
 				1E1C58CB1C91B6EC009BD677 /* about-icon.png in Resources */,
@@ -1000,6 +1073,7 @@
 				1E59C2171C8F0F8500B229A2 /* search-icon@2x.png in Resources */,
 				1E1C58D31C959AF3009BD677 /* help-1@3x.png in Resources */,
 				E82DD3CA1CA00389008CA31D /* mercury@3x.png in Resources */,
+				E83377921CA13AEA003A5391 /* seat@3x.png in Resources */,
 				E82DD3C81CA00389008CA31D /* McLaren@3x.png in Resources */,
 				E87710DF1C5A61120079BF0D /* carsWaset.json in Resources */,
 				1E1E8FCA1C917396007E0700 /* Daihatsu@3x.png in Resources */,
@@ -1019,7 +1093,9 @@
 				E82DD3CC1CA00389008CA31D /* Mitsubishi@3x.png in Resources */,
 				1E1C58D81C959F0B009BD677 /* help-2@2x.png in Resources */,
 				1E1E8FCE1C917396007E0700 /* Ferrari.png in Resources */,
+				E83377911CA13AEA003A5391 /* SangYong@3x.png in Resources */,
 				E82DD3FA1CA0045A008CA31D /* mercury.png in Resources */,
+				E833778F1CA13AEA003A5391 /* Rolls-Royce-Logo@2x.png in Resources */,
 				1E59C2111C8F09BF00B229A2 /* about-logo@2x.png in Resources */,
 				1E1E8FA31C917396007E0700 /* acura@3x.png in Resources */,
 				E87710DD1C5A61120079BF0D /* carsOlx.json in Resources */,
@@ -1028,8 +1104,10 @@
 				E87710E11C5A611B0079BF0D /* carsQ8.json in Resources */,
 				1E1E8FF41C917396007E0700 /* kia@3x.png in Resources */,
 				E82DD3FB1CA0045A008CA31D /* mini.png in Resources */,
+				E833779E1CA13AEA003A5391 /* Subaru.png in Resources */,
 				1E1C58BB1C91ABC2009BD677 /* contact-us-icon@3x.png in Resources */,
 				1E1E8FEF1C917396007E0700 /* jeep.png in Resources */,
+				E833779F1CA13AEA003A5391 /* seat@2x.png in Resources */,
 				1E1E8FC71C917396007E0700 /* Daewoo@3x.png in Resources */,
 				1E1E8FBC1C917396007E0700 /* Chrysler.png in Resources */,
 				1E1E8FE71C917396007E0700 /* Infiniti@2x.png in Resources */,
@@ -1044,6 +1122,7 @@
 				1E1C58E01C95AE3E009BD677 /* help-3.png in Resources */,
 				E82DD3E81CA0040E008CA31D /* Porsche@2x.png in Resources */,
 				E82DD3CD1CA00389008CA31D /* nissan@3x.png in Resources */,
+				E83377951CA13AEA003A5391 /* Rolls-Royce-Logo.png in Resources */,
 				E82DD3F61CA0045A008CA31D /* Maserati.png in Resources */,
 				E82DD3E01CA0040E008CA31D /* mercedes@2x.png in Resources */,
 				1E1E8FA81C917396007E0700 /* AstonMartin@2x.png in Resources */,
@@ -1059,6 +1138,7 @@
 				1E1C58E11C95AE3E009BD677 /* help-3@2x.png in Resources */,
 				1E1E8FA51C917396007E0700 /* alfaromeo@2x.png in Resources */,
 				1E59C20A1C8EF3A200B229A2 /* mark-on.png in Resources */,
+				E833779C1CA13AEA003A5391 /* SangYong.png in Resources */,
 				1E1E8FC31C917396007E0700 /* cmc@2x.png in Resources */,
 				1E1E8FD41C917396007E0700 /* ford.png in Resources */,
 				E81DB8D31C8B78AC00826EFE /* dark-eye.png in Resources */,
@@ -1067,6 +1147,7 @@
 				1E1E8FE41C917396007E0700 /* Hyundai@2x.png in Resources */,
 				1E1E8FAD1C917396007E0700 /* bentley.png in Resources */,
 				E82DD3F51CA0045A008CA31D /* lexus.png in Resources */,
+				E833778E1CA13AEA003A5391 /* renault@3x.png in Resources */,
 				E82DD4051CA00547008CA31D /* lincolin@2x.png in Resources */,
 				1E1E8FB81C917396007E0700 /* chery@3x.png in Resources */,
 				1E1E8FD61C917396007E0700 /* ford@3x.png in Resources */,
@@ -1076,9 +1157,11 @@
 				1E1E8FA91C917396007E0700 /* AstonMartin@3x.png in Resources */,
 				1E1E8FB11C917396007E0700 /* bmw@2x.png in Resources */,
 				E82DD3F81CA0045A008CA31D /* McLaren.png in Resources */,
+				E83377931CA13AEA003A5391 /* skoda.png in Resources */,
 				1E1E8FF81C917396007E0700 /* LandRover.png in Resources */,
 				1E1C58C01C91AC90009BD677 /* help-icon@2x.png in Resources */,
 				1E1E8FD81C917396007E0700 /* geely@2x.png in Resources */,
+				E83377A11CA13AEA003A5391 /* smart@2x.png in Resources */,
 				1E1E8FB61C917396007E0700 /* chery.png in Resources */,
 				1E1E8FB71C917396007E0700 /* chery@2x.png in Resources */,
 				1E1E8FD51C917396007E0700 /* ford@2x.png in Resources */,
@@ -1100,6 +1183,7 @@
 				1E1E8FAE1C917396007E0700 /* bentley@2x.png in Resources */,
 				E82DD3E61CA0040E008CA31D /* opel@2x.png in Resources */,
 				E82DD3E51CA0040E008CA31D /* mini@2x.png in Resources */,
+				E83377961CA13AEA003A5391 /* skoda@2x.png in Resources */,
 				E8D9E3681C56405400D7F5E1 /* Main.storyboard in Resources */,
 				1E1C58C51C91AD04009BD677 /* rate-icon.png in Resources */,
 				1E59C2091C8EF3A200B229A2 /* mark-off@3x.png in Resources */,
