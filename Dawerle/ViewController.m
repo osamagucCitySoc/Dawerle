@@ -12,6 +12,9 @@
 #import "SearchesViewController.h"
 #import <OpinionzAlertView/OpinionzAlertView.h>
 #import <Google/Analytics.h>
+#import "CarsBrandsViewController.h"
+#import "JobSearchViewController.h"
+
 @import GoogleMobileAds;
 
 @interface ViewController ()<UIActionSheetDelegate,UITableViewDataSource,UITableViewDelegate>
@@ -25,6 +28,7 @@
     __weak IBOutlet UITableView *tableVieww;
     NSMutableArray* dataSource;
     id<GAITracker> tracker;
+    NSString* countryType;
 }
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -42,9 +46,19 @@
         {
             [dst setType:@"villas"];
         }
+        [dst setCountryType:countryType];
         NSDictionary *dataToSendGoogleAnalytics = [[NSDictionary alloc]initWithObjects:@[[dst type]] forKeys:@[@"message"]];
         [tracker send:dataToSendGoogleAnalytics];
-    }else if([[segue identifier]isEqualToString:@"showRecordedSearch"])
+    }else if([[segue identifier]isEqualToString:@"carsSeg"])
+    {
+        CarsBrandsViewController* dst = (CarsBrandsViewController*)[segue destinationViewController];
+        [dst setCountryType:countryType];
+    }else if([[segue identifier]isEqualToString:@"jobsSeg"])
+    {
+        JobSearchViewController* dst = (JobSearchViewController*)[segue destinationViewController];
+        [dst setCountryType:countryType];
+    }
+    else if([[segue identifier]isEqualToString:@"showRecordedSearch"])
     {
         SearchesViewController* dst = (SearchesViewController*)[segue destinationViewController];
         [dst setDataID:[[dataSource objectAtIndex:savedInd] objectForKey:@"dataID"]];
@@ -215,21 +229,40 @@
     }
     else
     {
-        [self performSegueWithIdentifier:[[dataSource objectAtIndex:indexPath.row] objectForKey:@"seg"] sender:self];
+        UIActionSheet* sheet = [[UIActionSheet alloc]initWithTitle:@"خيارات الدولة" delegate:self cancelButtonTitle:@"إلغاء" destructiveButtonTitle:nil otherButtonTitles:@"الكويت",@"السعودية",nil];
+        [sheet setTag:111];
+        [sheet showInView:self.view];
     }
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex  {
     [tableVieww deselectRowAtIndexPath:tableVieww.indexPathForSelectedRow animated:YES];
     
+    
+    if(actionSheet.tag == 111 && actionSheet.cancelButtonIndex != buttonIndex)
+    {
+        countryType = @"";
+        if(buttonIndex == 0)
+        {
+            countryType = @"KW";
+        }else
+        {
+            countryType = @"SA";
+        }
+        [self performSegueWithIdentifier:[[dataSource objectAtIndex:savedInd] objectForKey:@"seg"] sender:self];
+        return;
+    }
+    
     switch (buttonIndex) {
         case 0:
         {
             if (actionSheet.tag == 11)
             {
-                if([[UIApplication sharedApplication] isRegisteredForRemoteNotifications])
+                if(YES || [[UIApplication sharedApplication] isRegisteredForRemoteNotifications])
                 {
-                    [self performSegueWithIdentifier:[[dataSource objectAtIndex:savedInd] objectForKey:@"seg"] sender:self];
+                    UIActionSheet* sheet = [[UIActionSheet alloc]initWithTitle:@"خيارات الدولة" delegate:self cancelButtonTitle:@"إلغاء" destructiveButtonTitle:nil otherButtonTitles:@"الكويت",@"السعودية",nil];
+                    [sheet setTag:111];
+                    [sheet showInView:self.view];
                 }else
                 {
                     OpinionzAlertView *alert = [[OpinionzAlertView alloc] initWithTitle:@"خطأ"

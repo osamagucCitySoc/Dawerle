@@ -10,4 +10,6 @@
 
 @interface CarsBrandsViewController : UIViewController
 
+@property(nonatomic, strong)NSString* countryType;
+
 @end

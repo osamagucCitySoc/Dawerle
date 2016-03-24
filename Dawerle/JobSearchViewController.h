@@ -10,4 +10,6 @@
 
 @interface JobSearchViewController : UIViewController
 
+@property(nonatomic, strong)NSString* countryType;
+
 @end

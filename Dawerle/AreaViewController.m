@@ -17,7 +17,7 @@
 #import <OpinionzAlertView/OpinionzAlertView.h>
 @import GoogleMobileAds;
 
-@interface AreaViewController ()<UITableViewDelegate,UITableViewDataSource,PopupDelegate,UIAlertViewDelegate,UIActionSheetDelegate>
+@interface AreaViewController ()<UITableViewDelegate,UITableViewDataSource,PopupDelegate,UIAlertViewDelegate>
 @property (strong, nonatomic) FeEqualize *equalizer;
 @end
 
@@ -40,11 +40,22 @@
     {
         RoomsViewController* dst = (RoomsViewController*)[segue destinationViewController];
         NSMutableArray* keywords = [[NSMutableArray alloc]init];
-        for(int i = 0 ; i < [tableView indexPathsForSelectedRows].count ; i++)
+        if([_countryType isEqualToString:@"KW"])
         {
-            [keywords addObject:[dataSource objectAtIndex:[[tableView.indexPathsForSelectedRows objectAtIndex:i] row]]];
+            for(int i = 0 ; i < [tableView indexPathsForSelectedRows].count ; i++)
+            {
+                [keywords addObject:[dataSource objectAtIndex:[[tableView.indexPathsForSelectedRows objectAtIndex:i] row]]];
+            }
+        }else
+        {
+            for(int i = 0 ; i < [tableView indexPathsForSelectedRows].count ; i++)
+            {
+                NSIndexPath* index = [tableView.indexPathsForSelectedRows objectAtIndex:i];
+                [keywords addObject:[[[dataSource objectAtIndex:index.section] objectForKey:@"cities"] objectAtIndex:index.row]];
+            }
         }
         [dst setType:type];
+        [dst setCountryType:_countryType];
         [dst setSelectedAreas:keywords];
     }else if([[segue identifier]isEqualToString:@"showRecordedSearch"])
     {
@@ -130,17 +141,32 @@
     [super viewDidAppear:animated];
     if(dataSource.count == 0)
     {
-        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"combinedAreas" ofType:@"json"];
-        NSData *content = [[NSData alloc] initWithContentsOfFile:filePath];
-        dataSource = [[NSMutableArray alloc]initWithArray:[NSJSONSerialization JSONObjectWithData:content options:kNilOptions error:nil]];
-        NSMutableArray* indices = [[NSMutableArray alloc]init];
-        
-        for(int i = 0 ; i < dataSource.count ; i++)
+        if([_countryType isEqualToString:@"KW"])
         {
-            [indices addObject:[NSIndexPath indexPathForRow:i inSection:0]];
+            NSString *filePath = [[NSBundle mainBundle] pathForResource:@"combinedAreas" ofType:@"json"];
+            NSData *content = [[NSData alloc] initWithContentsOfFile:filePath];
+            dataSource = [[NSMutableArray alloc]initWithArray:[NSJSONSerialization JSONObjectWithData:content options:kNilOptions error:nil]];
+            NSMutableArray* indices = [[NSMutableArray alloc]init];
+            
+            for(int i = 0 ; i < dataSource.count ; i++)
+            {
+                [indices addObject:[NSIndexPath indexPathForRow:i inSection:0]];
+            }
+            
+            [tableView insertRowsAtIndexPaths:indices withRowAnimation:UITableViewRowAnimationTop];
+        }else
+        {
+            NSString *filePath = [[NSBundle mainBundle] pathForResource:@"combinedAreasSA" ofType:@"json"];
+            NSData *content = [[NSData alloc] initWithContentsOfFile:filePath];
+            dataSource = [[NSMutableArray alloc]initWithArray:[NSJSONSerialization JSONObjectWithData:content options:kNilOptions error:nil]];
+            NSMutableIndexSet* set = [[NSMutableIndexSet alloc]init];
+            
+            for(int i = 0 ; i < dataSource.count ; i++)
+            {
+                [set addIndex:i];
+            }
+            [tableView insertSections:set withRowAnimation:UITableViewRowAnimationTop];
         }
-        
-        [tableView insertRowsAtIndexPaths:indices withRowAnimation:UITableViewRowAnimationTop];
     }
 
     _equalizer = [[FeEqualize alloc] initWithView:eqHolder title:@"جاري حفظ بحثك"];
@@ -167,17 +193,30 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    if([_countryType isEqualToString:@"KW"])
+    {
+        return 1;
+    }else
+    {
+        return  dataSource.count;
+    }
 }
 -(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    return @"إختر المناطق :";
+    if([_countryType isEqualToString:@"KW"])
+    {
+        return @"إختر المناطق :";
+    }else
+    {
+        return  [[dataSource objectAtIndex:section] objectForKey:@"title"];
+    }
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return dataSource.count;
 }
+
 
 -(UITableViewCell*)tableView:(UITableView *)tableVieww cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -189,12 +228,26 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
     
-    if (dataSource.count == (indexPath.row+1))
+    /*if([_countryType isEqualToString:@"KW"])
     {
-        [(UILabel*)[cell viewWithTag:4]setHidden:YES];
-    }
+        if (dataSource.count == (indexPath.row+1))
+        {
+            [(UILabel*)[cell viewWithTag:4]setHidden:YES];
+        }
+    }else
+    {
+        
+    }*/
     
-    [(UILabel*)[cell viewWithTag:1]setText:[dataSource objectAtIndex:indexPath.row]];
+    
+    
+    if([_countryType isEqualToString:@"KW"])
+    {
+        [(UILabel*)[cell viewWithTag:1]setText:[dataSource objectAtIndex:indexPath.row]];
+    }else
+    {
+        [(UILabel*)[cell viewWithTag:1]setText:[[[dataSource objectAtIndex:indexPath.section] objectForKey:@"cities"] objectAtIndex:indexPath.row]];
+    }
     [(UIImageView*)[cell viewWithTag:2]setImage:[UIImage imageNamed:@"mark-off.png"]];
     
     if([[tableView indexPathsForSelectedRows]containsObject:indexPath])
@@ -256,54 +309,20 @@
 - (IBAction)submitClicked:(id)sender {
     if([type isEqualToString:@"stores"])
     {
-        UIActionSheet* sheet = [[UIActionSheet alloc]initWithTitle:@"خيارات الدولة" delegate:self cancelButtonTitle:@"إلغاء" destructiveButtonTitle:nil otherButtonTitles:@"الكويت",@"السعودية",nil];
-        [sheet setTag:111];
-        [sheet showInView:self.view];
-    }else
-    {
-        [self performSegueWithIdentifier:@"roomSeg" sender:self];
-    }
-}
-
-- (void)dictionary:(NSMutableDictionary *)dictionary forpopup:(Popup *)popup stringsFromTextFields:(NSArray *)stringArray {
-    
-    NSString *textFromBox1 = [stringArray objectAtIndex:0];
-    maxPrice = textFromBox1;
-}
-
-
-#pragma mark aert view methods
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if(alertView.tag == 1)
-    {
-        NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
-        for (UIViewController *aViewController in allViewControllers) {
-            if ([aViewController isKindOfClass:[ViewController class]]) {
-                [self.navigationController popToViewController:aViewController animated:YES];
-            }
-        }
-    }
-}
-
-
-#pragma mark UIActionSheet delegate
--(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if(actionSheet.tag == 111 && buttonIndex != actionSheet.cancelButtonIndex)
-    {
-        NSString* countryType = @"";
-        if(buttonIndex == 0)
+        NSMutableArray* keywords = [[NSMutableArray alloc]init];
+        if([_countryType isEqualToString:@"KW"])
         {
-            countryType = @"KW";
+            for(int i = 0 ; i < [tableView indexPathsForSelectedRows].count ; i++)
+            {
+                [keywords addObject:[dataSource objectAtIndex:[[tableView.indexPathsForSelectedRows objectAtIndex:i] row]]];
+            }
         }else
         {
-            countryType = @"SA";
-        }
-        NSMutableArray* keywords = [[NSMutableArray alloc]init];
-        for(int i = 0 ; i < [tableView indexPathsForSelectedRows].count ; i++)
-        {
-            [keywords addObject:[dataSource objectAtIndex:[[tableView.indexPathsForSelectedRows objectAtIndex:i] row]]];
+            for(int i = 0 ; i < [tableView indexPathsForSelectedRows].count ; i++)
+            {
+                NSIndexPath* index = [tableView.indexPathsForSelectedRows objectAtIndex:i];
+                [keywords addObject:[[[dataSource objectAtIndex:index.section] objectForKey:@"cities"] objectAtIndex:index.row]];
+            }
         }
         
         Popup *popup = [[Popup alloc] initWithTitle:@"تحديد السعر"
@@ -338,7 +357,7 @@
                                             [dict setObject:[NSNumber numberWithInt:[maxPrice intValue]] forKey:@"price"];
                                             [dict setObject:@"store" forKey:@"type"];
                                             [dict setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"deviceToken"] forKey:@"token"];
-                                            [dict setObject:countryType forKey:@"country"];
+                                            [dict setObject:_countryType forKey:@"country"];
                                             
                                             
                                             AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
@@ -419,6 +438,30 @@
         [popup setTitleColor:[UIColor whiteColor]];
         [popup setSubTitleColor:[UIColor whiteColor]];
         [popup showPopup];
+    }else
+    {
+        [self performSegueWithIdentifier:@"roomSeg" sender:self];
+    }
+}
+
+- (void)dictionary:(NSMutableDictionary *)dictionary forpopup:(Popup *)popup stringsFromTextFields:(NSArray *)stringArray {
+    
+    NSString *textFromBox1 = [stringArray objectAtIndex:0];
+    maxPrice = textFromBox1;
+}
+
+
+#pragma mark aert view methods
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(alertView.tag == 1)
+    {
+        NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
+        for (UIViewController *aViewController in allViewControllers) {
+            if ([aViewController isKindOfClass:[ViewController class]]) {
+                [self.navigationController popToViewController:aViewController animated:YES];
+            }
+        }
     }
 }
 

@@ -263,6 +263,7 @@
 		E87710DE1C5A61120079BF0D /* carsSooq.json in Resources */ = {isa = PBXBuildFile; fileRef = E87710DB1C5A61120079BF0D /* carsSooq.json */; };
 		E87710DF1C5A61120079BF0D /* carsWaset.json in Resources */ = {isa = PBXBuildFile; fileRef = E87710DC1C5A61120079BF0D /* carsWaset.json */; };
 		E87710E11C5A611B0079BF0D /* carsQ8.json in Resources */ = {isa = PBXBuildFile; fileRef = E87710E01C5A611B0079BF0D /* carsQ8.json */; };
+		E87D53651CA40F100092A922 /* combinedAreasSA.json in Resources */ = {isa = PBXBuildFile; fileRef = E87D53641CA40F100092A922 /* combinedAreasSA.json */; };
 		E8B54D151C56B2B100C2249F /* RoomsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B54D141C56B2B100C2249F /* RoomsViewController.m */; };
 		E8B54D181C56B6F300C2249F /* Popup.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B54D171C56B6F300C2249F /* Popup.m */; };
 		E8D8CB921C9D1CD900DEFB2D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E8D8CB911C9D1CD900DEFB2D /* GoogleService-Info.plist */; };
@@ -550,6 +551,7 @@
 		E87710DB1C5A61120079BF0D /* carsSooq.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = carsSooq.json; sourceTree = "<group>"; };
 		E87710DC1C5A61120079BF0D /* carsWaset.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = carsWaset.json; sourceTree = "<group>"; };
 		E87710E01C5A611B0079BF0D /* carsQ8.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = carsQ8.json; sourceTree = "<group>"; };
+		E87D53641CA40F100092A922 /* combinedAreasSA.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = combinedAreasSA.json; sourceTree = "<group>"; };
 		E8B54D131C56B2B100C2249F /* RoomsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoomsViewController.h; sourceTree = "<group>"; };
 		E8B54D141C56B2B100C2249F /* RoomsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomsViewController.m; sourceTree = "<group>"; };
 		E8B54D161C56B6F300C2249F /* Popup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Popup.h; sourceTree = "<group>"; };
@@ -932,6 +934,7 @@
 		E8D9E35D1C56405400D7F5E1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E87D53641CA40F100092A922 /* combinedAreasSA.json */,
 				E8529B811C6F2F7B00D71623 /* DownloaderClass.h */,
 				E8529B821C6F2F7B00D71623 /* DownloaderClass.m */,
 				E87710DA1C5A61120079BF0D /* carsOlx.json */,
@@ -1157,6 +1160,7 @@
 				1E1E8FE71C917396007E0700 /* Infiniti@2x.png in Resources */,
 				1E1E8FD01C917396007E0700 /* Ferrari@3x.png in Resources */,
 				E82DD3C51CA00389008CA31D /* lexus@3x.png in Resources */,
+				E87D53651CA40F100092A922 /* combinedAreasSA.json in Resources */,
 				1E1E8FBB1C917396007E0700 /* Chevrolet@3x.png in Resources */,
 				1E59C2071C8EF3A200B229A2 /* mark-off.png in Resources */,
 				1E1E8FB01C917396007E0700 /* bmw.png in Resources */,
