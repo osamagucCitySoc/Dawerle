@@ -15,7 +15,7 @@
 #import <OpinionzAlertView/OpinionzAlertView.h>
 #import <AFNetworking/AFNetworking.h>
 
-@interface JobSearchViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIAlertViewDelegate>
+@interface JobSearchViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIAlertViewDelegate,UIActionSheetDelegate>
 @property (strong, nonatomic) FeEqualize *equalizer;
 @end
 
@@ -199,87 +199,10 @@
 
 - (IBAction)submitClicked:(id)sender {
     [keyWordTextField resignFirstResponder];
-    
-    
-    [UIView transitionWithView:eqHolder
-                      duration:0.2f
-                       options:UIViewAnimationOptionTransitionCrossDissolve
-                    animations:^{
-                        [eqHolder setAlpha:1.0];
-                        [_equalizer show];
-                    } completion:NULL];
+    UIActionSheet* sheet = [[UIActionSheet alloc]initWithTitle:@"خيارات الدولة" delegate:self cancelButtonTitle:@"إلغاء" destructiveButtonTitle:nil otherButtonTitles:@"الكويت",@"السعودية",nil];
+    [sheet setTag:111];
+    [sheet showInView:self.view];
 
-    
-    NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-    [dict setObject:dataSource forKey:@"keywords"];
-    [dict setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"deviceToken"] forKey:@"token"];
-    
-    
-    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:@"http://almasdarapp.com/Dawerle/storeSearchJob.php" parameters:dict progress:nil success:^(NSURLSessionTask *task, id responseObject) {
-        NSString* ID = responseObject[@"res"];
-        if([ID containsString:@"ERROR"])
-        {
-            OpinionzAlertView *alert = [[OpinionzAlertView alloc]initWithTitle:@"حدث خلل" message:@"يرجى المحاولة مرة أحرى" cancelButtonTitle:@"OK" otherButtonTitles:@[]];
-            alert.iconType = OpinionzAlertIconWarning;
-            alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
-            
-            [UIView transitionWithView:eqHolder
-                              duration:0.2f
-                               options:UIViewAnimationOptionTransitionCrossDissolve
-                            animations:^{
-                                [eqHolder setAlpha:0.0];
-                                [_equalizer dismiss];
-                            } completion:^(BOOL finished){
-                                [alert show];
-                            }];
-        }else
-        {
-            NSMutableArray* searchFlats = [[NSMutableArray alloc] initWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"jobSearch"]];
-            [searchFlats addObject:ID];
-            [[NSUserDefaults standardUserDefaults]setObject:searchFlats forKey:@"jobSearch"];
-            [[NSUserDefaults standardUserDefaults] synchronize];
-            
-            OpinionzAlertView *alert = [[OpinionzAlertView alloc] initWithTitle:@"Wohoo"
-                                                                        message:@"الأن إستريح و دورلي سيقوم بالبحث بدلاً عنك و يبلغك فور نزول أي إعلان على أي موقع يلبي طلبك" cancelButtonTitle:@"(Y)"              otherButtonTitles:nil          usingBlockWhenTapButton:^(OpinionzAlertView *alertView, NSInteger buttonIndex) {
-                                                                            NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
-                                                                            for (UIViewController *aViewController in allViewControllers) {
-                                                                                if ([aViewController isKindOfClass:[ViewController class]]) {
-                                                                                    [self.navigationController popToViewController:aViewController animated:YES];
-                                                                                }
-                                                                            }
-                                                                        }];
-            alert.iconType = OpinionzAlertIconSuccess;
-            alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
-            
-            
-            
-            [UIView transitionWithView:eqHolder
-                              duration:0.2f
-                               options:UIViewAnimationOptionTransitionCrossDissolve
-                            animations:^{
-                                [eqHolder setAlpha:0.0];
-                                [_equalizer dismiss];
-                            } completion:^(BOOL finished){
-                                [alert show];
-                            }];
-
-        }
-    } failure:^(NSURLSessionTask *operation, NSError *error) {
-        OpinionzAlertView *alert = [[OpinionzAlertView alloc]initWithTitle:@"حدث خلل" message:@"يرجى المحاولة مرة أحرى" cancelButtonTitle:@"OK" otherButtonTitles:@[]];
-        alert.iconType = OpinionzAlertIconWarning;
-        alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
-        
-        [UIView transitionWithView:eqHolder
-                          duration:0.2f
-                           options:UIViewAnimationOptionTransitionCrossDissolve
-                        animations:^{
-                            [eqHolder setAlpha:0.0];
-                            [_equalizer dismiss];
-                        } completion:^(BOOL finished){
-                            [alert show];
-                        }];
-    }];
 }
 - (IBAction)addKeyWordClicked:(id)sender {
     if(keyWordTextField.text.length > 0)
@@ -363,5 +286,102 @@
     }
 }
 
+
+
+
+#pragma mark UIActionSheet delegate
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(actionSheet.tag == 111 && buttonIndex != actionSheet.cancelButtonIndex)
+    {
+        NSString* countryType = @"";
+        if(buttonIndex == 0)
+        {
+            countryType = @"KW";
+        }else
+        {
+            countryType = @"SA";
+        }
+        [UIView transitionWithView:eqHolder
+                          duration:0.2f
+                           options:UIViewAnimationOptionTransitionCrossDissolve
+                        animations:^{
+                            [eqHolder setAlpha:1.0];
+                            [_equalizer show];
+                        } completion:NULL];
+        
+        
+        NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+        [dict setObject:dataSource forKey:@"keywords"];
+        [dict setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"deviceToken"] forKey:@"token"];
+        [dict setObject:countryType forKey:@"country"];
+        
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        [manager POST:@"http://almasdarapp.com/Dawerle/storeSearchJob.php" parameters:dict progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+            NSString* ID = responseObject[@"res"];
+            if([ID containsString:@"ERROR"])
+            {
+                OpinionzAlertView *alert = [[OpinionzAlertView alloc]initWithTitle:@"حدث خلل" message:@"يرجى المحاولة مرة أحرى" cancelButtonTitle:@"OK" otherButtonTitles:@[]];
+                alert.iconType = OpinionzAlertIconWarning;
+                alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
+                
+                [UIView transitionWithView:eqHolder
+                                  duration:0.2f
+                                   options:UIViewAnimationOptionTransitionCrossDissolve
+                                animations:^{
+                                    [eqHolder setAlpha:0.0];
+                                    [_equalizer dismiss];
+                                } completion:^(BOOL finished){
+                                    [alert show];
+                                }];
+            }else
+            {
+                NSMutableArray* searchFlats = [[NSMutableArray alloc] initWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"jobSearch"]];
+                [searchFlats addObject:ID];
+                [[NSUserDefaults standardUserDefaults]setObject:searchFlats forKey:@"jobSearch"];
+                [[NSUserDefaults standardUserDefaults] synchronize];
+                
+                OpinionzAlertView *alert = [[OpinionzAlertView alloc] initWithTitle:@"Wohoo"
+                                                                            message:@"الأن إستريح و دورلي سيقوم بالبحث بدلاً عنك و يبلغك فور نزول أي إعلان على أي موقع يلبي طلبك" cancelButtonTitle:@"(Y)"              otherButtonTitles:nil          usingBlockWhenTapButton:^(OpinionzAlertView *alertView, NSInteger buttonIndex) {
+                                                                                NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
+                                                                                for (UIViewController *aViewController in allViewControllers) {
+                                                                                    if ([aViewController isKindOfClass:[ViewController class]]) {
+                                                                                        [self.navigationController popToViewController:aViewController animated:YES];
+                                                                                    }
+                                                                                }
+                                                                            }];
+                alert.iconType = OpinionzAlertIconSuccess;
+                alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
+                
+                
+                
+                [UIView transitionWithView:eqHolder
+                                  duration:0.2f
+                                   options:UIViewAnimationOptionTransitionCrossDissolve
+                                animations:^{
+                                    [eqHolder setAlpha:0.0];
+                                    [_equalizer dismiss];
+                                } completion:^(BOOL finished){
+                                    [alert show];
+                                }];
+                
+            }
+        } failure:^(NSURLSessionTask *operation, NSError *error) {
+            OpinionzAlertView *alert = [[OpinionzAlertView alloc]initWithTitle:@"حدث خلل" message:@"يرجى المحاولة مرة أحرى" cancelButtonTitle:@"OK" otherButtonTitles:@[]];
+            alert.iconType = OpinionzAlertIconWarning;
+            alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
+            
+            [UIView transitionWithView:eqHolder
+                              duration:0.2f
+                               options:UIViewAnimationOptionTransitionCrossDissolve
+                            animations:^{
+                                [eqHolder setAlpha:0.0];
+                                [_equalizer dismiss];
+                            } completion:^(BOOL finished){
+                                [alert show];
+                            }];
+        }];
+    }
+}
 
 @end

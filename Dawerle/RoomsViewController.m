@@ -128,141 +128,9 @@
 #pragma mark button methods
 
 - (IBAction)submitClicked:(id)sender {
-    Popup *popup = [[Popup alloc] initWithTitle:@"تحديد السعر"
-                                       subTitle:@"قم بإدخال الحد الأعلى للسعر أو أتركه فارغاً ليتم تنبيهك بكل الأسعار"
-                          textFieldPlaceholders:@[@""]
-                                    cancelTitle:@"إلغاء"
-                                   successTitle:@"دورلي ;)"
-                                    cancelBlock:^{} successBlock:^{
-                                        [UIView transitionWithView:eqHolder
-                                    duration:0.2f
-                                    options:UIViewAnimationOptionTransitionCrossDissolve
-                                    animations:^{
-                                        [eqHolder setAlpha:1.0];
-                                        [_equalizer show];
-                                    } completion:NULL];
-                                        
-                                        NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-                                        
-                                        NSMutableArray* rooms = [[NSMutableArray alloc]init];
-                                        for(int i = 0 ; i < [tableView indexPathsForSelectedRows].count ; i++)
-                                        {
-                                            if([tableView.indexPathsForSelectedRows objectAtIndex:i].row == 0)
-                                            {
-                                                [rooms addObject:@"-1"];
-                                            }else
-                                            {
-                                                [rooms addObject:[dataSource objectAtIndex:[[tableView.indexPathsForSelectedRows objectAtIndex:i] row]]];
-                                            }
-                                        }
-                                        if(rooms.count == 0)
-                                        {
-                                            [rooms addObject:@"-1"];
-                                        }
-                                        [dict setObject:rooms forKey:@"rooms"];
-                                        [dict setObject:selectedAreas forKey:@"keywords"];
-                                        [dict setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"deviceToken"] forKey:@"token"];
-                                        
-                                        if([maxPrice isEqualToString:@""])
-                                        {
-                                            maxPrice = @"-1";
-                                        }
-                                        [dict setObject:[NSNumber numberWithInt:[maxPrice intValue]] forKey:@"price"];
-                                        if([type isEqualToString:@"flats"])
-                                        {
-                                            [dict setObject:@"flat" forKey:@"type"];
-                                        }else
-                                        {
-                                            [dict setObject:@"villa" forKey:@"type"];
-                                        }
-                                        
-                                        
-                                        
-                                        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-                                        [manager POST:@"http://almasdarapp.com/Dawerle/storeSearchFlat.php" parameters:dict progress:nil success:^(NSURLSessionTask *task, id responseObject) {
-                                            NSString* ID = responseObject[@"res"];
-                                            if([ID containsString:@"ERROR"])
-                                            {
-                                                OpinionzAlertView *alert = [[OpinionzAlertView alloc]initWithTitle:@"حدث خلل" message:@"يرجى المحاولة مرة أحرى" cancelButtonTitle:@"OK" otherButtonTitles:@[]];
-                                                alert.iconType = OpinionzAlertIconWarning;
-                                                alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
-                                                
-                                                [UIView transitionWithView:eqHolder
-                                                                  duration:0.2f
-                                                                   options:UIViewAnimationOptionTransitionCrossDissolve
-                                                                animations:^{
-                                                                    [eqHolder setAlpha:0.0];
-                                                                    [_equalizer dismiss];
-                                                                } completion:^(BOOL finished){
-                                                                    [alert show];
-                                                                }];
-                                            }else
-                                            {
-                                                if([type isEqualToString:@"flats"])
-                                                {
-                                                    NSMutableArray* searchFlats = [[NSMutableArray alloc] initWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"flatSearch"]];
-                                                    [searchFlats addObject:ID];
-                                                    [[NSUserDefaults standardUserDefaults]setObject:searchFlats forKey:@"flatSearch"];
-                                                }else
-                                                {
-                                                    NSMutableArray* searchFlats = [[NSMutableArray alloc] initWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"villaSearch"]];
-                                                    [searchFlats addObject:ID];
-                                                    [[NSUserDefaults standardUserDefaults]setObject:searchFlats forKey:@"villaSearch"];
-                                                }
-                                                [[NSUserDefaults standardUserDefaults] synchronize];
-                                                
-                                                OpinionzAlertView *alert = [[OpinionzAlertView alloc] initWithTitle:@"Wohoo"
-                                                                                                            message:@"الأن إستريح و دورلي سيقوم بالبحث بدلاً عنك و يبلغك فور نزول أي إعلان على أي موقع يلبي طلبك" cancelButtonTitle:@"(Y)"              otherButtonTitles:nil          usingBlockWhenTapButton:^(OpinionzAlertView *alertView, NSInteger buttonIndex) {
-                                                                                                                NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
-                                                                                                                for (UIViewController *aViewController in allViewControllers) {
-                                                                                                                    if ([aViewController isKindOfClass:[ViewController class]]) {
-                                                                                                                        [self.navigationController popToViewController:aViewController animated:YES];
-                                                                                                                    }
-                                                                                                                }
-                                                                                                            }];
-                                                alert.iconType = OpinionzAlertIconSuccess;
-                                                alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
-                                                
-                                                
-                                                [UIView transitionWithView:eqHolder
-                                                                  duration:0.2f
-                                                                   options:UIViewAnimationOptionTransitionCrossDissolve
-                                                                animations:^{
-                                                                    [eqHolder setAlpha:0.0];
-                                                                    [_equalizer dismiss];
-                                                                } completion:^(BOOL finished){
-                                                                    [alert show];
-                                                                }];
-                                            }
-                                        } failure:^(NSURLSessionTask *operation, NSError *error) {
-                                            OpinionzAlertView *alert = [[OpinionzAlertView alloc]initWithTitle:@"حدث خلل" message:@"يرجى المحاولة مرة أحرى" cancelButtonTitle:@"OK" otherButtonTitles:@[]];
-                                            alert.iconType = OpinionzAlertIconWarning;
-                                            alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
-                                            
-                                            [UIView transitionWithView:eqHolder
-                                                              duration:0.2f
-                                                               options:UIViewAnimationOptionTransitionCrossDissolve
-                                                            animations:^{
-                                                                [eqHolder setAlpha:0.0];
-                                                                [_equalizer dismiss];
-                                                            } completion:^(BOOL finished){
-                                                                [alert show];
-                                                            }];
-                                        }];
-                                    }];
-    [popup setKeyboardTypeForTextFields:@[@"NUMBER"]];
-    [popup setBackgroundBlurType:PopupBackGroundBlurTypeDark];
-    [popup setIncomingTransition:PopupIncomingTransitionTypeBounceFromCenter];
-    [popup setOutgoingTransition:PopupOutgoingTransitionTypeBounceFromCenter];
-    [popup setTapBackgroundToDismiss:YES];
-    [popup setDelegate:self];
-    [popup setBackgroundColor:[UIColor colorFromHexCode:@"1085C7"]];
-    [popup setSuccessBtnColor:[UIColor colorFromHexCode:@"34a853"]];
-    [popup setSuccessTitleColor:[UIColor whiteColor]];
-    [popup setCancelTitleColor:[UIColor whiteColor]];
-    [popup setTitleColor:[UIColor whiteColor]];
-    [popup setSubTitleColor:[UIColor whiteColor]];
-    [popup showPopup];
+    UIActionSheet* sheet = [[UIActionSheet alloc]initWithTitle:@"خيارات الدولة" delegate:self cancelButtonTitle:@"إلغاء" destructiveButtonTitle:nil otherButtonTitles:@"الكويت",@"السعودية",nil];
+    [sheet setTag:111];
+    [sheet showInView:self.view];
 }
 
 #pragma mark table methods
@@ -377,14 +245,157 @@
     }
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
+
+#pragma mark UIActionSheet delegate
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(actionSheet.tag == 111 && buttonIndex != actionSheet.cancelButtonIndex)
+    {
+        NSString* countryType = @"";
+        if(buttonIndex == 0)
+        {
+            countryType = @"KW";
+        }else
+        {
+            countryType = @"SA";
+        }
+        Popup *popup = [[Popup alloc] initWithTitle:@"تحديد السعر"
+                                           subTitle:@"قم بإدخال الحد الأعلى للسعر أو أتركه فارغاً ليتم تنبيهك بكل الأسعار"
+                              textFieldPlaceholders:@[@""]
+                                        cancelTitle:@"إلغاء"
+                                       successTitle:@"دورلي ;)"
+                                        cancelBlock:^{} successBlock:^{
+                                            [UIView transitionWithView:eqHolder
+                                                              duration:0.2f
+                                                               options:UIViewAnimationOptionTransitionCrossDissolve
+                                                            animations:^{
+                                                                [eqHolder setAlpha:1.0];
+                                                                [_equalizer show];
+                                                            } completion:NULL];
+                                            
+                                            NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+                                            
+                                            NSMutableArray* rooms = [[NSMutableArray alloc]init];
+                                            for(int i = 0 ; i < [tableView indexPathsForSelectedRows].count ; i++)
+                                            {
+                                                if([tableView.indexPathsForSelectedRows objectAtIndex:i].row == 0)
+                                                {
+                                                    [rooms addObject:@"-1"];
+                                                }else
+                                                {
+                                                    [rooms addObject:[dataSource objectAtIndex:[[tableView.indexPathsForSelectedRows objectAtIndex:i] row]]];
+                                                }
+                                            }
+                                            if(rooms.count == 0)
+                                            {
+                                                [rooms addObject:@"-1"];
+                                            }
+                                            [dict setObject:rooms forKey:@"rooms"];
+                                            [dict setObject:selectedAreas forKey:@"keywords"];
+                                            [dict setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"deviceToken"] forKey:@"token"];
+                                            [dict setObject:countryType forKey:@"country"];
+                                            
+                                            if([maxPrice isEqualToString:@""])
+                                            {
+                                                maxPrice = @"-1";
+                                            }
+                                            [dict setObject:[NSNumber numberWithInt:[maxPrice intValue]] forKey:@"price"];
+                                            if([type isEqualToString:@"flats"])
+                                            {
+                                                [dict setObject:@"flat" forKey:@"type"];
+                                            }else
+                                            {
+                                                [dict setObject:@"villa" forKey:@"type"];
+                                            }
+                                            
+                                            
+                                            
+                                            AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+                                            [manager POST:@"http://almasdarapp.com/Dawerle/storeSearchFlat.php" parameters:dict progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+                                                NSString* ID = responseObject[@"res"];
+                                                if([ID containsString:@"ERROR"])
+                                                {
+                                                    OpinionzAlertView *alert = [[OpinionzAlertView alloc]initWithTitle:@"حدث خلل" message:@"يرجى المحاولة مرة أحرى" cancelButtonTitle:@"OK" otherButtonTitles:@[]];
+                                                    alert.iconType = OpinionzAlertIconWarning;
+                                                    alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
+                                                    
+                                                    [UIView transitionWithView:eqHolder
+                                                                      duration:0.2f
+                                                                       options:UIViewAnimationOptionTransitionCrossDissolve
+                                                                    animations:^{
+                                                                        [eqHolder setAlpha:0.0];
+                                                                        [_equalizer dismiss];
+                                                                    } completion:^(BOOL finished){
+                                                                        [alert show];
+                                                                    }];
+                                                }else
+                                                {
+                                                    if([type isEqualToString:@"flats"])
+                                                    {
+                                                        NSMutableArray* searchFlats = [[NSMutableArray alloc] initWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"flatSearch"]];
+                                                        [searchFlats addObject:ID];
+                                                        [[NSUserDefaults standardUserDefaults]setObject:searchFlats forKey:@"flatSearch"];
+                                                    }else
+                                                    {
+                                                        NSMutableArray* searchFlats = [[NSMutableArray alloc] initWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"villaSearch"]];
+                                                        [searchFlats addObject:ID];
+                                                        [[NSUserDefaults standardUserDefaults]setObject:searchFlats forKey:@"villaSearch"];
+                                                    }
+                                                    [[NSUserDefaults standardUserDefaults] synchronize];
+                                                    
+                                                    OpinionzAlertView *alert = [[OpinionzAlertView alloc] initWithTitle:@"Wohoo"
+                                                                                                                message:@"الأن إستريح و دورلي سيقوم بالبحث بدلاً عنك و يبلغك فور نزول أي إعلان على أي موقع يلبي طلبك" cancelButtonTitle:@"(Y)"              otherButtonTitles:nil          usingBlockWhenTapButton:^(OpinionzAlertView *alertView, NSInteger buttonIndex) {
+                                                                                                                    NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
+                                                                                                                    for (UIViewController *aViewController in allViewControllers) {
+                                                                                                                        if ([aViewController isKindOfClass:[ViewController class]]) {
+                                                                                                                            [self.navigationController popToViewController:aViewController animated:YES];
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                }];
+                                                    alert.iconType = OpinionzAlertIconSuccess;
+                                                    alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
+                                                    
+                                                    
+                                                    [UIView transitionWithView:eqHolder
+                                                                      duration:0.2f
+                                                                       options:UIViewAnimationOptionTransitionCrossDissolve
+                                                                    animations:^{
+                                                                        [eqHolder setAlpha:0.0];
+                                                                        [_equalizer dismiss];
+                                                                    } completion:^(BOOL finished){
+                                                                        [alert show];
+                                                                    }];
+                                                }
+                                            } failure:^(NSURLSessionTask *operation, NSError *error) {
+                                                OpinionzAlertView *alert = [[OpinionzAlertView alloc]initWithTitle:@"حدث خلل" message:@"يرجى المحاولة مرة أحرى" cancelButtonTitle:@"OK" otherButtonTitles:@[]];
+                                                alert.iconType = OpinionzAlertIconWarning;
+                                                alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
+                                                
+                                                [UIView transitionWithView:eqHolder
+                                                                  duration:0.2f
+                                                                   options:UIViewAnimationOptionTransitionCrossDissolve
+                                                                animations:^{
+                                                                    [eqHolder setAlpha:0.0];
+                                                                    [_equalizer dismiss];
+                                                                } completion:^(BOOL finished){
+                                                                    [alert show];
+                                                                }];
+                                            }];
+                                        }];
+        [popup setKeyboardTypeForTextFields:@[@"NUMBER"]];
+        [popup setBackgroundBlurType:PopupBackGroundBlurTypeDark];
+        [popup setIncomingTransition:PopupIncomingTransitionTypeBounceFromCenter];
+        [popup setOutgoingTransition:PopupOutgoingTransitionTypeBounceFromCenter];
+        [popup setTapBackgroundToDismiss:YES];
+        [popup setDelegate:self];
+        [popup setBackgroundColor:[UIColor colorFromHexCode:@"1085C7"]];
+        [popup setSuccessBtnColor:[UIColor colorFromHexCode:@"34a853"]];
+        [popup setSuccessTitleColor:[UIColor whiteColor]];
+        [popup setCancelTitleColor:[UIColor whiteColor]];
+        [popup setTitleColor:[UIColor whiteColor]];
+        [popup setSubTitleColor:[UIColor whiteColor]];
+        [popup showPopup];
+    }
+}
 
 @end

@@ -17,7 +17,7 @@
 #import <OpinionzAlertView/OpinionzAlertView.h>
 @import GoogleMobileAds;
 
-@interface AreaViewController ()<UITableViewDelegate,UITableViewDataSource,PopupDelegate,UIAlertViewDelegate>
+@interface AreaViewController ()<UITableViewDelegate,UITableViewDataSource,PopupDelegate,UIAlertViewDelegate,UIActionSheetDelegate>
 @property (strong, nonatomic) FeEqualize *equalizer;
 @end
 
@@ -256,6 +256,50 @@
 - (IBAction)submitClicked:(id)sender {
     if([type isEqualToString:@"stores"])
     {
+        UIActionSheet* sheet = [[UIActionSheet alloc]initWithTitle:@"خيارات الدولة" delegate:self cancelButtonTitle:@"إلغاء" destructiveButtonTitle:nil otherButtonTitles:@"الكويت",@"السعودية",nil];
+        [sheet setTag:111];
+        [sheet showInView:self.view];
+    }else
+    {
+        [self performSegueWithIdentifier:@"roomSeg" sender:self];
+    }
+}
+
+- (void)dictionary:(NSMutableDictionary *)dictionary forpopup:(Popup *)popup stringsFromTextFields:(NSArray *)stringArray {
+    
+    NSString *textFromBox1 = [stringArray objectAtIndex:0];
+    maxPrice = textFromBox1;
+}
+
+
+#pragma mark aert view methods
+-(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(alertView.tag == 1)
+    {
+        NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
+        for (UIViewController *aViewController in allViewControllers) {
+            if ([aViewController isKindOfClass:[ViewController class]]) {
+                [self.navigationController popToViewController:aViewController animated:YES];
+            }
+        }
+    }
+}
+
+
+#pragma mark UIActionSheet delegate
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(actionSheet.tag == 111 && buttonIndex != actionSheet.cancelButtonIndex)
+    {
+        NSString* countryType = @"";
+        if(buttonIndex == 0)
+        {
+            countryType = @"KW";
+        }else
+        {
+            countryType = @"SA";
+        }
         NSMutableArray* keywords = [[NSMutableArray alloc]init];
         for(int i = 0 ; i < [tableView indexPathsForSelectedRows].count ; i++)
         {
@@ -294,8 +338,8 @@
                                             [dict setObject:[NSNumber numberWithInt:[maxPrice intValue]] forKey:@"price"];
                                             [dict setObject:@"store" forKey:@"type"];
                                             [dict setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"deviceToken"] forKey:@"token"];
+                                            [dict setObject:countryType forKey:@"country"];
                                             
-                                           
                                             
                                             AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
                                             [manager POST:@"http://almasdarapp.com/Dawerle/storeSearchFlat.php" parameters:dict progress:nil success:^(NSURLSessionTask *task, id responseObject) {
@@ -375,33 +419,8 @@
         [popup setTitleColor:[UIColor whiteColor]];
         [popup setSubTitleColor:[UIColor whiteColor]];
         [popup showPopup];
-    }else
-    {
-        [self performSegueWithIdentifier:@"roomSeg" sender:self];
     }
 }
-
-- (void)dictionary:(NSMutableDictionary *)dictionary forpopup:(Popup *)popup stringsFromTextFields:(NSArray *)stringArray {
-    
-    NSString *textFromBox1 = [stringArray objectAtIndex:0];
-    maxPrice = textFromBox1;
-}
-
-
-#pragma mark aert view methods
--(void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if(alertView.tag == 1)
-    {
-        NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
-        for (UIViewController *aViewController in allViewControllers) {
-            if ([aViewController isKindOfClass:[ViewController class]]) {
-                [self.navigationController popToViewController:aViewController animated:YES];
-            }
-        }
-    }
-}
-
 
 
 /*

@@ -16,7 +16,7 @@
 #import <OpinionzAlertView/OpinionzAlertView.h>
 @import GoogleMobileAds;
 
-@interface CarsBrandsViewController ()<UITableViewDataSource,UITableViewDelegate,PopupDelegate,UISearchBarDelegate,UIAlertViewDelegate>
+@interface CarsBrandsViewController ()<UITableViewDataSource,UITableViewDelegate,PopupDelegate,UISearchBarDelegate,UIAlertViewDelegate,UIActionSheetDelegate>
 @property (strong, nonatomic) FeEqualize *equalizer;
 @end
 
@@ -266,121 +266,9 @@
 }
 
 - (IBAction)submitClicked:(id)sender {
-
-    
-    
-    Popup *popup = [[Popup alloc] initWithTitle:@"خيارات إضافية" subTitle:@"من فضلك، قم بكتابة الحد الأقصى للسعر و الحد الأدنى لسنة الصنع أو أتركهم فارغين للحصول على كل النتائج." textFieldPlaceholders:@[@"السعر",@"السنة"] cancelTitle:@"إلغاء" successTitle:@"دورلي ;)" cancelBlock:^{} successBlock:^{
-        
-        
-        [UIView transitionWithView:eqHolder
-                          duration:0.2f
-                           options:UIViewAnimationOptionTransitionCrossDissolve
-                        animations:^{
-                            [eqHolder setAlpha:1.0];
-                            [_equalizer show];
-                        } completion:NULL];
-        
-        NSMutableArray* brands = [[NSMutableArray alloc]init];
-        NSMutableArray* subBrands = [[NSMutableArray alloc]init];
-        
-        
-        for(NSIndexPath* index in [tableVieww indexPathsForSelectedRows])
-        {
-            [brands addObjectsFromArray:[[dataSource objectAtIndex:index.section] objectForKey:@"all"]];
-            [subBrands addObjectsFromArray:[[[[dataSource objectAtIndex:index.section] objectForKey:@"cats"] objectAtIndex:index.row] objectForKey:@"all"]];
-        }
-        
-        [brands setArray:[[NSSet setWithArray:brands] allObjects]];
-        [subBrands setArray:[[NSSet setWithArray:subBrands] allObjects]];
-        
-        NSNumber* pr = [NSNumber numberWithInt:[price intValue]];
-        NSNumber* yr = [NSNumber numberWithInt:[year intValue]];
-        
-        NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
-        [dict setObject:brands forKey:@"brands"];
-        [dict setObject:subBrands forKey:@"subs"];
-        [dict setObject:pr forKey:@"price"];
-        [dict setObject:yr forKey:@"year"];
-        [dict setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"deviceToken"] forKey:@"token"];
-        
-        
-        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-        [manager POST:@"http://almasdarapp.com/Dawerle/storeSearchCar.php" parameters:dict progress:nil success:^(NSURLSessionTask *task, id responseObject) {
-            NSString* ID = responseObject[@"res"];
-            if([ID containsString:@"ERROR"])
-            {
-                OpinionzAlertView *alert = [[OpinionzAlertView alloc]initWithTitle:@"حدث خلل" message:@"يرجى المحاولة مرة أحرى" cancelButtonTitle:@"OK" otherButtonTitles:@[]];
-                alert.iconType = OpinionzAlertIconWarning;
-                alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
-                
-                [UIView transitionWithView:eqHolder
-                                  duration:0.2f
-                                   options:UIViewAnimationOptionTransitionCrossDissolve
-                                animations:^{
-                                    [eqHolder setAlpha:0.0];
-                                    [_equalizer dismiss];
-                                } completion:^(BOOL finished){
-                                    [alert show];
-                                }];
-            }else
-            {
-                NSMutableArray* searchFlats = [[NSMutableArray alloc] initWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"carSearch"]];
-                [searchFlats addObject:ID];
-                [[NSUserDefaults standardUserDefaults]setObject:searchFlats forKey:@"carSearch"];
-                [[NSUserDefaults standardUserDefaults] synchronize];
-                
-                OpinionzAlertView *alert = [[OpinionzAlertView alloc] initWithTitle:@"Wohoo"
-                                                                            message:@"الأن إستريح و دورلي سيقوم بالبحث بدلاً عنك و يبلغك فور نزول أي إعلان على أي موقع يلبي طلبك" cancelButtonTitle:@"(Y)"              otherButtonTitles:nil          usingBlockWhenTapButton:^(OpinionzAlertView *alertView, NSInteger buttonIndex) {
-                                                                                NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
-                                                                                for (UIViewController *aViewController in allViewControllers) {
-                                                                                    if ([aViewController isKindOfClass:[ViewController class]]) {
-                                                                                        [self.navigationController popToViewController:aViewController animated:YES];
-                                                                                    }
-                                                                                }
-                                                                            }];
-                alert.iconType = OpinionzAlertIconSuccess;
-                alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
-                
-                [UIView transitionWithView:eqHolder
-                                  duration:0.2f
-                                   options:UIViewAnimationOptionTransitionCrossDissolve
-                                animations:^{
-                                    [eqHolder setAlpha:0.0];
-                                    [_equalizer dismiss];
-                                } completion:^(BOOL finished){
-                                    [alert show];
-                                }];
-            }
-        } failure:^(NSURLSessionTask *operation, NSError *error) {
-            OpinionzAlertView *alert = [[OpinionzAlertView alloc]initWithTitle:@"حدث خلل" message:@"يرجى المحاولة مرة أحرى" cancelButtonTitle:@"OK" otherButtonTitles:@[]];
-            alert.iconType = OpinionzAlertIconWarning;
-            alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
-            
-            [UIView transitionWithView:eqHolder
-                              duration:0.2f
-                               options:UIViewAnimationOptionTransitionCrossDissolve
-                            animations:^{
-                                [eqHolder setAlpha:0.0];
-                                [_equalizer dismiss];
-                            } completion:^(BOOL finished){
-                                [alert show];
-                            }];
-        }];
-    }];
-    
-    [popup setKeyboardTypeForTextFields:@[@"NUMBER",@"NUMBER"]];
-    [popup setBackgroundBlurType:PopupBackGroundBlurTypeDark];
-    [popup setIncomingTransition:PopupIncomingTransitionTypeBounceFromCenter];
-    [popup setOutgoingTransition:PopupOutgoingTransitionTypeBounceFromCenter];
-    [popup setTapBackgroundToDismiss:YES];
-    [popup setDelegate:self];
-    [popup setBackgroundColor:[UIColor colorFromHexCode:@"1085C7"]];
-    [popup setSuccessBtnColor:[UIColor colorFromHexCode:@"34a853"]];
-    [popup setSuccessTitleColor:[UIColor whiteColor]];
-    [popup setCancelTitleColor:[UIColor whiteColor]];
-    [popup setTitleColor:[UIColor whiteColor]];
-    [popup setSubTitleColor:[UIColor whiteColor]];
-    [popup showPopup];
+    UIActionSheet* sheet = [[UIActionSheet alloc]initWithTitle:@"خيارات الدولة" delegate:self cancelButtonTitle:@"إلغاء" destructiveButtonTitle:nil otherButtonTitles:@"الكويت",@"السعودية",nil];
+    [sheet setTag:111];
+    [sheet showInView:self.view];
 }
 
 - (void)dictionary:(NSMutableDictionary *)dictionary forpopup:(Popup *)popup stringsFromTextFields:(NSArray *)stringArray {
@@ -440,14 +328,133 @@
     }
 }
 
-/*
-#pragma mark - Navigation
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+#pragma mark UIActionSheet delegate
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(actionSheet.tag == 111 && buttonIndex != actionSheet.cancelButtonIndex)
+    {
+        NSString* countryType = @"";
+        if(buttonIndex == 0)
+        {
+            countryType = @"KW";
+        }else
+        {
+            countryType = @"SA";
+        }
+        Popup *popup = [[Popup alloc] initWithTitle:@"خيارات إضافية" subTitle:@"من فضلك، قم بكتابة الحد الأقصى للسعر و الحد الأدنى لسنة الصنع أو أتركهم فارغين للحصول على كل النتائج." textFieldPlaceholders:@[@"السعر",@"السنة"] cancelTitle:@"إلغاء" successTitle:@"دورلي ;)" cancelBlock:^{} successBlock:^{
+            
+            
+            [UIView transitionWithView:eqHolder
+                              duration:0.2f
+                               options:UIViewAnimationOptionTransitionCrossDissolve
+                            animations:^{
+                                [eqHolder setAlpha:1.0];
+                                [_equalizer show];
+                            } completion:NULL];
+            
+            NSMutableArray* brands = [[NSMutableArray alloc]init];
+            NSMutableArray* subBrands = [[NSMutableArray alloc]init];
+            
+            
+            for(NSIndexPath* index in [tableVieww indexPathsForSelectedRows])
+            {
+                [brands addObjectsFromArray:[[dataSource objectAtIndex:index.section] objectForKey:@"all"]];
+                [subBrands addObjectsFromArray:[[[[dataSource objectAtIndex:index.section] objectForKey:@"cats"] objectAtIndex:index.row] objectForKey:@"all"]];
+            }
+            
+            [brands setArray:[[NSSet setWithArray:brands] allObjects]];
+            [subBrands setArray:[[NSSet setWithArray:subBrands] allObjects]];
+            
+            NSNumber* pr = [NSNumber numberWithInt:[price intValue]];
+            NSNumber* yr = [NSNumber numberWithInt:[year intValue]];
+            
+            NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+            [dict setObject:brands forKey:@"brands"];
+            [dict setObject:subBrands forKey:@"subs"];
+            [dict setObject:pr forKey:@"price"];
+            [dict setObject:yr forKey:@"year"];
+            [dict setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"deviceToken"] forKey:@"token"];
+            [dict setObject:countryType forKey:@"country"];
+            
+            AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+            [manager POST:@"http://almasdarapp.com/Dawerle/storeSearchCar.php" parameters:dict progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+                NSString* ID = responseObject[@"res"];
+                if([ID containsString:@"ERROR"])
+                {
+                    OpinionzAlertView *alert = [[OpinionzAlertView alloc]initWithTitle:@"حدث خلل" message:@"يرجى المحاولة مرة أحرى" cancelButtonTitle:@"OK" otherButtonTitles:@[]];
+                    alert.iconType = OpinionzAlertIconWarning;
+                    alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
+                    
+                    [UIView transitionWithView:eqHolder
+                                      duration:0.2f
+                                       options:UIViewAnimationOptionTransitionCrossDissolve
+                                    animations:^{
+                                        [eqHolder setAlpha:0.0];
+                                        [_equalizer dismiss];
+                                    } completion:^(BOOL finished){
+                                        [alert show];
+                                    }];
+                }else
+                {
+                    NSMutableArray* searchFlats = [[NSMutableArray alloc] initWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"carSearch"]];
+                    [searchFlats addObject:ID];
+                    [[NSUserDefaults standardUserDefaults]setObject:searchFlats forKey:@"carSearch"];
+                    [[NSUserDefaults standardUserDefaults] synchronize];
+                    
+                    OpinionzAlertView *alert = [[OpinionzAlertView alloc] initWithTitle:@"Wohoo"
+                                                                                message:@"الأن إستريح و دورلي سيقوم بالبحث بدلاً عنك و يبلغك فور نزول أي إعلان على أي موقع يلبي طلبك" cancelButtonTitle:@"(Y)"              otherButtonTitles:nil          usingBlockWhenTapButton:^(OpinionzAlertView *alertView, NSInteger buttonIndex) {
+                                                                                    NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
+                                                                                    for (UIViewController *aViewController in allViewControllers) {
+                                                                                        if ([aViewController isKindOfClass:[ViewController class]]) {
+                                                                                            [self.navigationController popToViewController:aViewController animated:YES];
+                                                                                        }
+                                                                                    }
+                                                                                }];
+                    alert.iconType = OpinionzAlertIconSuccess;
+                    alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
+                    
+                    [UIView transitionWithView:eqHolder
+                                      duration:0.2f
+                                       options:UIViewAnimationOptionTransitionCrossDissolve
+                                    animations:^{
+                                        [eqHolder setAlpha:0.0];
+                                        [_equalizer dismiss];
+                                    } completion:^(BOOL finished){
+                                        [alert show];
+                                    }];
+                }
+            } failure:^(NSURLSessionTask *operation, NSError *error) {
+                OpinionzAlertView *alert = [[OpinionzAlertView alloc]initWithTitle:@"حدث خلل" message:@"يرجى المحاولة مرة أحرى" cancelButtonTitle:@"OK" otherButtonTitles:@[]];
+                alert.iconType = OpinionzAlertIconWarning;
+                alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
+                
+                [UIView transitionWithView:eqHolder
+                                  duration:0.2f
+                                   options:UIViewAnimationOptionTransitionCrossDissolve
+                                animations:^{
+                                    [eqHolder setAlpha:0.0];
+                                    [_equalizer dismiss];
+                                } completion:^(BOOL finished){
+                                    [alert show];
+                                }];
+            }];
+        }];
+        
+        [popup setKeyboardTypeForTextFields:@[@"NUMBER",@"NUMBER"]];
+        [popup setBackgroundBlurType:PopupBackGroundBlurTypeDark];
+        [popup setIncomingTransition:PopupIncomingTransitionTypeBounceFromCenter];
+        [popup setOutgoingTransition:PopupOutgoingTransitionTypeBounceFromCenter];
+        [popup setTapBackgroundToDismiss:YES];
+        [popup setDelegate:self];
+        [popup setBackgroundColor:[UIColor colorFromHexCode:@"1085C7"]];
+        [popup setSuccessBtnColor:[UIColor colorFromHexCode:@"34a853"]];
+        [popup setSuccessTitleColor:[UIColor whiteColor]];
+        [popup setCancelTitleColor:[UIColor whiteColor]];
+        [popup setTitleColor:[UIColor whiteColor]];
+        [popup setSubTitleColor:[UIColor whiteColor]];
+        [popup showPopup];
+    }
 }
-*/
 
 @end
