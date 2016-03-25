@@ -29,6 +29,7 @@
     NSMutableArray* dataSource;
     id<GAITracker> tracker;
     NSString* countryType;
+    NSString* rentType;
 }
 
 -(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -47,6 +48,7 @@
             [dst setType:@"villas"];
         }
         [dst setCountryType:countryType];
+        [dst setRentType:rentType];
         NSDictionary *dataToSendGoogleAnalytics = [[NSDictionary alloc]initWithObjects:@[[dst type]] forKeys:@[@"message"]];
         [tracker send:dataToSendGoogleAnalytics];
     }else if([[segue identifier]isEqualToString:@"carsSeg"])
@@ -249,9 +251,32 @@
         {
             countryType = @"SA";
         }
+        if(savedInd < 3)
+        {
+            UIActionSheet* sheet = [[UIActionSheet alloc]initWithTitle:@"خيارات العقارات" delegate:self cancelButtonTitle:@"إلغاء" destructiveButtonTitle:nil otherButtonTitles:@"بيع",@"إيجار",nil];
+            [sheet setTag:222];
+            [sheet showInView:self.view];
+   
+        }else
+        {
+            [self performSegueWithIdentifier:[[dataSource objectAtIndex:savedInd] objectForKey:@"seg"] sender:self];
+        }
+        return;
+    }else if(actionSheet.tag == 222 && actionSheet.cancelButtonIndex != buttonIndex)
+    {
+        rentType = @"";
+        if(buttonIndex == 0)
+        {
+            rentType = @"1";
+        }else
+        {
+            rentType = @"0";
+        }
+        
         [self performSegueWithIdentifier:[[dataSource objectAtIndex:savedInd] objectForKey:@"seg"] sender:self];
         return;
     }
+
     
     switch (buttonIndex) {
         case 0:

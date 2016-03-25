@@ -13,5 +13,6 @@
 @property (nonatomic,strong)NSMutableArray* selectedAreas;
 @property(nonatomic, strong)NSString* type;
 @property(nonatomic, strong)NSString* countryType;
+@property(nonatomic, strong)NSString* rentType;
 
 @end

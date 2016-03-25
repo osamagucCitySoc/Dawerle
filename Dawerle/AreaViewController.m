@@ -56,6 +56,7 @@
         }
         [dst setType:type];
         [dst setCountryType:_countryType];
+        [dst setRentType:_rentType];
         [dst setSelectedAreas:keywords];
     }else if([[segue identifier]isEqualToString:@"showRecordedSearch"])
     {
@@ -358,6 +359,7 @@
                                             [dict setObject:@"store" forKey:@"type"];
                                             [dict setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"deviceToken"] forKey:@"token"];
                                             [dict setObject:_countryType forKey:@"country"];
+                                            [dict setObject:_rentType forKey:@"rent"];
                                             
                                             
                                             AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];

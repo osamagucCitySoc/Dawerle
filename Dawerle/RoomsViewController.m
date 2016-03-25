@@ -163,6 +163,7 @@
                                         [dict setObject:selectedAreas forKey:@"keywords"];
                                         [dict setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"deviceToken"] forKey:@"token"];
                                         [dict setObject:_countryType forKey:@"country"];
+                                        [dict setObject:_rentType forKey:@"rent"];
                                         
                                         if([maxPrice isEqualToString:@""])
                                         {
