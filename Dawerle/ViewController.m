@@ -316,7 +316,7 @@
         [_firstOptionsButton setTag:5];
         [_secondOptionsButton setTag:6];
         
-        [self openOptionsWithFirstLabel:@"بحث جديد" andSecondLabel:@"عمليات البحث المحفوظة" andFirstImg:@"kw-icon.png" andSecondImg:@"sa-icon.png"];
+        [self openOptionsWithFirstLabel:@"بحث جديد" andSecondLabel:@"عمليات البحث المحفوظة" andFirstImg:@"search-options-icon.png" andSecondImg:@"archive-icon.png"];
     }
     else
     {
