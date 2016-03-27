@@ -404,9 +404,38 @@
         dataSource = [NSMutableArray arrayWithArray:origDataSource];
     }else
     {
-        NSPredicate * predicate =  [NSPredicate predicateWithFormat:@"name CONTAINS[cd] %@", searchText];
+        dataSource = [[NSMutableArray alloc]init];
+        for(NSDictionary* dict in origDataSource)
+        {
+            NSArray* brandNames = [dict objectForKey:@"all"];
+            NSArray* cats = [dict objectForKey:@"cats"];
+            BOOL subCheck = YES;
+            for(NSString* brand in brandNames)
+            {
+                if([[brand lowercaseString]containsString:[searchText lowercaseString]])
+                {
+                    [dataSource addObject:dict];
+                    subCheck = NO;
+                    break;
+                }
+            }
+            if(subCheck)
+            {
+                for(NSDictionary* dict2 in cats)
+                {
+                    NSArray* subNames = [dict2 objectForKey:@"all"];
+                    for(NSString* brand in subNames)
+                    {
+                        if([[brand lowercaseString]containsString:[searchText lowercaseString]])
+                        {
+                            [dataSource addObject:dict];
+                            break;
+                        }
+                    }
+                }
 
-        dataSource = [[NSMutableArray alloc]initWithArray:[origDataSource filteredArrayUsingPredicate:predicate]];
+            }
+        }
     }
     
     indexLetters = [[NSMutableArray alloc]init];
