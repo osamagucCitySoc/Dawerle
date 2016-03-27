@@ -57,17 +57,17 @@
     [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)
                                                          forBarMetrics:UIBarMetricsDefault];
     
-//    UIImage *myImage = [UIImage imageNamed:@"search-icon.png"];
-//    myImage = [myImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-//    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithImage:myImage style:UIBarButtonItemStylePlain target:self action:@selector(myCarSearchClicked:)];
-//    self.navigationItem.rightBarButtonItem = menuButton;
+    //    UIImage *myImage = [UIImage imageNamed:@"search-icon.png"];
+    //    myImage = [myImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
+    //    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithImage:myImage style:UIBarButtonItemStylePlain target:self action:@selector(myCarSearchClicked:)];
+    //    self.navigationItem.rightBarButtonItem = menuButton;
     
     roomesButton.buttonColor = [UIColor colorFromHexCode:@"34a853"];
     roomesButton.shadowColor = [UIColor greenSeaColor];
     roomesButton.shadowHeight = 0.0f;
     roomesButton.cornerRadius = 0.0f;
     roomesButton.alpha = 0.0f;
-
+    
     self.title = @"السيارات";
     
     
@@ -92,7 +92,7 @@
     request.testDevices = @[ @"c89d60e378a6e6f767031c551ca757a7" ];
     [bannerView loadRequest:request];
     [bannerAdHolder addSubview:bannerView];
-
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -433,7 +433,7 @@
                         }
                     }
                 }
-
+                
             }
         }
     }

@@ -123,10 +123,94 @@
     [self performSegueWithIdentifier:@"settingsSeg" sender:self];
 }
 
+- (IBAction)closeOptions:(id)sender {
+    [self closeOptionsView];
+}
+
+-(void)openOptionsWithFirstLabel:(NSString*)firstLabel andSecondLabel:(NSString*)secondlabel andFirstImg:(NSString*)firstImg andSecondImg:(NSString*)SecondImg
+{
+    SADAHBlurView *blurView = [[SADAHBlurView alloc] initWithFrame:_optionsView.frame];
+    
+    blurView.blurRadius = 30;
+    
+    [blurView setTag:837];
+    
+    [self.navigationController.view addSubview:_optionsView];
+    
+    [_optionsView insertSubview:blurView belowSubview:_optionsBackButton];
+    
+    [_optionsView setAlpha:0.0];
+    
+    [_optionsView setHidden:NO];
+    
+    _firstOptionLabel.text = firstLabel;
+    _secondOptionLabel.text = secondlabel;
+    
+    [_firstOptionsButton setImage:[UIImage imageNamed:firstImg] forState:UIControlStateNormal];
+    
+    [_secondOptionsButton setImage:[UIImage imageNamed:SecondImg] forState:UIControlStateNormal];
+    
+    for (UIView* view in _optionsView.subviews)
+    {
+        if (view.tag != 999)
+        {
+            [view setFrame:CGRectMake(view.frame.origin.x, view.frame.origin.y+500, view.frame.size.width, view.frame.size.height)];
+        }
+    }
+    
+    [UIView animateWithDuration:0.4 delay:0.0 options:0
+                     animations:^{
+                         [_optionsView setAlpha:1.0];
+                         
+                         for (UIView* view in _optionsView.subviews)
+                         {
+                             if (view.tag != 999)
+                             {
+                                 [view setFrame:CGRectMake(view.frame.origin.x, view.frame.origin.y-500, view.frame.size.width, view.frame.size.height)];
+                             }
+                         }
+                     }
+                     completion:^(BOOL finished) {
+                         //
+                     }];
+    [UIView commitAnimations];
+}
+
+-(void)closeOptionsView
+{
+    [UIView animateWithDuration:0.3 delay:0.0 options:0
+                     animations:^{
+                         [_optionsView setAlpha:0.0];
+                         
+                         [[_optionsView viewWithTag:837] removeFromSuperview];
+                         
+                         for (UIView* view in _optionsView.subviews)
+                         {
+                             if (view.tag != 999)
+                             {
+                                 [view setFrame:CGRectMake(view.frame.origin.x, view.frame.origin.y+500, view.frame.size.width, view.frame.size.height)];
+                             }
+                         }
+                     }
+                     completion:^(BOOL finished) {
+                         for (UIView* view in _optionsView.subviews)
+                         {
+                             if (view.tag != 999)
+                             {
+                                 [view setFrame:CGRectMake(view.frame.origin.x, view.frame.origin.y-500, view.frame.size.width, view.frame.size.height)];
+                             }
+                         }
+                         
+                         [_optionsView removeFromSuperview];
+                         
+                         [tableVieww deselectRowAtIndexPath:tableVieww.indexPathForSelectedRow animated:YES];
+                     }];
+    [UIView commitAnimations];
+}
+
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
     
     CGRect frame1 = bannerView.frame;
     CGRect frame2 = bannerAdHolder.frame;
@@ -225,32 +309,138 @@
     
     if (isSearches)
     {
-        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"إلغاء" destructiveButtonTitle:nil otherButtonTitles:@"بحث جديد",@"تصفح عمليات البحث المحفوظة",nil];
-        [actionSheet setTag:11];
-        [actionSheet showInView:[UIApplication sharedApplication].keyWindow];
+//        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"إلغاء" destructiveButtonTitle:nil otherButtonTitles:@"بحث جديد",@"تصفح عمليات البحث المحفوظة",nil];
+//        [actionSheet setTag:11];
+//        [actionSheet showInView:[UIApplication sharedApplication].keyWindow];
+        
+        [_firstOptionsButton setTag:5];
+        [_secondOptionsButton setTag:6];
+        
+        [self openOptionsWithFirstLabel:@"بحث جديد" andSecondLabel:@"عمليات البحث المحفوظة" andFirstImg:@"kw-icon.png" andSecondImg:@"sa-icon.png"];
     }
     else
     {
-        UIActionSheet* sheet = [[UIActionSheet alloc]initWithTitle:@"خيارات الدولة" delegate:self cancelButtonTitle:@"إلغاء" destructiveButtonTitle:nil otherButtonTitles:@"الكويت",@"السعودية",nil];
-        [sheet setTag:111];
-        [sheet showInView:self.view];
+//        UIActionSheet* sheet = [[UIActionSheet alloc]initWithTitle:@"خيارات الدولة" delegate:self cancelButtonTitle:@"إلغاء" destructiveButtonTitle:nil otherButtonTitles:@"الكويت",@"السعودية",nil];
+//        [sheet setTag:111];
+//        [sheet showInView:self.view];
+        
+        [_firstOptionsButton setTag:1];
+        [_secondOptionsButton setTag:2];
+        
+        [self openOptionsWithFirstLabel:@"الكويت" andSecondLabel:@"السعودية" andFirstImg:@"kw-icon.png" andSecondImg:@"sa-icon.png"];
+    }
+}
+
+-(void)doRent
+{
+    rentType = @"1";
+    
+    [self performSegueWithIdentifier:[[dataSource objectAtIndex:savedInd] objectForKey:@"seg"] sender:self];
+}
+
+-(void)doSell
+{
+    rentType = @"0";
+    
+    [self performSegueWithIdentifier:[[dataSource objectAtIndex:savedInd] objectForKey:@"seg"] sender:self];
+}
+
+- (IBAction)optionsOptions:(id)sender {
+    [self closeOptionsView];
+    
+    theTag = [sender tag];
+    
+    [self performSelector:@selector(doOptions) withObject:nil afterDelay:0.5];
+}
+
+-(void)doOptions
+{
+    if (theTag == 1)
+    {
+        [self doAction:0];
+    }
+    else if (theTag == 2)
+    {
+        [self doAction:1];
+    }
+    else if (theTag == 3)
+    {
+        [self doSell];
+    }
+    else if (theTag == 4)
+    {
+        [self doRent];
+    }
+    else if (theTag == 5)
+    {
+        if(YES || [[UIApplication sharedApplication] isRegisteredForRemoteNotifications])
+        {
+            [_firstOptionsButton setTag:1];
+            [_secondOptionsButton setTag:2];
+            
+            [self openOptionsWithFirstLabel:@"الكويت" andSecondLabel:@"السعودية" andFirstImg:@"kw-icon.png" andSecondImg:@"sa-icon.png"];
+        }else
+        {
+            OpinionzAlertView *alert = [[OpinionzAlertView alloc] initWithTitle:@"خطأ"
+                                                                        message:@"للأسف لم تسمح لنا بإرسال إشعارات لك:( يجب تفعيلها لكي نستطيع تبيلغك عند وجود إعلان يهمك"
+                                                              cancelButtonTitle:@"إلغاء"              otherButtonTitles:@[@"تفعيل"]          usingBlockWhenTapButton:^(OpinionzAlertView *alertView, NSInteger buttonIndex) {
+                                                                  if(buttonIndex == 1)
+                                                                  {
+                                                                      NSURL* settingsURL = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
+                                                                      [[UIApplication sharedApplication] openURL:settingsURL];
+                                                                  }
+                                                              }];
+            alert.iconType = OpinionzAlertIconWarning;
+            alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
+            [alert show];
+        }
+    }
+    else if (theTag == 6)
+    {
+        [self performSegueWithIdentifier:@"showRecordedSearch" sender:self];
+    }
+}
+
+-(void)doAction:(NSInteger)theCase
+{
+    if (theCase == 0)
+    {
+        countryType = @"KW";
+    }
+    else
+    {
+        countryType = @"SA";
+    }
+    
+    if(savedInd < 3)
+    {
+        [_firstOptionsButton setTag:3];
+        [_secondOptionsButton setTag:4];
+        
+        [self openOptionsWithFirstLabel:@"بيع" andSecondLabel:@"إيجار" andFirstImg:@"sell-icon.png" andSecondImg:@"rent-icon.png"];
+        
+    }else
+    {
+        [self performSegueWithIdentifier:[[dataSource objectAtIndex:savedInd] objectForKey:@"seg"] sender:self];
     }
 }
 
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex  {
     [tableVieww deselectRowAtIndexPath:tableVieww.indexPathForSelectedRow animated:YES];
     
-    
     if(actionSheet.tag == 111 && actionSheet.cancelButtonIndex != buttonIndex)
     {
         countryType = @"";
+        
         if(buttonIndex == 0)
         {
             countryType = @"KW";
-        }else
+        }
+        else
         {
             countryType = @"SA";
         }
+        
         if(savedInd < 3)
         {
             UIActionSheet* sheet = [[UIActionSheet alloc]initWithTitle:@"خيارات العقارات" delegate:self cancelButtonTitle:@"إلغاء" destructiveButtonTitle:nil otherButtonTitles:@"بيع",@"إيجار",nil];
@@ -261,10 +451,12 @@
         {
             [self performSegueWithIdentifier:[[dataSource objectAtIndex:savedInd] objectForKey:@"seg"] sender:self];
         }
+        
         return;
     }else if(actionSheet.tag == 222 && actionSheet.cancelButtonIndex != buttonIndex)
     {
         rentType = @"";
+        
         if(buttonIndex == 0)
         {
             rentType = @"1";
