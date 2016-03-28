@@ -266,7 +266,7 @@
 }
 
 - (IBAction)submitClicked:(id)sender {
-    Popup *popup = [[Popup alloc] initWithTitle:@"خيارات إضافية" subTitle:@"من فضلك، قم بكتابة الحد الأقصى للسعر و الحد الأدنى لسنة الصنع أو أتركهم فارغين للحصول على كل النتائج." textFieldPlaceholders:@[@"السعر",@"السنة"] cancelTitle:@"إلغاء" successTitle:@"دورلي ;)" cancelBlock:^{} successBlock:^{
+    Popup *popup = [[Popup alloc] initWithTitle:@"خيارات إضافية" subTitle:@"من فضلك، قم بكتابة الحد الأقصى للسعر و الحد الأدنى لسنة الصنع أو أتركهم فارغين للحصول على كل النتائج. سيتم تنبيهك أيضاً بالإعلانات التي لم تضمن السعر لحصولك على أكبر فرصة ممكنه لتجد ما تريده" textFieldPlaceholders:@[@"السعر",@"السنة"] cancelTitle:@"إلغاء" successTitle:@"دورلي ;)" cancelBlock:^{} successBlock:^{
         
         
         [UIView transitionWithView:eqHolder

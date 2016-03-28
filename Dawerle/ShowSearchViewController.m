@@ -25,6 +25,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSDictionary *dictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"mozilla/5.0 (iphone; cpu iphone os 7_0_2 like mac os x) applewebkit/537.51.1 (khtml, like gecko) version/7.0 mobile/11a501 safari/9537.53", @"UserAgent", nil];
+    [[NSUserDefaults standardUserDefaults] registerDefaults:dictionary];
+    
     if(!self.link)
     {
         NSURL* url = [NSURL URLWithString:[[searchItem objectForKey:@"aps"] objectForKey:@"i"]];
@@ -38,6 +41,8 @@
     }else
     {
         NSURLRequest* req = [[NSURLRequest alloc]initWithURL:self.link];
+        
+
         [webView loadRequest:req];
     }
     
@@ -77,6 +82,11 @@
 {
     [eqHolder setAlpha:0.0];
     [_equalizer dismiss];
+}
+
+-(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    NSLog(@"%@",[error description]);
 }
 
 /*

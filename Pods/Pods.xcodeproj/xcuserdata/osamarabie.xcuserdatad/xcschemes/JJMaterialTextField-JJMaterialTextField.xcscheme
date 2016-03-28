@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '47DDA2020B8EFE49FF266678'
+               BlueprintIdentifier = '3413E0DF85E801B6B7FC414E'
                BlueprintName = 'JJMaterialTextField-JJMaterialTextField'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'JJMaterialTextField.bundle'>

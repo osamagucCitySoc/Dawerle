@@ -13,6 +13,8 @@
 #import "FeEqualize.h"
 #import "ViewController.h"
 #import <OpinionzAlertView/OpinionzAlertView.h>
+#import <KSToastView/KSToastView.h>
+
 @import GoogleMobileAds;
 
 @interface RoomsViewController ()<UITableViewDelegate,UITableViewDataSource,PopupDelegate,UIAlertViewDelegate>
@@ -83,6 +85,10 @@
     [bannerView loadRequest:request];
     [bannerAdHolder addSubview:bannerView];
     
+    
+    
+   
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -100,8 +106,7 @@
     [super viewDidAppear:animated];
     if(dataSource.count == 0)
     {
-        [dataSource addObject:@"غير محدد"];
-        for(int i = 1 ; i <= 10 ; i++)
+        for(int i = 0 ; i <= 10 ; i++)
         {
             [dataSource addObject:[NSString stringWithFormat:@"%i",i]];
         }
@@ -118,6 +123,9 @@
     CGRect frame2 = bannerAdHolder.frame;
     frame1.origin.x = (frame2.size.width/2)-160;
     [bannerView setFrame:frame1];
+    
+    [KSToastView ks_showToast:@"تنبيه : سيتم أيضاً تنبيهك بالإعلانات التي لم تضمن عدد الغرف لحصولك على أكبر فرصة ممكنه لتجد ما تريده."];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -129,7 +137,7 @@
 
 - (IBAction)submitClicked:(id)sender {
     Popup *popup = [[Popup alloc] initWithTitle:@"تحديد السعر"
-                                       subTitle:@"قم بإدخال الحد الأعلى للسعر أو أتركه فارغاً ليتم تنبيهك بكل الأسعار"
+                                       subTitle:@"قم بإدخال الحد الأعلى للسعر أو أتركه فارغاً ليتم تنبيهك بكل الأسعار. سيتم تنبيهك أيضاً بالإعلانات التي لم تضمن السعر لحصولك على أكبر فرصة ممكنه لتجد ما تريده"
                           textFieldPlaceholders:@[@""]
                                     cancelTitle:@"إلغاء"
                                    successTitle:@"دورلي ;)"
@@ -147,14 +155,9 @@
                                         NSMutableArray* rooms = [[NSMutableArray alloc]init];
                                         for(int i = 0 ; i < [tableView indexPathsForSelectedRows].count ; i++)
                                         {
-                                            if([tableView.indexPathsForSelectedRows objectAtIndex:i].row == 0)
-                                            {
-                                                [rooms addObject:@"-1"];
-                                            }else
-                                            {
-                                                [rooms addObject:[dataSource objectAtIndex:[[tableView.indexPathsForSelectedRows objectAtIndex:i] row]]];
-                                            }
+                                            [rooms addObject:[dataSource objectAtIndex:[[tableView.indexPathsForSelectedRows objectAtIndex:i] row]]];
                                         }
+                                        [rooms addObject:@"-1"];
                                         if(rooms.count == 0)
                                         {
                                             [rooms addObject:@"-1"];

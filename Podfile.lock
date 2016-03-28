@@ -35,6 +35,7 @@ PODS:
   - GoogleUtilities (1.1.0):
     - GoogleSymbolUtilities (~> 1.0.0)
   - JJMaterialTextField (0.1.3)
+  - KSToastView (0.5.6)
   - OpinionzAlertView (0.3.1)
 
 DEPENDENCIES:
@@ -45,6 +46,7 @@ DEPENDENCIES:
   - Google-Mobile-Ads-SDK (~> 7.0)
   - Google/Analytics
   - JJMaterialTextField
+  - KSToastView (= 0.5.6)
   - OpinionzAlertView
 
 EXTERNAL SOURCES:
@@ -69,6 +71,7 @@ SPEC CHECKSUMS:
   GoogleSymbolUtilities: 82ad9f93d3615244b3f4ce440f5ab2515e8b4f56
   GoogleUtilities: 8ed9134debe11719097881711464752900668f10
   JJMaterialTextField: 1ae240b5d75966dd0c2acc9f59d1be6f4e83e0e5
+  KSToastView: 6c6044f1e8d8a7bb5ba098886421062eabba0478
   OpinionzAlertView: 213cf7fa544091962ebd9526ff2e7e120b13c149
 
 COCOAPODS: 0.39.0

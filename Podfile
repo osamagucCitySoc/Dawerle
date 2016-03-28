@@ -13,6 +13,7 @@ pod 'DZNWebViewController'
 pod 'AFNetworking', '~> 3.0'
 pod 'Google-Mobile-Ads-SDK', '~> 7.0'
 pod 'Google/Analytics'
+pod 'KSToastView', '0.5.6'
 
 end
 

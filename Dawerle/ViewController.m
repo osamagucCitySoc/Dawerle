@@ -104,7 +104,6 @@
     [bannerAdHolder addSubview:bannerView];
     tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:@"ViewController"];
-    
 }
 
 -(void)showHelp:(NSTimer *)timer {

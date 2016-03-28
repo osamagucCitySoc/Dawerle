@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '0CC6795505B7DFB6A4D7B617'
-               BlueprintName = 'JJMaterialTextField'
+               BlueprintIdentifier = 'FED539B7ABA051D347F92204'
+               BlueprintName = 'KSToastView'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libJJMaterialTextField.a'>
+               BuildableName = 'libKSToastView.a'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
