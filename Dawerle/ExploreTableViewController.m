@@ -339,10 +339,14 @@
 
 -(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
+    NSDateFormatter* formatter = [[NSDateFormatter alloc]init];
+    [formatter setDateFormat:@"YYYY-MM-dd HH:mm:SS"];
     
     NSDictionary* dict = [dataSource objectAtIndex:section];
-    NSLog(@"%@",[dict objectForKey:@"addedOn"]);
-    return [NSString stringWithFormat:@"في %@",[dict objectForKey:@"addedOn"]];
+    NSDate* date = [formatter dateFromString:[dict objectForKey:@"addedOn"]];
+    NSTimeInterval secondsInOneHour = 1 * 60 * 60;
+    NSDate *dateOnetHourAhead = [date dateByAddingTimeInterval:secondsInOneHour];
+    return [NSString stringWithFormat:@"في %@",[formatter stringFromDate:dateOnetHourAhead]];
 }
 
 

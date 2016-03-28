@@ -333,14 +333,14 @@
 
 -(void)doRent
 {
-    rentType = @"1";
+    rentType = @"0";
     
     [self performSegueWithIdentifier:[[dataSource objectAtIndex:savedInd] objectForKey:@"seg"] sender:self];
 }
 
 -(void)doSell
 {
-    rentType = @"0";
+    rentType = @"1";
     
     [self performSegueWithIdentifier:[[dataSource objectAtIndex:savedInd] objectForKey:@"seg"] sender:self];
 }
@@ -373,7 +373,7 @@
     }
     else if (theTag == 5)
     {
-        if(YES || [[UIApplication sharedApplication] isRegisteredForRemoteNotifications])
+        if([[UIApplication sharedApplication] isRegisteredForRemoteNotifications])
         {
             [_firstOptionsButton setTag:1];
             [_secondOptionsButton setTag:2];
@@ -475,7 +475,7 @@
         {
             if (actionSheet.tag == 11)
             {
-                if(YES || [[UIApplication sharedApplication] isRegisteredForRemoteNotifications])
+                if([[UIApplication sharedApplication] isRegisteredForRemoteNotifications])
                 {
                     UIActionSheet* sheet = [[UIActionSheet alloc]initWithTitle:@"خيارات الدولة" delegate:self cancelButtonTitle:@"إلغاء" destructiveButtonTitle:nil otherButtonTitles:@"الكويت",@"السعودية",nil];
                     [sheet setTag:111];

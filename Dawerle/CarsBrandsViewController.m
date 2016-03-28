@@ -279,16 +279,19 @@
         
         NSMutableArray* brands = [[NSMutableArray alloc]init];
         NSMutableArray* subBrands = [[NSMutableArray alloc]init];
+        NSMutableArray* subBrandsHeaders = [[NSMutableArray alloc]init];
         
         
         for(NSIndexPath* index in [tableVieww indexPathsForSelectedRows])
         {
             [brands addObjectsFromArray:[[dataSource objectAtIndex:index.section] objectForKey:@"all"]];
             [subBrands addObjectsFromArray:[[[[dataSource objectAtIndex:index.section] objectForKey:@"cats"] objectAtIndex:index.row] objectForKey:@"all"]];
+            [subBrandsHeaders addObject:[[[[dataSource objectAtIndex:index.section] objectForKey:@"cats"] objectAtIndex:index.row] objectForKey:@"sub"]];
         }
         
         [brands setArray:[[NSSet setWithArray:brands] allObjects]];
         [subBrands setArray:[[NSSet setWithArray:subBrands] allObjects]];
+        [subBrandsHeaders setArray:[[NSSet setWithArray:subBrandsHeaders] allObjects]];
         
         NSNumber* pr = [NSNumber numberWithInt:[price intValue]];
         NSNumber* yr = [NSNumber numberWithInt:[year intValue]];
@@ -296,6 +299,7 @@
         NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
         [dict setObject:brands forKey:@"brands"];
         [dict setObject:subBrands forKey:@"subs"];
+        [dict setObject:subBrandsHeaders forKey:@"subsHeaders"];
         [dict setObject:pr forKey:@"price"];
         [dict setObject:yr forKey:@"year"];
         [dict setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"deviceToken"] forKey:@"token"];

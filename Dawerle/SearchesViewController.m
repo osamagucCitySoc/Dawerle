@@ -97,6 +97,8 @@
                         [indices addIndex:i];
                     }
                     
+
+                    
                     [tableView insertSections:indices withRowAnimation:UITableViewRowAnimationTop];
                 });
                 [UIView transitionWithView:eqHolder
@@ -259,6 +261,7 @@
     ((FUIButton*)[cell viewWithTag:2]).alpha = 0.0f;
     ((FUIButton*)[cell viewWithTag:4]).alpha = 0.0f;
     ((UIView*)[cell viewWithTag:3]).alpha = 0.0f;
+    ((UILabel*)[cell viewWithTag:1]).alpha = 1.0f;
     
     NSDictionary* dict = [dataSource objectAtIndex:indexPath.section];
     
@@ -287,6 +290,7 @@
             }
         }else
         {
+            ((UILabel*)[cell viewWithTag:1]).alpha = 0.0f;
             ((FUIButton*)[cell viewWithTag:2]).buttonColor = [UIColor colorFromHexCode:@"39C73C"];
             ((FUIButton*)[cell viewWithTag:2]).shadowColor = [UIColor greenSeaColor];
             ((FUIButton*)[cell viewWithTag:2]).shadowHeight = 0.0f;
@@ -327,6 +331,7 @@
             }
         }else
         {
+            ((UILabel*)[cell viewWithTag:1]).alpha = 0.0f;
             ((FUIButton*)[cell viewWithTag:2]).buttonColor = [UIColor colorFromHexCode:@"39C73C"];
             ((FUIButton*)[cell viewWithTag:2]).shadowColor = [UIColor greenSeaColor];
             ((FUIButton*)[cell viewWithTag:2]).shadowHeight = 0.0f;
@@ -351,7 +356,7 @@
     }else if([dataID isEqualToString:@"cars"])
     {
         NSString* brands = [dict objectForKey:@"brands"];
-        NSString* sub = [dict objectForKey:@"subs"];
+        NSString* sub = [dict objectForKey:@"subsHeaders"];
         int maxPrice  = [[dict objectForKey:@"price"] intValue];
         int year  = [[dict objectForKey:@"year"] intValue];
         
@@ -382,6 +387,7 @@
             }
         }else
         {
+            ((UILabel*)[cell viewWithTag:1]).alpha = 0.0f;
             ((FUIButton*)[cell viewWithTag:2]).buttonColor = [UIColor colorFromHexCode:@"39C73C"];
             ((FUIButton*)[cell viewWithTag:2]).shadowColor = [UIColor greenSeaColor];
             ((FUIButton*)[cell viewWithTag:2]).shadowHeight = 0.0f;
@@ -411,6 +417,7 @@
             string = [NSString stringWithFormat:@"%@ : %@",@"الكلمات الدالة",[dict objectForKey:@"keywords"]];
         }else
         {
+            ((UILabel*)[cell viewWithTag:1]).alpha = 0.0f;
             ((FUIButton*)[cell viewWithTag:2]).buttonColor = [UIColor colorFromHexCode:@"39C73C"];
             ((FUIButton*)[cell viewWithTag:2]).shadowColor = [UIColor greenSeaColor];
             ((FUIButton*)[cell viewWithTag:2]).shadowHeight = 0.0f;
