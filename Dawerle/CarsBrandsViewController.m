@@ -13,6 +13,7 @@
 #import <FlatUIKit.h>
 #import "FeEqualize.h"
 #import "ViewController.h"
+#import "CarsSubBrandsViewController.h"
 #import <OpinionzAlertView/OpinionzAlertView.h>
 @import GoogleMobileAds;
 
@@ -34,6 +35,7 @@
     __weak IBOutlet UISearchBar *searchBar;
     __weak IBOutlet UIView *eqHolder;
     NSMutableArray* indexLetters;
+    int sectionClicked;
 }
 
 
@@ -43,12 +45,20 @@
     {
         SearchesViewController* dst = (SearchesViewController*)[segue destinationViewController];
         [dst setDataID:@"cars"];
+    }else if([[segue identifier]isEqualToString:@"subBrandsSeg"])
+    {
+        CarsSubBrandsViewController* dst = (CarsSubBrandsViewController*)[segue destinationViewController];
+        [dst setSelectedCarBrand:[dataSource objectAtIndex:sectionClicked]];
+        [dst setSectionIndex:sectionClicked];
     }
 }
 
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:[[NSArray alloc] init] forKey:@"selectedCars"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
     
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSForegroundColorAttributeName:[UIColor whiteColor],
@@ -125,6 +135,26 @@
         
         origDataSource = [NSMutableArray arrayWithArray:dataSource];
         [tableVieww insertSections:indices withRowAnimation:UITableViewRowAnimationTop];
+    }else
+    {
+        NSArray* selected  = [[NSUserDefaults standardUserDefaults] objectForKey:@"selectedCars"];
+        if(selected.count > 0)
+        {
+            [UIView transitionWithView:roomesButton
+                              duration:0.2f
+                               options:UIViewAnimationOptionTransitionCrossDissolve
+                            animations:^{
+                                [roomesButton setAlpha:1.0f];
+                            } completion:NULL];
+        }else
+        {
+            [UIView transitionWithView:roomesButton
+                              duration:0.2f
+                               options:UIViewAnimationOptionTransitionCrossDissolve
+                            animations:^{
+                                [roomesButton setAlpha:0.0f];
+                            } completion:NULL];
+        }
     }
     
     _equalizer = [[FeEqualize alloc] initWithView:eqHolder title:@"جاري حفظ بحثك"];
@@ -149,7 +179,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[[dataSource objectAtIndex:section] objectForKey:@"cats"] count];
+    return 0;//[[[dataSource objectAtIndex:section] objectForKey:@"cats"] count];
 }
 
 -(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -176,11 +206,26 @@
     [label setFont: [UIFont fontWithName:@"Courier-bold" size:19.0]];
     [view addSubview:label];
     
+    UITapGestureRecognizer *singleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureHandler:)];
+    //[singleTapRecognizer setDelegate:self];
+    singleTapRecognizer.numberOfTouchesRequired = 1;
+    singleTapRecognizer.numberOfTapsRequired = 1;
+    view.tag = section;
+    [view addGestureRecognizer:singleTapRecognizer];
+    
+    
+    
     return view;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     return 60.0f;
+}
+
+-(void) gestureHandler:(UIGestureRecognizer *)gestureRecognizer
+{
+    sectionClicked = (int)[gestureRecognizer.view tag];
+    [self performSegueWithIdentifier:@"subBrandsSeg" sender:self];
 }
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -213,33 +258,6 @@
                         } completion:NULL];
     }
     return cell;
-}
-
--(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [UIView transitionWithView:(UIImageView*)[[tableVieww cellForRowAtIndexPath:indexPath] viewWithTag:2]
-                      duration:0.2f
-                       options:UIViewAnimationOptionTransitionCrossDissolve
-                    animations:^{
-                        [(UIImageView*)[[tableVieww cellForRowAtIndexPath:indexPath] viewWithTag:2]setImage:[UIImage imageNamed:@"mark-off.png"]];
-                        if(tableVieww.indexPathsForSelectedRows.count == 0)
-                        {
-                            [roomesButton setAlpha:0.0f];
-                        }
-                    } completion:NULL];
-}
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [UIView transitionWithView:(UIImageView*)[[tableVieww cellForRowAtIndexPath:indexPath] viewWithTag:2]
-                      duration:0.2f
-                       options:UIViewAnimationOptionTransitionCrossDissolve
-                    animations:^{
-                        [(UIImageView*)[[tableVieww cellForRowAtIndexPath:indexPath] viewWithTag:2]setImage:[UIImage imageNamed:@"mark-on.png"]];
-                        if(roomesButton.alpha == 0.0f)
-                        {
-                            [roomesButton setAlpha:1.0f];
-                        }
-                    } completion:NULL];
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -281,12 +299,12 @@
         NSMutableArray* subBrands = [[NSMutableArray alloc]init];
         NSMutableArray* subBrandsHeaders = [[NSMutableArray alloc]init];
         
-        
-        for(NSIndexPath* index in [tableVieww indexPathsForSelectedRows])
+        NSArray* selected  = [[NSUserDefaults standardUserDefaults] objectForKey:@"selectedCars"];
+        for(NSDictionary* index in selected)
         {
-            [brands addObjectsFromArray:[[dataSource objectAtIndex:index.section] objectForKey:@"all"]];
-            [subBrands addObjectsFromArray:[[[[dataSource objectAtIndex:index.section] objectForKey:@"cats"] objectAtIndex:index.row] objectForKey:@"all"]];
-            [subBrandsHeaders addObject:[[[[dataSource objectAtIndex:index.section] objectForKey:@"cats"] objectAtIndex:index.row] objectForKey:@"sub"]];
+            [brands addObjectsFromArray:[[dataSource objectAtIndex:[[index objectForKey:@"section"] intValue]] objectForKey:@"all"]];
+            [subBrands addObjectsFromArray:[[[[dataSource objectAtIndex:[[index objectForKey:@"section"] intValue]] objectForKey:@"cats"] objectAtIndex:[[index objectForKey:@"row"] intValue]] objectForKey:@"all"]];
+            [subBrandsHeaders addObject:[[[[dataSource objectAtIndex:[[index objectForKey:@"section"] intValue]] objectForKey:@"cats"] objectAtIndex:[[index objectForKey:@"row"] intValue]] objectForKey:@"sub"]];
         }
         
         [brands setArray:[[NSSet setWithArray:brands] allObjects]];

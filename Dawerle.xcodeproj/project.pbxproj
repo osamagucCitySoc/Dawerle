@@ -204,6 +204,7 @@
 		E81DB8DE1C8B8D4500826EFE /* FeEqualize.m in Sources */ = {isa = PBXBuildFile; fileRef = E81DB8DD1C8B8D4500826EFE /* FeEqualize.m */; };
 		E81DB8E31C8B8D5D00826EFE /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = E81DB8E01C8B8D5D00826EFE /* FXBlurView.m */; };
 		E81DB8E41C8B8D5D00826EFE /* UIColor+flat.m in Sources */ = {isa = PBXBuildFile; fileRef = E81DB8E21C8B8D5D00826EFE /* UIColor+flat.m */; };
+		E81F75201CAA62EC00D7F623 /* CarsSubBrandsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E81F751F1CAA62EC00D7F623 /* CarsSubBrandsViewController.m */; };
 		E82DD3C51CA00389008CA31D /* lexus@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E82DD3B91CA00389008CA31D /* lexus@3x.png */; };
 		E82DD3C61CA00389008CA31D /* Maserati@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E82DD3BA1CA00389008CA31D /* Maserati@3x.png */; };
 		E82DD3C71CA00389008CA31D /* mazda@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E82DD3BB1CA00389008CA31D /* mazda@3x.png */; };
@@ -510,6 +511,8 @@
 		E81DB8E01C8B8D5D00826EFE /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
 		E81DB8E11C8B8D5D00826EFE /* UIColor+flat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+flat.h"; sourceTree = "<group>"; };
 		E81DB8E21C8B8D5D00826EFE /* UIColor+flat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+flat.m"; sourceTree = "<group>"; };
+		E81F751E1CAA62EB00D7F623 /* CarsSubBrandsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarsSubBrandsViewController.h; sourceTree = "<group>"; };
+		E81F751F1CAA62EC00D7F623 /* CarsSubBrandsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarsSubBrandsViewController.m; sourceTree = "<group>"; };
 		E82DD3B91CA00389008CA31D /* lexus@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lexus@3x.png"; sourceTree = "<group>"; };
 		E82DD3BA1CA00389008CA31D /* Maserati@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Maserati@3x.png"; sourceTree = "<group>"; };
 		E82DD3BB1CA00389008CA31D /* mazda@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mazda@3x.png"; sourceTree = "<group>"; };
@@ -998,6 +1001,8 @@
 				1E1C58DB1C95A2FD009BD677 /* HelpViewController.m */,
 				1EAFBE611CA7FFF600E01891 /* SADAHBlurView.h */,
 				1EAFBE621CA7FFF700E01891 /* SADAHBlurView.m */,
+				E81F751E1CAA62EB00D7F623 /* CarsSubBrandsViewController.h */,
+				E81F751F1CAA62EC00D7F623 /* CarsSubBrandsViewController.m */,
 			);
 			path = Dawerle;
 			sourceTree = "<group>";
@@ -1417,6 +1422,7 @@
 				E862BD591C8C25BC00541240 /* SearchesViewController.m in Sources */,
 				E81DB8E41C8B8D5D00826EFE /* UIColor+flat.m in Sources */,
 				E87710D91C5A558A0079BF0D /* CarsBrandsViewController.m in Sources */,
+				E81F75201CAA62EC00D7F623 /* CarsSubBrandsViewController.m in Sources */,
 				E81DB8DE1C8B8D4500826EFE /* FeEqualize.m in Sources */,
 				E8529B801C6EB56000D71623 /* ExploreTableViewController.m in Sources */,
 				1E1C58DC1C95A2FD009BD677 /* HelpViewController.m in Sources */,

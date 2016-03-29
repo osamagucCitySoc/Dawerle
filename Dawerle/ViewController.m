@@ -372,7 +372,7 @@
     }
     else if (theTag == 5)
     {
-        if([[UIApplication sharedApplication] isRegisteredForRemoteNotifications])
+        if(YES || [[UIApplication sharedApplication] isRegisteredForRemoteNotifications])
         {
             [_firstOptionsButton setTag:1];
             [_secondOptionsButton setTag:2];
@@ -474,7 +474,7 @@
         {
             if (actionSheet.tag == 11)
             {
-                if([[UIApplication sharedApplication] isRegisteredForRemoteNotifications])
+                if(YES || [[UIApplication sharedApplication] isRegisteredForRemoteNotifications])
                 {
                     UIActionSheet* sheet = [[UIActionSheet alloc]initWithTitle:@"خيارات الدولة" delegate:self cancelButtonTitle:@"إلغاء" destructiveButtonTitle:nil otherButtonTitles:@"الكويت",@"السعودية",nil];
                     [sheet setTag:111];
