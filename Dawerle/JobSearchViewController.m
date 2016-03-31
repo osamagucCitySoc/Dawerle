@@ -14,6 +14,7 @@
 #import "ViewController.h"
 #import <OpinionzAlertView/OpinionzAlertView.h>
 #import <AFNetworking/AFNetworking.h>
+#import <Google/Analytics.h>
 
 @interface JobSearchViewController ()<UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIAlertViewDelegate,UIActionSheetDelegate>
 @property (strong, nonatomic) FeEqualize *equalizer;
@@ -26,6 +27,7 @@
     __weak IBOutlet FUIButton *roomesButton;
     __weak IBOutlet UIView *eqHolder;
     NSMutableArray* dataSource;
+    id<GAITracker> tracker;
 }
 
 
@@ -88,6 +90,10 @@
     roomesButton.shadowHeight = 0.0f;
     roomesButton.cornerRadius = 0.0f;
     roomesButton.alpha = 0.0f;
+    
+    
+    tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"JobSearchViewController"];
 
     
 }
@@ -125,6 +131,8 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
     _equalizer = [[FeEqualize alloc] initWithView:eqHolder title:@"جاري حفظ بحثك"];
     CGRect frame = CGRectMake(0, 0, 70, 70);
     [_equalizer setFrame:frame];

@@ -12,6 +12,7 @@
 #import <FlatUIKit.h>
 #import "FeEqualize.h"
 #import "ViewController.h"
+#import <Google/Analytics.h>
 #import <OpinionzAlertView/OpinionzAlertView.h>
 #import <KSToastView/KSToastView.h>
 
@@ -30,6 +31,7 @@
     NSString* maxPrice;
     __weak IBOutlet FUIButton *roomesButton;
     __weak IBOutlet UIView *eqHolder;
+    id<GAITracker> tracker;
 }
 
 @synthesize selectedAreas,type;
@@ -87,12 +89,14 @@
     
     
     
-   
+    tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"RoomsViewController"];
     
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
     _equalizer = [[FeEqualize alloc] initWithView:eqHolder title:@"جاري حفظ بحثك"];
     CGRect frame = CGRectMake(0, 0, 70, 70);
     [_equalizer setFrame:frame];

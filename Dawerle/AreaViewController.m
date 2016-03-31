@@ -11,6 +11,7 @@
 #import "SearchesViewController.h"
 #import <AFNetworking/AFNetworking.h>
 #import "Popup.h"
+#import <Google/Analytics.h>
 #import <FlatUIKit.h>
 #import "FeEqualize.h"
 #import "ViewController.h"
@@ -29,7 +30,8 @@
     __weak IBOutlet UITableView *tableView;
     NSMutableArray* dataSource;
     NSString* maxPrice;
-    __weak IBOutlet UIView *eqHolder;    
+    __weak IBOutlet UIView *eqHolder;
+    id<GAITracker> tracker;
 }
 
 @synthesize type;
@@ -134,12 +136,16 @@
     request.testDevices = @[ @"c89d60e378a6e6f767031c551ca757a7" ];
     [bannerView loadRequest:request];
     [bannerAdHolder addSubview:bannerView];
+    
+    tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"AreaViewController"];
 
 }
 
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
     if(dataSource.count == 0)
     {
         if([_countryType isEqualToString:@"KW"])
@@ -215,7 +221,13 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return dataSource.count;
+    if([_countryType isEqualToString:@"KW"])
+    {
+        return dataSource.count;
+    }else
+    {
+        return  [[[dataSource objectAtIndex:section] objectForKey:@"cities"] count];
+    }
 }
 
 
@@ -247,6 +259,7 @@
         [(UILabel*)[cell viewWithTag:1]setText:[dataSource objectAtIndex:indexPath.row]];
     }else
     {
+        NSLog(@"%@",indexPath);
         [(UILabel*)[cell viewWithTag:1]setText:[[[dataSource objectAtIndex:indexPath.section] objectForKey:@"cities"] objectAtIndex:indexPath.row]];
     }
     [(UIImageView*)[cell viewWithTag:2]setImage:[UIImage imageNamed:@"mark-off.png"]];

@@ -15,6 +15,7 @@
 #import "ViewController.h"
 #import "CarsSubBrandsViewController.h"
 #import <OpinionzAlertView/OpinionzAlertView.h>
+#import <Google/Analytics.h>
 @import GoogleMobileAds;
 
 @interface CarsBrandsViewController ()<UITableViewDataSource,UITableViewDelegate,PopupDelegate,UISearchBarDelegate,UIAlertViewDelegate>
@@ -36,6 +37,7 @@
     __weak IBOutlet UIView *eqHolder;
     NSMutableArray* indexLetters;
     int sectionClicked;
+    id<GAITracker> tracker;
 }
 
 
@@ -103,6 +105,9 @@
     [bannerView loadRequest:request];
     [bannerAdHolder addSubview:bannerView];
     
+    tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"CarsBrandsViewController"];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -111,6 +116,7 @@
 }
 -(void)viewDidAppear:(BOOL)animated
 {
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
     if(dataSource.count == 0)
     {
         NSString *filePath1 = [[NSBundle mainBundle] pathForResource:@"cars" ofType:@"json"];

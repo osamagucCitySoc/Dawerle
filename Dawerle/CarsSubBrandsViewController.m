@@ -8,6 +8,7 @@
 
 #import "CarsSubBrandsViewController.h"
 @import GoogleMobileAds;
+#import <Google/Analytics.h>
 
 @interface CarsSubBrandsViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate>
 
@@ -25,6 +26,7 @@
     NSString* year;
     __weak IBOutlet UISearchBar *searchBar;
     NSMutableArray* indexSet;
+    id<GAITracker> tracker;
 }
 
 @synthesize selectedCarBrand,sectionIndex;
@@ -64,12 +66,17 @@
     request.testDevices = @[ @"c89d60e378a6e6f767031c551ca757a7" ];
     [bannerView loadRequest:request];
     [bannerAdHolder addSubview:bannerView];
+    
+    tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"SubBrandsViewController"];
 
 }
 
 
 -(void)viewDidAppear:(BOOL)animated
 {
+    [super viewDidAppear:animated];
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
     dataSource = [[NSMutableArray alloc]initWithObjects:selectedCarBrand, nil];
     origDataSource = [[NSMutableArray alloc]initWithObjects:selectedCarBrand, nil];
 

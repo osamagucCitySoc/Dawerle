@@ -13,6 +13,7 @@
 #import "FeEqualize.h"
 #import <AFNetworking/AFNetworking.h>
 #import <OpinionzAlertView/OpinionzAlertView.h>
+#import <Google/Analytics.h>
 
 @interface ExploreTableViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
@@ -25,6 +26,7 @@
     DownloaderClass* class;
      __weak IBOutlet UIView *eqHolder;
     NSIndexPath* selected;
+    id<GAITracker> tracker;
 }
 
 @synthesize className,searchingParams;
@@ -55,6 +57,10 @@
     class = [DownloaderClass sharedInstance];
     [self.tableView setDelegate:self];
     [self.tableView setDataSource:self];
+    
+    
+    tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"ExploreViewController"];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -64,6 +70,7 @@
     {
         [self loadItems];
     }
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 }
 
 -(void)loadItems

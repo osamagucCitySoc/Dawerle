@@ -13,6 +13,7 @@
 #import <OpinionzAlertView/OpinionzAlertView.h>
 #import <AFNetworking/AFNetworking.h>
 @import GoogleMobileAds;
+#import <Google/Analytics.h>
 
 @interface SearchesViewController ()<UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) FeEqualize *equalizer;
@@ -29,6 +30,7 @@
     __weak IBOutlet UIView *eqHolder;
     __weak IBOutlet UITableView *tableView;
     NSIndexPath* selected;
+    id<GAITracker> tracker;
 }
 
 @synthesize dataID;
@@ -47,7 +49,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    
+    [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
     if(dataSource.count == 0)
     {
         [_equalizer removeFromSuperview];
@@ -210,6 +212,9 @@
     request.testDevices = @[ @"c89d60e378a6e6f767031c551ca757a7" ];
     [bannerView loadRequest:request];
     [bannerAdHolder addSubview:bannerView];
+    
+    tracker = [[GAI sharedInstance] defaultTracker];
+    [tracker set:kGAIScreenName value:@"SearchesViewController"];
 
 }
 
