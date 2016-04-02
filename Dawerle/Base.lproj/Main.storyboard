@@ -44,6 +44,7 @@
             <string>DroidArabicKufi</string>
             <string>DroidArabicKufi</string>
             <string>DroidArabicKufi</string>
+            <string>DroidArabicKufi</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -346,7 +347,7 @@
                             <tableViewSection headerTitle="عام" footerTitle="--" id="M9h-zU-rn2">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="myCell" rowHeight="60" id="4Iw-19-aTb">
-                                        <rect key="frame" x="0.0" y="113.5" width="414" height="60"/>
+                                        <rect key="frame" x="0.0" y="49.5" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4Iw-19-aTb" id="EPR-XH-CPQ">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="59.5"/>
@@ -371,7 +372,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="myCell" rowHeight="60" id="8pY-wm-ZpN">
-                                        <rect key="frame" x="0.0" y="173.5" width="414" height="60"/>
+                                        <rect key="frame" x="0.0" y="109.5" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8pY-wm-ZpN" id="62T-HH-htH">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="59.5"/>
@@ -396,7 +397,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="myCell" rowHeight="60" id="zj7-L0-Zfe">
-                                        <rect key="frame" x="0.0" y="233.5" width="414" height="60"/>
+                                        <rect key="frame" x="0.0" y="169.5" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zj7-L0-Zfe" id="xc8-tZ-LcI">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="59.5"/>
@@ -425,7 +426,7 @@
                             <tableViewSection headerTitle="المزيد" footerTitle="--" id="Uoo-1t-Ioi">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="myCell" rowHeight="60" id="PiL-zR-nh3">
-                                        <rect key="frame" x="0.0" y="360" width="414" height="60"/>
+                                        <rect key="frame" x="0.0" y="296" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PiL-zR-nh3" id="R5G-oc-FPL">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="59.5"/>
@@ -1066,12 +1067,23 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="hAZ-4u-CX2" customClass="FUIButton">
+                                <rect key="frame" x="0.0" y="676" width="414" height="60"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" name="DroidArabicKufi" family="Droid Arabic Kufi" pointSize="20"/>
+                                <state key="normal" title="المزيد.."/>
+                                <connections>
+                                    <action selector="moreButtonClicked:" destination="Us2-xO-cQJ" eventType="touchUpInside" id="uzB-vU-ScD"/>
+                                    <action selector="submitClicked:" destination="lRU-sA-5M4" eventType="touchUpInside" id="qSe-II-SKA"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="mWo-pu-TB1"/>
                     <connections>
                         <outlet property="eqHolder" destination="pFJ-f9-HwJ" id="2za-HF-9dq"/>
+                        <outlet property="moreButton" destination="hAZ-4u-CX2" id="TDE-sg-MMs"/>
                         <outlet property="tableView" destination="dMk-YP-OIW" id="HwY-P5-UAc"/>
                         <segue destination="TSk-DX-Pbb" kind="push" identifier="searchWebSeg" id="Xoy-Bt-13L"/>
                     </connections>
@@ -1188,7 +1200,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="4Qq-bL-TWA"/>
         <segue reference="Ndx-2i-aPz"/>
-        <segue reference="0A0-ai-ceb"/>
-        <segue reference="W1J-xp-4I0"/>
+        <segue reference="DCZ-UF-Ul3"/>
+        <segue reference="Xoy-Bt-13L"/>
     </inferredMetricsTieBreakers>
 </document>

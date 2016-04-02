@@ -27,6 +27,7 @@
      __weak IBOutlet UIView *eqHolder;
     NSIndexPath* selected;
     id<GAITracker> tracker;
+    __weak IBOutlet FUIButton *moreButton;
 }
 
 @synthesize className,searchingParams;
@@ -61,6 +62,13 @@
     
     tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:@"ExploreViewController"];
+    
+    
+    moreButton.buttonColor = [UIColor colorFromHexCode:@"34a853"];
+    moreButton.shadowColor = [UIColor greenSeaColor];
+    moreButton.shadowHeight = 0.0f;
+    moreButton.cornerRadius = 0.0f;
+    moreButton.alpha = 0.0f;
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -107,10 +115,19 @@
     }
 
     
+    NSMutableDictionary* params = [[NSMutableDictionary alloc]initWithDictionary:searchingParams];
+    [params setObject:[NSString stringWithFormat:@"%ld",dataSource.count] forKey:@"limit"];
+    
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:url parameters:searchingParams progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+    [manager POST:url parameters:params progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         @try {
-            dataSource = [[NSMutableArray alloc]initWithArray:responseObject copyItems:NO];
+            if(dataSource.count == 0)
+            {
+                dataSource = [[NSMutableArray alloc]initWithArray:responseObject copyItems:NO];
+            }else
+            {
+                [dataSource addObjectsFromArray:responseObject];
+            }
         }
         @catch (NSException *exception) {
             dataSource = nil;
@@ -319,6 +336,17 @@
                                                  action:@selector(shareClicked:) forControlEvents:UIControlEventTouchUpInside];
         }
     }
+    
+    if(indexPath.section >= dataSource.count-5)
+    {
+       [moreButton setAlpha:1.0f];
+    }else
+    {
+        [moreButton setAlpha:0.0f];
+    }
+    
+    
+    
     return cell;
 }
 
@@ -396,5 +424,8 @@
         activityVC.excludedActivityTypes = @[UIActivityTypeSaveToCameraRoll]; //Exclude whichever aren't relevant
         [self presentViewController:activityVC animated:YES completion:nil];
     }
+}
+- (IBAction)moreButtonClicked:(id)sender {
+    [self loadItems];
 }
 @end
