@@ -119,9 +119,7 @@
 }
 
 - (void)application:(UIApplication *)application handleActionWithIdentifier:(NSString *)identifier forRemoteNotification:(NSDictionary *)userInfo completionHandler:(void(^)())completionHandler
-{
-    [PFPush handlePush:userInfo];
-}
+{}
 #endif
 
 
