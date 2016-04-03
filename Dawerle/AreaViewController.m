@@ -16,6 +16,7 @@
 #import "FeEqualize.h"
 #import "ViewController.h"
 #import <OpinionzAlertView/OpinionzAlertView.h>
+
 @import GoogleMobileAds;
 
 @interface AreaViewController ()<UITableViewDelegate,UITableViewDataSource,PopupDelegate,UIAlertViewDelegate>
@@ -73,6 +74,10 @@
         {
             [dst setDataID:@"flats"];
         }
+    }else if([[segue identifier] isEqualToString:@"exploreSeg"])
+    {
+        SearchesViewController* dst = (SearchesViewController*)[segue destinationViewController];
+        [dst setDataID:@"stores"];
     }
 }
 
@@ -402,13 +407,19 @@
                                                     
                                                     
                                                     OpinionzAlertView *alert = [[OpinionzAlertView alloc] initWithTitle:@"Wohoo"
-                                                                                                                message:@"الأن إستريح و دورلي سيقوم بالبحث بدلاً عنك و يبلغك فور نزول أي إعلان على أي موقع يلبي طلبك" cancelButtonTitle:@"(Y)"              otherButtonTitles:nil          usingBlockWhenTapButton:^(OpinionzAlertView *alertView, NSInteger buttonIndex) {
-                                                                                                                    NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
-                                                                                                                    for (UIViewController *aViewController in allViewControllers) {
-                                                                                                                        if ([aViewController isKindOfClass:[ViewController class]]) {
-                                                                                                                            [self.navigationController popToViewController:aViewController animated:YES];
-                                                                                                                        }
-                                                                                                                    }
+                                                                                                                message:@"الأن إستريح و دورلي سيقوم بالبحث بدلاً عنك و يبلغك فور نزول أي إعلان على أي موقع يلبي طلبك" cancelButtonTitle:@"(Y)"              otherButtonTitles:@[@"تصفح النتائج؟"]          usingBlockWhenTapButton:^(OpinionzAlertView *alertView, NSInteger buttonIndex) {
+                                                                            if(buttonIndex == 0)
+                                                                            {
+                                                                                NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
+                                                                                for (UIViewController *aViewController in allViewControllers) {
+                                                                                    if ([aViewController isKindOfClass:[ViewController class]]) {
+                                                                                        [self.navigationController popToViewController:aViewController animated:YES];
+                                                                                    }
+                                                                                }
+                                                                            }else
+                                                                            {
+                                                                                [self performSegueWithIdentifier:@"exploreSeg" sender:self];
+                                                                            }
                                                                                                                 }];
                                                     alert.iconType = OpinionzAlertIconSuccess;
                                                     alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];

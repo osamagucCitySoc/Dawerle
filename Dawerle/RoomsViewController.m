@@ -15,6 +15,7 @@
 #import <Google/Analytics.h>
 #import <OpinionzAlertView/OpinionzAlertView.h>
 #import <KSToastView/KSToastView.h>
+#import "SearchesViewController.h"
 
 @import GoogleMobileAds;
 
@@ -35,6 +36,16 @@
 }
 
 @synthesize selectedAreas,type;
+
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if([[segue identifier] isEqualToString:@"exploreSeg"])
+    {
+        SearchesViewController* dst = (SearchesViewController*)[segue destinationViewController];
+        [dst setDataID:type];
+    }
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -221,12 +232,18 @@
                                                 [[NSUserDefaults standardUserDefaults] synchronize];
                                                 
                                                 OpinionzAlertView *alert = [[OpinionzAlertView alloc] initWithTitle:@"Wohoo"
-                                                                                                            message:@"الأن إستريح و دورلي سيقوم بالبحث بدلاً عنك و يبلغك فور نزول أي إعلان على أي موقع يلبي طلبك" cancelButtonTitle:@"(Y)"              otherButtonTitles:nil          usingBlockWhenTapButton:^(OpinionzAlertView *alertView, NSInteger buttonIndex) {
-                                                                                                                NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
-                                                                                                                for (UIViewController *aViewController in allViewControllers) {
-                                                                                                                    if ([aViewController isKindOfClass:[ViewController class]]) {
-                                                                                                                        [self.navigationController popToViewController:aViewController animated:YES];
+                                                                                                            message:@"الأن إستريح و دورلي سيقوم بالبحث بدلاً عنك و يبلغك فور نزول أي إعلان على أي موقع يلبي طلبك" cancelButtonTitle:@"(Y)"              otherButtonTitles:@[@"تصفح النتائج؟"]          usingBlockWhenTapButton:^(OpinionzAlertView *alertView, NSInteger buttonIndex) {
+                                                                                                                if(buttonIndex == 0)
+                                                                                                                {
+                                                                                                                    NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
+                                                                                                                    for (UIViewController *aViewController in allViewControllers) {
+                                                                                                                        if ([aViewController isKindOfClass:[ViewController class]]) {
+                                                                                                                            [self.navigationController popToViewController:aViewController animated:YES];
+                                                                                                                        }
                                                                                                                     }
+                                                                                                                }else
+                                                                                                                {
+                                                                                                                    [self performSegueWithIdentifier:@"exploreSeg" sender:self];
                                                                                                                 }
                                                                                                             }];
                                                 alert.iconType = OpinionzAlertIconSuccess;

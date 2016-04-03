@@ -267,6 +267,7 @@
                         <segue destination="KQL-6N-5dk" kind="push" identifier="roomSeg" id="XyK-nO-5bn"/>
                         <segue destination="TSk-DX-Pbb" kind="push" identifier="searchWebSeg" id="Bdp-lh-LGl"/>
                         <segue destination="Eid-gq-M9Y" kind="push" identifier="showRecordedSearch" id="Dgg-zD-W3T"/>
+                        <segue destination="Eid-gq-M9Y" kind="push" identifier="exploreSeg" id="7jU-pM-P69"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AGg-wr-fuB" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -579,7 +580,7 @@
                         <outlet property="headerView" destination="8dR-vp-Uxt" id="Dz3-Ge-Snl"/>
                         <outlet property="roomesButton" destination="KB1-MI-xEy" id="oKH-IU-SGW"/>
                         <outlet property="tableVieww" destination="L8r-em-f3l" id="5IU-bd-Re7"/>
-                        <segue destination="Eid-gq-M9Y" kind="push" identifier="showRecordedSearch" id="0A0-ai-ceb"/>
+                        <segue destination="Eid-gq-M9Y" kind="push" identifier="exploreSeg" id="0A0-ai-ceb"/>
                         <segue destination="InC-cK-b4g" kind="push" identifier="subBrandsSeg" id="mhs-21-LkL"/>
                     </connections>
                 </viewController>
@@ -798,6 +799,7 @@
                         <outlet property="roomesButton" destination="h2U-lj-V4S" id="uMt-b3-G0f"/>
                         <outlet property="tableView" destination="Ia3-VH-Nf7" id="xfO-p6-1eB"/>
                         <segue destination="TSk-DX-Pbb" kind="push" identifier="searchWebSeg" id="W1J-xp-4I0"/>
+                        <segue destination="Eid-gq-M9Y" kind="push" identifier="exploreSeg" id="WuD-qA-ZUz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Pez-IE-g2C" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -887,7 +889,7 @@
                         <outlet property="keyWordTextField" destination="CUN-Wp-jgI" id="JXZ-Xm-avI"/>
                         <outlet property="roomesButton" destination="Jh1-K1-iPd" id="2O6-n3-bP0"/>
                         <outlet property="tableView" destination="Qo5-4L-bQC" id="dIt-aZ-Rck"/>
-                        <segue destination="Eid-gq-M9Y" kind="push" identifier="showRecordedSearch" id="DCZ-UF-Ul3"/>
+                        <segue destination="Eid-gq-M9Y" kind="push" identifier="exploreSeg" id="DCZ-UF-Ul3"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="s4m-iL-Ngu" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1236,7 +1238,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="4Qq-bL-TWA"/>
-        <segue reference="0A0-ai-ceb"/>
+        <segue reference="DCZ-UF-Ul3"/>
         <segue reference="Xoy-Bt-13L"/>
         <segue reference="0Eg-Et-8qs"/>
     </inferredMetricsTieBreakers>
