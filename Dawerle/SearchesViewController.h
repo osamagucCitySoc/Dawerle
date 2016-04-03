@@ -13,5 +13,6 @@
 @property (strong, nonatomic) IBOutlet UIView *resView;
 
 @property(nonatomic,strong)NSString* dataID;
+@property(nonatomic)BOOL normalBack;
 
 @end

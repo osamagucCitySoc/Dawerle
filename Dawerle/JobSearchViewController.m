@@ -37,6 +37,7 @@
     {
         SearchesViewController* dst = (SearchesViewController*)[segue destinationViewController];
         [dst setDataID:@"jobs"];
+        [dst setNormalBack:YES];
     }
 }
 

@@ -10,6 +10,7 @@
 #import "ExploreTableViewController.h"
 #import <FlatUIKit.h>
 #import "FeEqualize.h"
+#import "ViewController.h"
 #import <OpinionzAlertView/OpinionzAlertView.h>
 #import <AFNetworking/AFNetworking.h>
 @import GoogleMobileAds;
@@ -31,9 +32,10 @@
     __weak IBOutlet UITableView *tableView;
     NSIndexPath* selected;
     id<GAITracker> tracker;
+    UIButton *transparentButton;
 }
 
-@synthesize dataID;
+@synthesize dataID,normalBack;
 
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -46,10 +48,24 @@
     }
 }
 
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [transparentButton removeFromSuperview];
+}
+
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+    if(normalBack)
+    {
+        transparentButton = [[UIButton alloc] init];
+        [transparentButton setFrame:CGRectMake(0,0, 50, 40)];
+        [transparentButton setBackgroundColor:[UIColor clearColor]];
+        [transparentButton addTarget:self action:@selector(backAction:) forControlEvents:UIControlEventTouchUpInside];
+        [self.navigationController.navigationBar addSubview:transparentButton];
+    }
     if(dataSource.count == 0)
     {
         [_equalizer removeFromSuperview];
@@ -140,6 +156,16 @@
     CGRect frame2 = bannerAdHolder.frame;
     frame1.origin.x = (frame2.size.width/2)-160;
     [bannerView setFrame:frame1];
+}
+
+
+-(void)backAction:(UIBarButtonItem *)sender {
+    NSMutableArray *allViewControllers = [NSMutableArray arrayWithArray:[self.navigationController viewControllers]];
+    for (UIViewController *aViewController in allViewControllers) {
+        if ([aViewController isKindOfClass:[ViewController class]]) {
+            [self.navigationController popToViewController:aViewController animated:YES];
+        }
+    }
 }
 
 - (void)viewDidLoad {

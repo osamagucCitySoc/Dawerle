@@ -47,6 +47,7 @@
     {
         SearchesViewController* dst = (SearchesViewController*)[segue destinationViewController];
         [dst setDataID:@"cars"];
+        [dst setNormalBack:YES];
     }else if([[segue identifier]isEqualToString:@"subBrandsSeg"])
     {
         CarsSubBrandsViewController* dst = (CarsSubBrandsViewController*)[segue destinationViewController];

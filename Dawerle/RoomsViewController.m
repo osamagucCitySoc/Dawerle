@@ -44,6 +44,7 @@
     {
         SearchesViewController* dst = (SearchesViewController*)[segue destinationViewController];
         [dst setDataID:type];
+        [dst setNormalBack:YES];
     }
 }
 
