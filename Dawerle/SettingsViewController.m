@@ -7,12 +7,18 @@
 
 #import "SettingsViewController.h"
 #import <MessageUI/MessageUI.h>
+#import <AFNetworking/AFNetworking.h>
+#import <OpinionzAlertView/OpinionzAlertView.h>
 
 @interface SettingsViewController ()<MFMailComposeViewControllerDelegate>
 @property (nonatomic, strong) MFMailComposeViewController *globalMailComposer;
 @end
 
 @implementation SettingsViewController
+{
+    __weak IBOutlet UIActivityIndicatorView *busyIndicator;
+    __weak IBOutlet UISwitch *silentSoundSwitch;
+}
 
 - (void)viewDidLoad
 {
@@ -20,6 +26,32 @@
     
     self.globalMailComposer = [[MFMailComposeViewController alloc] init];
     self.globalMailComposer.mailComposeDelegate = self;
+    [busyIndicator setAlpha:0.0];
+    
+    /*if([[NSUserDefaults standardUserDefaults]objectForKey:@"deviceToken"] && [[[NSUserDefaults standardUserDefaults]objectForKey:@"deviceToken"] length]>0)
+    {
+        [busyIndicator setAlpha:1.0];
+        [silentSoundSwitch setUserInteractionEnabled:NO];
+
+        NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+        [dict setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"deviceToken"] forKey:@"token"];
+        
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        [manager POST:@"http://almasdarapp.com/Dawerle/getSilence.php" parameters:dict progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+            
+            NSString* sound = responseObject[@"sound"];
+            if([sound isEqualToString:@"n.caf"])
+            {
+                [silentSoundSwitch setOn:NO];
+            }else
+            {
+                [silentSoundSwitch setOn:YES];
+            }
+            [silentSoundSwitch setUserInteractionEnabled:YES];
+            [busyIndicator setAlpha:0.0];
+        } failure:^(NSURLSessionTask *operation, NSError *error) {}];
+    }*/
+    
     
 }
 
@@ -47,8 +79,14 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0)return 3;
-    return 1;
+    if (section == 0)
+    {
+        return 3;
+    }else if(section == 1)
+    {
+        return 1;
+    }
+    return 0;
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger) section
@@ -131,7 +169,7 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section != 1)
+    if (indexPath.section == 0)
     {
         if (indexPath.row == 0)
         {
@@ -151,16 +189,19 @@
             NSString *templateReviewURLiOS8 = @"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=APP_ID&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&type=Purple+Software";
             
             NSString *reviewURL = [templateReviewURLiOS8 stringByReplacingOccurrencesOfString:@"APP_ID" withString:[NSString stringWithFormat:@"%d", 1094778160]];
-
+            
             [[UIApplication sharedApplication] openURL:[NSURL URLWithString: reviewURL]];
             
             NSLog(@"Rate the App!");
             [tableView deselectRowAtIndexPath:indexPath animated:YES];
         }
     }
-    else
+    else if(indexPath.section == 1)
     {
-        [self performSegueWithIdentifier:@"aboutSeg" sender:self];
+        if(indexPath.row == 0)
+        {
+            [self performSegueWithIdentifier:@"aboutSeg" sender:self];
+        }
     }
 }
 
@@ -168,6 +209,54 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (IBAction)silentSwitchChanged:(UISwitch*)sender {
+    
+    if([[NSUserDefaults standardUserDefaults]objectForKey:@"deviceToken"] && [[[NSUserDefaults standardUserDefaults]objectForKey:@"deviceToken"] length]>0)
+    {
+        
+        [sender setUserInteractionEnabled:NO];
+        [busyIndicator setAlpha:1.0];
+        
+        NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+        [dict setObject:[[NSUserDefaults standardUserDefaults]objectForKey:@"deviceToken"] forKey:@"token"];
+        NSString* soundName = @"";
+        if(!sender.isOn)
+        {
+            soundName = @"n.caf";
+        }else
+        {
+            soundName = @"";
+        }
+        [dict setObject:soundName forKey:@"sound"];
+        
+        
+        AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+        [manager POST:@"http://almasdarapp.com/Dawerle/storeSilence.php" parameters:dict progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+            [UIView transitionWithView:busyIndicator
+                              duration:0.2f
+                               options:UIViewAnimationOptionTransitionCrossDissolve
+                            animations:^{
+                                [busyIndicator setAlpha:0.0];
+                                [sender setUserInteractionEnabled:YES];
+                            } completion:^(BOOL finished){}];
+            
+        } failure:^(NSURLSessionTask *operation, NSError *error) {
+            OpinionzAlertView *alert = [[OpinionzAlertView alloc]initWithTitle:@"حدث خلل" message:@"يرجى المحاولة مرة أحرى" cancelButtonTitle:@"OK" otherButtonTitles:@[]];
+            alert.iconType = OpinionzAlertIconWarning;
+            alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
+            
+            [UIView transitionWithView:busyIndicator
+                              duration:0.2f
+                               options:UIViewAnimationOptionTransitionCrossDissolve
+                            animations:^{
+                                [busyIndicator setAlpha:0.0];
+                                [sender setUserInteractionEnabled:YES];
+                                [sender setOn:![sender isOn]];
+                            } completion:^(BOOL finished){}];
+        }];
+    }
+    
 }
 
 

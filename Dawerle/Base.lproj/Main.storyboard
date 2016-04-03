@@ -45,6 +45,7 @@
             <string>DroidArabicKufi</string>
             <string>DroidArabicKufi</string>
             <string>DroidArabicKufi</string>
+            <string>DroidArabicKufi</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -347,7 +348,7 @@
                             <tableViewSection headerTitle="عام" footerTitle="--" id="M9h-zU-rn2">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="myCell" rowHeight="60" id="4Iw-19-aTb">
-                                        <rect key="frame" x="0.0" y="49.5" width="414" height="60"/>
+                                        <rect key="frame" x="0.0" y="113.5" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="4Iw-19-aTb" id="EPR-XH-CPQ">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="59.5"/>
@@ -372,7 +373,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="myCell" rowHeight="60" id="8pY-wm-ZpN">
-                                        <rect key="frame" x="0.0" y="109.5" width="414" height="60"/>
+                                        <rect key="frame" x="0.0" y="173.5" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8pY-wm-ZpN" id="62T-HH-htH">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="59.5"/>
@@ -397,7 +398,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="myCell" rowHeight="60" id="zj7-L0-Zfe">
-                                        <rect key="frame" x="0.0" y="169.5" width="414" height="60"/>
+                                        <rect key="frame" x="0.0" y="233.5" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zj7-L0-Zfe" id="xc8-tZ-LcI">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="59.5"/>
@@ -426,7 +427,7 @@
                             <tableViewSection headerTitle="المزيد" footerTitle="--" id="Uoo-1t-Ioi">
                                 <cells>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="myCell" rowHeight="60" id="PiL-zR-nh3">
-                                        <rect key="frame" x="0.0" y="296" width="414" height="60"/>
+                                        <rect key="frame" x="0.0" y="360" width="414" height="60"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="PiL-zR-nh3" id="R5G-oc-FPL">
                                             <rect key="frame" x="0.0" y="0.0" width="414" height="59.5"/>
@@ -443,10 +444,44 @@
                                                     <rect key="frame" x="14" y="21" width="16" height="16"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="about-icon.png" id="xjm-Nm-HjK">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="app-icon.png" id="xjm-Nm-HjK">
                                                     <rect key="frame" x="366" y="10" width="40" height="40"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="myCell" rowHeight="60" id="RyP-9O-KKq">
+                                        <rect key="frame" x="0.0" y="420" width="414" height="60"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RyP-9O-KKq" id="cdj-1s-rJy">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="59.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="إلغاء صوت التنبيهات" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="a54-T4-3bP">
+                                                    <rect key="frame" x="15" y="4" width="343" height="51"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="DroidArabicKufi" family="Droid Arabic Kufi" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="No Audio-96.png" id="I82-fp-Hn2">
+                                                    <rect key="frame" x="366" y="10" width="40" height="40"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
+                                                <switch opaque="NO" tag="3" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="xEp-Cu-Xyj">
+                                                    <rect key="frame" x="8" y="14" width="51" height="31"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <color key="onTintColor" red="0.062745098040000002" green="0.52156862749999999" blue="0.78039215689999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <connections>
+                                                        <action selector="silentSwitchChanged:" destination="lt5-vl-ZMq" eventType="valueChanged" id="pR2-PT-ne3"/>
+                                                    </connections>
+                                                </switch>
+                                                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" id="WsG-Nv-TLl">
+                                                    <rect key="frame" x="65" y="20" width="20" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </activityIndicatorView>
                                             </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -460,6 +495,8 @@
                     </tableView>
                     <navigationItem key="navigationItem" title="الإعدادات" id="4Rw-ig-fe3"/>
                     <connections>
+                        <outlet property="busyIndicator" destination="WsG-Nv-TLl" id="hDw-nf-enk"/>
+                        <outlet property="silentSoundSwitch" destination="xEp-Cu-Xyj" id="jiK-jF-bSW"/>
                         <segue destination="Bif-0u-alj" kind="push" identifier="aboutSeg" id="OtK-rW-EaB"/>
                         <segue destination="KyQ-l8-fBe" kind="modal" identifier="helpSeg" id="0Eg-Et-8qs"/>
                     </connections>
@@ -1177,7 +1214,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="about-icon.png" width="40" height="40"/>
+        <image name="No Audio-96.png" width="96" height="96"/>
         <image name="add-circular-button.png" width="34" height="34"/>
         <image name="app-icon.png" width="160" height="160"/>
         <image name="app-logo.png" width="159" height="172"/>
@@ -1199,8 +1236,8 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="4Qq-bL-TWA"/>
-        <segue reference="Ndx-2i-aPz"/>
-        <segue reference="DCZ-UF-Ul3"/>
+        <segue reference="0A0-ai-ceb"/>
         <segue reference="Xoy-Bt-13L"/>
+        <segue reference="0Eg-Et-8qs"/>
     </inferredMetricsTieBreakers>
 </document>

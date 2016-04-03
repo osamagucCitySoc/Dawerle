@@ -286,6 +286,7 @@
 		E87710DF1C5A61120079BF0D /* carsWaset.json in Resources */ = {isa = PBXBuildFile; fileRef = E87710DC1C5A61120079BF0D /* carsWaset.json */; };
 		E87710E11C5A611B0079BF0D /* carsQ8.json in Resources */ = {isa = PBXBuildFile; fileRef = E87710E01C5A611B0079BF0D /* carsQ8.json */; };
 		E87D53651CA40F100092A922 /* combinedAreasSA.json in Resources */ = {isa = PBXBuildFile; fileRef = E87D53641CA40F100092A922 /* combinedAreasSA.json */; };
+		E89B902F1CB0EAC30003A1AC /* No Audio-96.png in Resources */ = {isa = PBXBuildFile; fileRef = E89B902E1CB0EAC30003A1AC /* No Audio-96.png */; };
 		E8B54D151C56B2B100C2249F /* RoomsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B54D141C56B2B100C2249F /* RoomsViewController.m */; };
 		E8B54D181C56B6F300C2249F /* Popup.m in Sources */ = {isa = PBXBuildFile; fileRef = E8B54D171C56B6F300C2249F /* Popup.m */; };
 		E8D8CB921C9D1CD900DEFB2D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E8D8CB911C9D1CD900DEFB2D /* GoogleService-Info.plist */; };
@@ -598,6 +599,7 @@
 		E87710DC1C5A61120079BF0D /* carsWaset.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = carsWaset.json; sourceTree = "<group>"; };
 		E87710E01C5A611B0079BF0D /* carsQ8.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = carsQ8.json; sourceTree = "<group>"; };
 		E87D53641CA40F100092A922 /* combinedAreasSA.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = combinedAreasSA.json; sourceTree = "<group>"; };
+		E89B902E1CB0EAC30003A1AC /* No Audio-96.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "No Audio-96.png"; sourceTree = "<group>"; };
 		E8B54D131C56B2B100C2249F /* RoomsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoomsViewController.h; sourceTree = "<group>"; };
 		E8B54D141C56B2B100C2249F /* RoomsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoomsViewController.m; sourceTree = "<group>"; };
 		E8B54D161C56B6F300C2249F /* Popup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Popup.h; sourceTree = "<group>"; };
@@ -646,6 +648,7 @@
 		1E59C1F41C8EDEDE00B229A2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E89B902E1CB0EAC30003A1AC /* No Audio-96.png */,
 				1EAFBE7C1CA8167B00E01891 /* sell-icon.png */,
 				1EAFBE7D1CA8167B00E01891 /* sell-icon@2x.png */,
 				1EAFBE7E1CA8167B00E01891 /* sell-icon@3x.png */,
@@ -1291,6 +1294,7 @@
 				1E1E8FF81C917396007E0700 /* LandRover.png in Resources */,
 				1E1C58C01C91AC90009BD677 /* help-icon@2x.png in Resources */,
 				1E1E8FD81C917396007E0700 /* geely@2x.png in Resources */,
+				E89B902F1CB0EAC30003A1AC /* No Audio-96.png in Resources */,
 				E808750C1CA1A2F900D4F711 /* proton@2x.png in Resources */,
 				E83377A11CA13AEA003A5391 /* smart@2x.png in Resources */,
 				1E1E8FB61C917396007E0700 /* chery.png in Resources */,
