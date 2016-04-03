@@ -31,28 +31,13 @@
     [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
     [[UIApplication sharedApplication] registerForRemoteNotifications];
     
+    
+    if(![[NSUserDefaults standardUserDefaults] objectForKey:@"sound"])
+    {
+        [[NSUserDefaults standardUserDefaults]setObject:@"0" forKey:@"sound"];
+    }
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"numberOfNumbers"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
-    
-    
-    BOOL remoteNotificationsEnabled = false, noneEnabled,alertsEnabled, badgesEnabled, soundsEnabled;
-    
-    if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
-        // iOS8+
-        remoteNotificationsEnabled = [UIApplication sharedApplication].isRegisteredForRemoteNotifications;
-        
-        UIUserNotificationSettings *userNotificationSettings = [UIApplication sharedApplication].currentUserNotificationSettings;
-        
-        noneEnabled = userNotificationSettings.types == UIUserNotificationTypeNone;
-        alertsEnabled = userNotificationSettings.types & UIUserNotificationTypeAlert;
-        badgesEnabled = userNotificationSettings.types & UIUserNotificationTypeBadge;
-        soundsEnabled = userNotificationSettings.types & UIUserNotificationTypeSound;
-        
-    }
-    if ([[UIApplication sharedApplication] respondsToSelector:@selector(registerUserNotificationSettings:)]) {
-        NSLog(@"Remote notifications enabled: %@", remoteNotificationsEnabled ? @"YES" : @"NO");
-    }
     
     if (launchOptions != nil) {
         // Launched from push notification

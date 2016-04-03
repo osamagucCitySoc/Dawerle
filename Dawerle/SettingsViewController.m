@@ -28,7 +28,7 @@
     self.globalMailComposer.mailComposeDelegate = self;
     [busyIndicator setAlpha:0.0];
     
-    /*if([[NSUserDefaults standardUserDefaults]objectForKey:@"deviceToken"] && [[[NSUserDefaults standardUserDefaults]objectForKey:@"deviceToken"] length]>0)
+    if([[NSUserDefaults standardUserDefaults]objectForKey:@"deviceToken"] && [[[NSUserDefaults standardUserDefaults]objectForKey:@"deviceToken"] length]>0)
     {
         [busyIndicator setAlpha:1.0];
         [silentSoundSwitch setUserInteractionEnabled:NO];
@@ -50,10 +50,9 @@
             [silentSoundSwitch setUserInteractionEnabled:YES];
             [busyIndicator setAlpha:0.0];
         } failure:^(NSURLSessionTask *operation, NSError *error) {}];
-    }*/
-    
-    
+    }
 }
+
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -84,7 +83,7 @@
         return 3;
     }else if(section == 1)
     {
-        return 1;
+        return 2;
     }
     return 0;
 }
