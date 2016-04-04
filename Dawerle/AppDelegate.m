@@ -10,6 +10,10 @@
 #import "ShowSearchViewController.h"
 #import <OpinionzAlertView/OpinionzAlertView.h>
 #import <Google/Analytics.h>
+#import "libpushwizard/PushWizard.h"
+
+static NSString *kAppKey = @"570232fea3fc275f288b470f";
+#define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
 @interface AppDelegate ()<UIAlertViewDelegate>
 
@@ -42,9 +46,13 @@
     if (launchOptions != nil) {
         // Launched from push notification
         NSDictionary *userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
-        [self performSelector:@selector(searchNotification:) withObject:userInfo afterDelay:1.0];
-        [self searchNotification:userInfo];
-        
+        if([[[userInfo objectForKey:@"aps"] allKeys] containsObject:@"i"])
+        {
+            [self performSelector:@selector(searchNotification:) withObject:userInfo afterDelay:1.0];
+        }else
+        {
+            [self application:application didReceiveRemoteNotification:userInfo];
+        }
     }
     
     NSError *configureError;
@@ -54,7 +62,8 @@
     // Optional: configure GAI options.
     GAI *gai = [GAI sharedInstance];
     gai.trackUncaughtExceptions = YES;  // report uncaught exceptions
-    gai.logger.logLevel = kGAILogLevelVerbose;  // remove before app release
+    //gai.logger.logLevel = kGAILogLevelVerbose;  // remove before app release
+   
     
     
     return YES;
@@ -89,6 +98,7 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    [PushWizard endSession];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -115,8 +125,17 @@
                              stringByReplacingOccurrencesOfString: @" " withString: @""];
     [[NSUserDefaults standardUserDefaults]setObject:deviceTokenn forKey:@"deviceToken"];
     [[NSUserDefaults standardUserDefaults]synchronize];
+    
+    [PushWizard startWithToken:deviceToken andAppKey:kAppKey andValues:nil];
 
+    
 }
+
+- (void)applicationDidBecomeActive:(UIApplication *)application {
+    // You can send a custom NSArray with max 100 NSString values for later filtering
+    [PushWizard updateSessionWithValues:nil];
+}
+
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
     if([[[userInfo objectForKey:@"aps"] allKeys] containsObject:@"i"])
@@ -127,8 +146,7 @@
         [self searchNotification:userInfo];
     }else
     {
-        UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"Dawerle" message:[[userInfo objectForKey:@"aps"] objectForKey:@"alert"] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
+        [PushWizard handleNotification:userInfo processOnlyStatisticalData:NO];
     }
     
     // Additional push notification handling code should be performed here

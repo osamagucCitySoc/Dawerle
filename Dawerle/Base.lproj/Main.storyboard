@@ -324,6 +324,10 @@
                                 <color key="textColor" red="0.33946439344188484" green="0.33946439344188484" blue="0.33946439344188484" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="deal-logo.png" id="rLW-gE-kVi">
+                                <rect key="frame" x="79" y="714" width="16" height="16"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" red="0.94509803920000002" green="0.94509803920000002" blue="0.94509803920000002" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
@@ -1225,6 +1229,7 @@
         <image name="cars.png" width="400" height="400"/>
         <image name="close-circular-button-of-a-cross.png" width="34" height="34"/>
         <image name="contact-us-icon.png" width="40" height="40"/>
+        <image name="deal-logo.png" width="45" height="59"/>
         <image name="help-1.png" width="260" height="150"/>
         <image name="help-2.png" width="260" height="150"/>
         <image name="help-3.png" width="260" height="150"/>

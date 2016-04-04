@@ -278,6 +278,8 @@
 		E859267F1C5A654500560C02 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E859267E1C5A654500560C02 /* SystemConfiguration.framework */; };
 		E85926811C5A654D00560C02 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E85926801C5A654D00560C02 /* libz.tbd */; };
 		E85926851C5A660800560C02 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E85926841C5A660800560C02 /* libsqlite3.0.tbd */; };
+		E860D4DE1CB26B31006FD1B5 /* libPushWizard.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E860D4DB1CB26B31006FD1B5 /* libPushWizard.a */; };
+		E860D4DF1CB26B31006FD1B5 /* readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = E860D4DD1CB26B31006FD1B5 /* readme.txt */; };
 		E862BD591C8C25BC00541240 /* SearchesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E862BD581C8C25BC00541240 /* SearchesViewController.m */; };
 		E862BD5E1C8C4C7C00541240 /* SplashScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E862BD5D1C8C4C7C00541240 /* SplashScreenViewController.m */; };
 		E87710D91C5A558A0079BF0D /* CarsBrandsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E87710D81C5A558A0079BF0D /* CarsBrandsViewController.m */; };
@@ -588,6 +590,9 @@
 		E85926801C5A654D00560C02 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		E85926821C5A655500560C02 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		E85926841C5A660800560C02 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		E860D4DB1CB26B31006FD1B5 /* libPushWizard.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPushWizard.a; sourceTree = "<group>"; };
+		E860D4DC1CB26B31006FD1B5 /* PushWizard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushWizard.h; sourceTree = "<group>"; };
+		E860D4DD1CB26B31006FD1B5 /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
 		E862BD571C8C25BC00541240 /* SearchesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchesViewController.h; sourceTree = "<group>"; };
 		E862BD581C8C25BC00541240 /* SearchesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchesViewController.m; sourceTree = "<group>"; };
 		E862BD5C1C8C4C7C00541240 /* SplashScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplashScreenViewController.h; sourceTree = "<group>"; };
@@ -634,6 +639,7 @@
 				E859267D1C5A653F00560C02 /* StoreKit.framework in Frameworks */,
 				E859267B1C5A653B00560C02 /* Security.framework in Frameworks */,
 				E85926771C5A653100560C02 /* CoreGraphics.framework in Frameworks */,
+				E860D4DE1CB26B31006FD1B5 /* libPushWizard.a in Frameworks */,
 				E85926781C5A653100560C02 /* CoreLocation.framework in Frameworks */,
 				E85926791C5A653100560C02 /* QuartzCore.framework in Frameworks */,
 				E85926731C5A652000560C02 /* CFNetwork.framework in Frameworks */,
@@ -751,6 +757,16 @@
 				E81DB8A91C8AE4B900826EFE /* Info-500.png */,
 			);
 			name = icons;
+			sourceTree = "<group>";
+		};
+		E860D4DA1CB26B31006FD1B5 /* libpushwizard */ = {
+			isa = PBXGroup;
+			children = (
+				E860D4DB1CB26B31006FD1B5 /* libPushWizard.a */,
+				E860D4DC1CB26B31006FD1B5 /* PushWizard.h */,
+				E860D4DD1CB26B31006FD1B5 /* readme.txt */,
+			);
+			path = libpushwizard;
 			sourceTree = "<group>";
 		};
 		E8875A4D1C7F9D3700156A4E /* cars */ = {
@@ -955,6 +971,7 @@
 		E8D9E35C1C56405400D7F5E1 /* Dawerle */ = {
 			isa = PBXGroup;
 			children = (
+				E860D4DA1CB26B31006FD1B5 /* libpushwizard */,
 				E8D8CB911C9D1CD900DEFB2D /* GoogleService-Info.plist */,
 				1E59C1F41C8EDEDE00B229A2 /* Images */,
 				E81DB8AB1C8AE4C300826EFE /* icons */,
@@ -1120,6 +1137,7 @@
 				1E1E8FA71C917396007E0700 /* AstonMartin.png in Resources */,
 				1E59C1FF1C8EE72D00B229A2 /* app-logo@2x.png in Resources */,
 				1E1E8FD71C917396007E0700 /* geely.png in Resources */,
+				E860D4DF1CB26B31006FD1B5 /* readme.txt in Resources */,
 				1E1E90011C91792F007E0700 /* add-circular-button.png in Resources */,
 				1E1E8FDC1C917396007E0700 /* gmc@3x.png in Resources */,
 				E82DD3E21CA0040E008CA31D /* mercury@2x.png in Resources */,
@@ -1476,8 +1494,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: HESHAM ALMENAYYE (PW2L4N8855)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: HESHAM ALMENAYYE (PW2L4N8855)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: HESHAM ALMENAYYE (F3KFXCXQ7F)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: HESHAM ALMENAYYE (F3KFXCXQ7F)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1499,7 +1517,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "4976cc28-14bb-491b-8089-6b0708893cde";
+				PROVISIONING_PROFILE = "30fc9094-fd86-47e7-b8d5-a8d872e80fb2";
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1521,8 +1539,8 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: HESHAM ALMENAYYE (PW2L4N8855)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: HESHAM ALMENAYYE (PW2L4N8855)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: HESHAM ALMENAYYE (F3KFXCXQ7F)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: HESHAM ALMENAYYE (F3KFXCXQ7F)";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1538,7 +1556,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "4976cc28-14bb-491b-8089-6b0708893cde";
+				PROVISIONING_PROFILE = "30fc9094-fd86-47e7-b8d5-a8d872e80fb2";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1549,7 +1567,7 @@
 			baseConfigurationReference = DA92531E76F7F131546836D8 /* Pods-Dawerle.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: HESHAM ALMENAYYE (PW2L4N8855)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: HESHAM ALMENAYYE (F3KFXCXQ7F)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1561,11 +1579,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Dawerle",
+					"$(PROJECT_DIR)/Dawerle/libpushwizard",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = dealcom.dawerle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4976cc28-14bb-491b-8089-6b0708893cde";
+				PROVISIONING_PROFILE = "30fc9094-fd86-47e7-b8d5-a8d872e80fb2";
 			};
 			name = Debug;
 		};
@@ -1574,7 +1593,7 @@
 			baseConfigurationReference = ACA9BE8C26890975B19B7438 /* Pods-Dawerle.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: HESHAM ALMENAYYE (PW2L4N8855)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: HESHAM ALMENAYYE (F3KFXCXQ7F)";
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1586,11 +1605,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Dawerle",
+					"$(PROJECT_DIR)/Dawerle/libpushwizard",
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = dealcom.dawerle;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "4976cc28-14bb-491b-8089-6b0708893cde";
+				PROVISIONING_PROFILE = "30fc9094-fd86-47e7-b8d5-a8d872e80fb2";
 			};
 			name = Release;
 		};
