@@ -61,6 +61,7 @@
     [super viewDidLoad];
     
     [[NSUserDefaults standardUserDefaults] setObject:[[NSArray alloc] init] forKey:@"selectedCars"];
+    [[NSUserDefaults standardUserDefaults] setObject:[[NSArray alloc] init] forKey:@"selectedCarsString"];
     [[NSUserDefaults standardUserDefaults]synchronize];
     
     [self.navigationController.navigationBar setTitleTextAttributes:

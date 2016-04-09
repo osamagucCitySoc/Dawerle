@@ -16,8 +16,6 @@
 
 @implementation CarsSubBrandsViewController
 {
-    __weak IBOutlet UIView *bannerAdHolder;
-    GADBannerView* bannerView;
     IBOutlet UIView *headerView;
     __weak IBOutlet UITableView *tableVieww;
     NSMutableArray* dataSource;
@@ -26,6 +24,7 @@
     NSString* year;
     __weak IBOutlet UISearchBar *searchBar;
     NSMutableArray* indexSet;
+    NSMutableArray* brandsSet;
     id<GAITracker> tracker;
 }
 
@@ -37,6 +36,7 @@
     
     
     indexSet = [[NSMutableArray alloc]initWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"selectedCars"]];
+    brandsSet = [[NSMutableArray alloc]initWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"selectedCarsString"]];
     
     [self.navigationController.navigationBar setTitleTextAttributes:
      @{NSForegroundColorAttributeName:[UIColor whiteColor],
@@ -58,18 +58,20 @@
     [tableVieww reloadData];
     [tableVieww setNeedsDisplay];
     
-    
-    bannerView = [[GADBannerView alloc]initWithAdSize:kGADAdSizeBanner];
-    bannerView.adUnitID = @"ca-app-pub-3916999996422088/5493912657";
-    bannerView.rootViewController = self;
-    GADRequest* request = [[GADRequest alloc]init];
-    request.testDevices = @[ @"c89d60e378a6e6f767031c551ca757a7" ];
-    [bannerView loadRequest:request];
-    [bannerAdHolder addSubview:bannerView];
-    
     tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:@"SubBrandsViewController"];
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self
+                                   action:@selector(dismissKeyboard)];
+    
+    [self.view addGestureRecognizer:tap];
+    [tableVieww addGestureRecognizer:tap];
 
+}
+
+-(void)dismissKeyboard {
+    [searchBar resignFirstResponder];
 }
 
 
@@ -87,13 +89,9 @@
     [arr sortUsingDescriptors:[NSArray arrayWithObject:aSortDescriptor]];
     [dict setObject:arr forKey:@"cats"];
     [dataSource replaceObjectAtIndex:0 withObject:dict];
+    origDataSource = [[NSMutableArray alloc]initWithArray:dataSource];
     [indices addIndex:0];
     [tableVieww insertSections:indices withRowAnimation:UITableViewRowAnimationTop];
-    
-    CGRect frame1 = bannerView.frame;
-    CGRect frame2 = bannerAdHolder.frame;
-    frame1.origin.x = (frame2.size.width/2)-160;
-    [bannerView setFrame:frame1];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -134,16 +132,6 @@
     [label setText:[[dataSource objectAtIndex:section] objectForKey:@"brand"]];
     [label setFont: [UIFont fontWithName:@"Courier-bold" size:19.0]];
     [view addSubview:label];
-    
-    UITapGestureRecognizer *singleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureHandler:)];
-    //[singleTapRecognizer setDelegate:self];
-    singleTapRecognizer.numberOfTouchesRequired = 1;
-    singleTapRecognizer.numberOfTapsRequired = 1;
-    view.tag = section;
-    [view addGestureRecognizer:singleTapRecognizer];
-    
-    
-    
     return view;
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -151,10 +139,6 @@
     return 60.0f;
 }
 
--(void) gestureHandler:(UIGestureRecognizer *)gestureRecognizer
-{
-    NSLog (@"%ld",[gestureRecognizer.view tag]);
-}
 
 -(UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -176,38 +160,52 @@
     [(UILabel*)[cell viewWithTag:1]setText:label];
     [(UIImageView*)[cell viewWithTag:2]setImage:[UIImage imageNamed:@"mark-off.png"]];
     
-    NSIndexPath* realIndex = [NSIndexPath indexPathForRow:indexPath.row inSection:sectionIndex];
-    
-    for(NSDictionary* path in indexSet)
+    if([brandsSet containsObject:label])
     {
-        if([[path objectForKey:@"section"] intValue] == realIndex.section && [[path objectForKey:@"row"] intValue] == realIndex.row)
-        {
-            [UIView transitionWithView:(UIImageView*)[cell viewWithTag:2]
-                              duration:0.2f
-                               options:UIViewAnimationOptionTransitionCrossDissolve
-                            animations:^{
-                                [(UIImageView*)[cell viewWithTag:2]setImage:[UIImage imageNamed:@"mark-on.png"]];
-                            } completion:NULL];
-            break;
-        }
+        [UIView transitionWithView:(UIImageView*)[cell viewWithTag:2]
+                          duration:0.2f
+                           options:UIViewAnimationOptionTransitionCrossDissolve
+                        animations:^{
+                            [(UIImageView*)[cell viewWithTag:2]setImage:[UIImage imageNamed:@"mark-on.png"]];
+                        } completion:NULL];
     }
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSIndexPath* realIndex = [NSIndexPath indexPathForRow:indexPath.row inSection:sectionIndex];
-    for(int i = 0 ; i < indexSet.count ; i++)
+    NSString* label = [[[[dataSource objectAtIndex:indexPath.section] objectForKey:@"cats"]objectAtIndex:indexPath.row] objectForKey:@"sub"];
+    
+    for(int i = 0 ; i < [[[origDataSource objectAtIndex:indexPath.section] objectForKey:@"cats"] count] ; i++)
     {
-        NSDictionary* path = [indexSet objectAtIndex:i];
-        
-        if([[path objectForKey:@"section"] intValue] == realIndex.section && [[path objectForKey:@"row"] intValue] == realIndex.row)
+        NSDictionary* dict = [[[origDataSource objectAtIndex:indexPath.section] objectForKey:@"cats"] objectAtIndex:i];
+        if([[dict objectForKey:@"sub"]isEqualToString:label])
         {
-            [indexSet removeObjectAtIndex:i];
+            NSIndexPath* realIndex = [NSIndexPath indexPathForRow:i inSection:sectionIndex];
+            for(int i = 0 ; i < indexSet.count ; i++)
+            {
+                NSDictionary* path = [indexSet objectAtIndex:i];
+                
+                if([[path objectForKey:@"section"] intValue] == realIndex.section && [[path objectForKey:@"row"] intValue] == realIndex.row)
+                {
+                    [indexSet removeObjectAtIndex:i];
+                    break;
+                }
+            }
             break;
         }
     }
 
+    
+    for(int i = 0 ; i < brandsSet.count ; i++)
+    {
+        if([[brandsSet objectAtIndex:i]isEqualToString:label])
+        {
+            [brandsSet removeObjectAtIndex:i];
+            break;
+        }
+    }
+    
     [UIView transitionWithView:(UIImageView*)[[tableVieww cellForRowAtIndexPath:indexPath] viewWithTag:2]
                       duration:0.2f
                        options:UIViewAnimationOptionTransitionCrossDissolve
@@ -217,8 +215,20 @@
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary* realIndex = [[NSDictionary alloc]initWithObjects:@[@(sectionIndex),@(indexPath.row)] forKeys:@[@"section",@"row"]];
-    [indexSet addObject:realIndex];
+    NSString* label = [[[[dataSource objectAtIndex:indexPath.section] objectForKey:@"cats"]objectAtIndex:indexPath.row] objectForKey:@"sub"];
+
+    for(int i = 0 ; i < [[[origDataSource objectAtIndex:indexPath.section] objectForKey:@"cats"] count] ; i++)
+    {
+        NSDictionary* dict = [[[origDataSource objectAtIndex:indexPath.section] objectForKey:@"cats"] objectAtIndex:i];
+        if([[dict objectForKey:@"sub"]isEqualToString:label])
+        {
+            NSDictionary* realIndex = [[NSDictionary alloc]initWithObjects:@[@(sectionIndex),@(i)] forKeys:@[@"section",@"row"]];
+            [indexSet addObject:realIndex];
+            break;
+        }
+    }
+    
+    [brandsSet addObject:label];
     
     [UIView transitionWithView:(UIImageView*)[[tableVieww cellForRowAtIndexPath:indexPath] viewWithTag:2]
                       duration:0.2f
@@ -237,7 +247,51 @@
 {
     [super viewWillDisappear:animated];
     [[NSUserDefaults standardUserDefaults] setObject:indexSet forKey:@"selectedCars"];
+    [[NSUserDefaults standardUserDefaults] setObject:brandsSet forKey:@"selectedCarsString"];
     [[NSUserDefaults standardUserDefaults]synchronize];
+}
+
+
+#pragma mark search delegate
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
+    if(searchText.length == 0)
+    {
+        dataSource = [[NSMutableArray alloc]initWithArray:origDataSource];
+    }else
+    {
+        dataSource = [[NSMutableArray alloc]initWithArray:origDataSource];
+        NSMutableDictionary* dict = [[NSMutableDictionary alloc]initWithDictionary:[dataSource objectAtIndex:0]];
+        NSMutableArray* arr = [[NSMutableArray alloc]initWithArray:[dict objectForKey:@"cats"]];
+        NSMutableArray* arr2 = [[NSMutableArray alloc]init];
+        for(NSDictionary* dict in arr)
+        {
+            if([[[dict objectForKey:@"sub"] lowercaseString]containsString:[searchText lowercaseString]])
+            {
+                [arr2 addObject:dict];
+            }else
+            {
+                for(NSString* string in [dict objectForKey:@"all"])
+                {
+                    if([[string lowercaseString] containsString:[searchText lowercaseString]])
+                    {
+                        [arr2 addObject:dict];
+                        break;
+                    }
+                }
+            }
+        }
+        [dict setObject:arr2 forKey:@"cats"];
+        [dataSource replaceObjectAtIndex:0 withObject:dict];
+    }
+    
+    [tableVieww reloadData];
+    [tableVieww setNeedsDisplay];
+}
+
+- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBarr
+{
+    [searchBarr resignFirstResponder];
 }
 
 @end
