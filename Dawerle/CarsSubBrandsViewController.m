@@ -9,6 +9,8 @@
 #import "CarsSubBrandsViewController.h"
 @import GoogleMobileAds;
 #import <Google/Analytics.h>
+#import "FUIButton.h"
+#import <FlatUIKit.h>
 
 @interface CarsSubBrandsViewController ()<UITableViewDataSource,UITableViewDelegate,UISearchBarDelegate>
 
@@ -26,6 +28,8 @@
     NSMutableArray* indexSet;
     NSMutableArray* brandsSet;
     id<GAITracker> tracker;
+    __weak IBOutlet FUIButton *submitButton;
+    int selected;
 }
 
 @synthesize selectedCarBrand,sectionIndex;
@@ -61,13 +65,17 @@
     tracker = [[GAI sharedInstance] defaultTracker];
     [tracker set:kGAIScreenName value:@"SubBrandsViewController"];
     
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
-                                   initWithTarget:self
-                                   action:@selector(dismissKeyboard)];
     
-    [self.view addGestureRecognizer:tap];
-    [tableVieww addGestureRecognizer:tap];
+    submitButton.buttonColor = [UIColor colorFromHexCode:@"34a853"];
+    submitButton.shadowColor = [UIColor greenSeaColor];
+    submitButton.shadowHeight = 0.0f;
+    submitButton.cornerRadius = 0.0f;
+    submitButton.alpha = 0.0f;
 
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"submitCar"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    
+    selected = 0;
 }
 
 -(void)dismissKeyboard {
@@ -212,9 +220,24 @@
                     animations:^{
                         [(UIImageView*)[[tableVieww cellForRowAtIndexPath:indexPath] viewWithTag:2]setImage:[UIImage imageNamed:@"mark-off.png"]];
                     } completion:NULL];
+    
+    
+    selected--;
+    if(selected <= 0 && submitButton.alpha == 1)
+    {
+        [UIView transitionWithView:submitButton
+                          duration:0.2f
+                           options:UIViewAnimationOptionTransitionCrossDissolve
+                        animations:^{
+                            [submitButton setAlpha:0.0f];
+                        } completion:NULL];
+    }
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    
+    selected++;
+    
     NSString* label = [[[[dataSource objectAtIndex:indexPath.section] objectForKey:@"cats"]objectAtIndex:indexPath.row] objectForKey:@"sub"];
 
     for(int i = 0 ; i < [[[origDataSource objectAtIndex:indexPath.section] objectForKey:@"cats"] count] ; i++)
@@ -236,6 +259,16 @@
                     animations:^{
                         [(UIImageView*)[[tableVieww cellForRowAtIndexPath:indexPath] viewWithTag:2]setImage:[UIImage imageNamed:@"mark-on.png"]];
                     } completion:NULL];
+    
+    if(selected > 0 && submitButton.alpha == 0)
+    {
+        [UIView transitionWithView:submitButton
+                          duration:0.2f
+                           options:UIViewAnimationOptionTransitionCrossDissolve
+                        animations:^{
+                            [submitButton setAlpha:1.0f];
+                        } completion:NULL];
+    }
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -292,6 +325,12 @@
 - (void)searchBarSearchButtonClicked:(UISearchBar *)searchBarr
 {
     [searchBarr resignFirstResponder];
+}
+
+- (IBAction)submitClicked:(id)sender {
+    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"submitCar"];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 @end

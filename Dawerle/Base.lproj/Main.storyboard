@@ -46,6 +46,7 @@
             <string>DroidArabicKufi</string>
             <string>DroidArabicKufi</string>
             <string>DroidArabicKufi</string>
+            <string>DroidArabicKufi</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -1185,6 +1186,15 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="iRS-UI-7lw" customClass="FUIButton">
+                                <rect key="frame" x="0.0" y="686" width="414" height="50"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" name="DroidArabicKufi" family="Droid Arabic Kufi" pointSize="20"/>
+                                <state key="normal" title="دورلي !"/>
+                                <connections>
+                                    <action selector="submitClicked:" destination="InC-cK-b4g" eventType="touchUpInside" id="vK2-i3-PFL"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
@@ -1193,6 +1203,7 @@
                     <connections>
                         <outlet property="headerView" destination="8dR-vp-Uxt" id="dat-3v-OGO"/>
                         <outlet property="searchBar" destination="her-ck-tNh" id="EVG-tf-Q6g"/>
+                        <outlet property="submitButton" destination="iRS-UI-7lw" id="eKZ-eJ-Jq7"/>
                         <outlet property="tableVieww" destination="CaN-8s-run" id="ndf-A4-ypJ"/>
                     </connections>
                 </viewController>

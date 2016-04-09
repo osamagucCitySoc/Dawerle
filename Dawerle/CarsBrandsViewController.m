@@ -62,6 +62,7 @@
     
     [[NSUserDefaults standardUserDefaults] setObject:[[NSArray alloc] init] forKey:@"selectedCars"];
     [[NSUserDefaults standardUserDefaults] setObject:[[NSArray alloc] init] forKey:@"selectedCarsString"];
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"submitCar"];
     [[NSUserDefaults standardUserDefaults]synchronize];
     
     [self.navigationController.navigationBar setTitleTextAttributes:
@@ -178,6 +179,13 @@
     CGRect frame2 = bannerAdHolder.frame;
     frame1.origin.x = (frame2.size.width/2)-160;
     [bannerView setFrame:frame1];
+    
+    if([[NSUserDefaults standardUserDefaults] boolForKey:@"submitCar"])
+    {
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"submitCar"];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+        [self submitClicked:nil];
+    }
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
