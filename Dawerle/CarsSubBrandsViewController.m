@@ -46,8 +46,8 @@
      @{NSForegroundColorAttributeName:[UIColor whiteColor],
        NSFontAttributeName:[UIFont fontWithName:@"DroidArabicKufi-Bold" size:19]}];
     
-    [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)
-                                                         forBarMetrics:UIBarMetricsDefault];
+   // [[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)
+     //                                                    forBarMetrics:UIBarMetricsDefault];
 
     
     dataSource = [[NSMutableArray alloc]init];

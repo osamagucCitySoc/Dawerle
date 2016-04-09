@@ -205,6 +205,7 @@
 		E81DB8E31C8B8D5D00826EFE /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = E81DB8E01C8B8D5D00826EFE /* FXBlurView.m */; };
 		E81DB8E41C8B8D5D00826EFE /* UIColor+flat.m in Sources */ = {isa = PBXBuildFile; fileRef = E81DB8E21C8B8D5D00826EFE /* UIColor+flat.m */; };
 		E81F75201CAA62EC00D7F623 /* CarsSubBrandsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E81F751F1CAA62EC00D7F623 /* CarsSubBrandsViewController.m */; };
+		E8205C861CB94D2600E49939 /* Edit Property-52.png in Resources */ = {isa = PBXBuildFile; fileRef = E8205C851CB94D2600E49939 /* Edit Property-52.png */; };
 		E82DD3C51CA00389008CA31D /* lexus@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E82DD3B91CA00389008CA31D /* lexus@3x.png */; };
 		E82DD3C61CA00389008CA31D /* Maserati@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E82DD3BA1CA00389008CA31D /* Maserati@3x.png */; };
 		E82DD3C71CA00389008CA31D /* mazda@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E82DD3BB1CA00389008CA31D /* mazda@3x.png */; };
@@ -514,6 +515,7 @@
 		E81DB8E21C8B8D5D00826EFE /* UIColor+flat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+flat.m"; sourceTree = "<group>"; };
 		E81F751E1CAA62EB00D7F623 /* CarsSubBrandsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarsSubBrandsViewController.h; sourceTree = "<group>"; };
 		E81F751F1CAA62EC00D7F623 /* CarsSubBrandsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarsSubBrandsViewController.m; sourceTree = "<group>"; };
+		E8205C851CB94D2600E49939 /* Edit Property-52.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Edit Property-52.png"; sourceTree = "<group>"; };
 		E82DD3B91CA00389008CA31D /* lexus@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lexus@3x.png"; sourceTree = "<group>"; };
 		E82DD3BA1CA00389008CA31D /* Maserati@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Maserati@3x.png"; sourceTree = "<group>"; };
 		E82DD3BB1CA00389008CA31D /* mazda@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mazda@3x.png"; sourceTree = "<group>"; };
@@ -654,6 +656,7 @@
 		1E59C1F41C8EDEDE00B229A2 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E8205C851CB94D2600E49939 /* Edit Property-52.png */,
 				E89B902E1CB0EAC30003A1AC /* No Audio-96.png */,
 				1EAFBE7C1CA8167B00E01891 /* sell-icon.png */,
 				1EAFBE7D1CA8167B00E01891 /* sell-icon@2x.png */,
@@ -1314,6 +1317,7 @@
 				1E1E8FD81C917396007E0700 /* geely@2x.png in Resources */,
 				E89B902F1CB0EAC30003A1AC /* No Audio-96.png in Resources */,
 				E808750C1CA1A2F900D4F711 /* proton@2x.png in Resources */,
+				E8205C861CB94D2600E49939 /* Edit Property-52.png in Resources */,
 				E83377A11CA13AEA003A5391 /* smart@2x.png in Resources */,
 				1E1E8FB61C917396007E0700 /* chery.png in Resources */,
 				1E1E8FB71C917396007E0700 /* chery@2x.png in Resources */,

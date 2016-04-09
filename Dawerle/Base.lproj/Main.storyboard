@@ -1010,8 +1010,8 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" minimumFontSize="8" id="wKJ-iU-cYX">
-                                                    <rect key="frame" x="14" y="10" width="392" height="49"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxY="YES"/>
+                                                    <rect key="frame" x="57" y="10" width="349" height="49"/>
+                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="DroidArabicKufi" family="Droid Arabic Kufi" pointSize="15"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -1029,6 +1029,11 @@
                                                     <color key="backgroundColor" red="1" green="0.17254901960784313" blue="0.14901960784313725" alpha="1" colorSpace="calibratedRGB"/>
                                                     <fontDescription key="fontDescription" name="DroidArabicKufi" family="Droid Arabic Kufi" pointSize="16"/>
                                                     <state key="normal" title="مسح"/>
+                                                </button>
+                                                <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="MnC-Hk-J0P">
+                                                    <rect key="frame" x="8" y="18" width="32" height="32"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                                                    <state key="normal" image="Edit Property-52.png"/>
                                                 </button>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -1231,6 +1236,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Edit Property-52.png" width="52" height="52"/>
         <image name="No Audio-96.png" width="96" height="96"/>
         <image name="add-circular-button.png" width="34" height="34"/>
         <image name="app-icon.png" width="160" height="160"/>
@@ -1253,9 +1259,9 @@
         <image name="settings-icon.png" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="lvM-MM-L7F"/>
         <segue reference="4Qq-bL-TWA"/>
-        <segue reference="0A0-ai-ceb"/>
-        <segue reference="Xoy-Bt-13L"/>
+        <segue reference="Ndx-2i-aPz"/>
+        <segue reference="Moa-F0-SEw"/>
+        <segue reference="gfB-64-xcI"/>
     </inferredMetricsTieBreakers>
 </document>

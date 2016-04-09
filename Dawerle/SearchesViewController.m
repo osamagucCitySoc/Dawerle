@@ -15,8 +15,9 @@
 #import <AFNetworking/AFNetworking.h>
 @import GoogleMobileAds;
 #import <Google/Analytics.h>
+#import "Popup.h"
 
-@interface SearchesViewController ()<UITableViewDataSource,UITableViewDelegate>
+@interface SearchesViewController ()<UITableViewDataSource,UITableViewDelegate,PopupDelegate>
 @property (strong, nonatomic) FeEqualize *equalizer;
 @end
 
@@ -32,6 +33,8 @@
     __weak IBOutlet UITableView *tableView;
     NSIndexPath* selected;
     id<GAITracker> tracker;
+    NSString* maxPricee;
+    NSString* minYearr;
     UIButton *transparentButton;
 }
 
@@ -293,7 +296,7 @@
     ((FUIButton*)[cell viewWithTag:4]).alpha = 0.0f;
     ((UIView*)[cell viewWithTag:3]).alpha = 0.0f;
     ((UILabel*)[cell viewWithTag:1]).alpha = 1.0f;
-    
+    ((UIButton*)[cell viewWithTag:7]).alpha = 0.0f;
     NSDictionary* dict = [dataSource objectAtIndex:indexPath.section];
     
     if([dataID isEqualToString:@"villas"] || [dataID isEqualToString:@"flats"])
@@ -312,6 +315,9 @@
             string = [NSString stringWithFormat:@"الغرف: %@",rooms];
         }else if(indexPath.row == 2)
         {
+            ((UIButton*)[cell viewWithTag:7]).alpha = 1.0f;
+            [(UIButton*)[cell viewWithTag:7] addTarget:self
+                                                action:@selector(editPriceClicked:) forControlEvents:UIControlEventTouchUpInside];
             if(maxPrice == -1)
             {
                 string = [NSString stringWithFormat:@"السعر : %@",@"غير محدد"];
@@ -321,6 +327,7 @@
             }
         }else
         {
+            ((UIButton*)[cell viewWithTag:7]).alpha = 0.0f;
             ((UILabel*)[cell viewWithTag:1]).alpha = 0.0f;
             ((FUIButton*)[cell viewWithTag:2]).buttonColor = [UIColor colorFromHexCode:@"39C73C"];
             ((FUIButton*)[cell viewWithTag:2]).shadowColor = [UIColor greenSeaColor];
@@ -353,6 +360,9 @@
             string = [NSString stringWithFormat:@"المناطق: %@",keywords];
         }else if(indexPath.row == 1)
         {
+            ((UIButton*)[cell viewWithTag:7]).alpha = 1.0f;
+            [(UIButton*)[cell viewWithTag:7] addTarget:self
+                                                action:@selector(editPriceClicked:) forControlEvents:UIControlEventTouchUpInside];
             if(maxPrice == -1)
             {
                 string = [NSString stringWithFormat:@"السعر : %@",@"غير محدد"];
@@ -362,6 +372,7 @@
             }
         }else
         {
+            ((UIButton*)[cell viewWithTag:7]).alpha = 0.0f;
             ((UILabel*)[cell viewWithTag:1]).alpha = 0.0f;
             ((FUIButton*)[cell viewWithTag:2]).buttonColor = [UIColor colorFromHexCode:@"39C73C"];
             ((FUIButton*)[cell viewWithTag:2]).shadowColor = [UIColor greenSeaColor];
@@ -400,6 +411,9 @@
             string = [NSString stringWithFormat:@"الماركات الفرعية: %@",sub];
         }else if(indexPath.row == 2)
         {
+            ((UIButton*)[cell viewWithTag:7]).alpha = 1.0f;
+            [(UIButton*)[cell viewWithTag:7] addTarget:self
+                                                action:@selector(editPriceClicked:) forControlEvents:UIControlEventTouchUpInside];
             if(maxPrice == -1)
             {
                 string = [NSString stringWithFormat:@"السعر : %@",@"غير محدد"];
@@ -409,6 +423,9 @@
             }
         }else if(indexPath.row == 3)
         {
+            ((UIButton*)[cell viewWithTag:7]).alpha = 1.0f;
+            [(UIButton*)[cell viewWithTag:7] addTarget:self
+                                                 action:@selector(editYearClicked:) forControlEvents:UIControlEventTouchUpInside];
             if(year == -1)
             {
                 string = [NSString stringWithFormat:@"السنة : %@",@"غير محدد"];
@@ -418,6 +435,7 @@
             }
         }else
         {
+            ((UIButton*)[cell viewWithTag:7]).alpha = 0.0f;
             ((UILabel*)[cell viewWithTag:1]).alpha = 0.0f;
             ((FUIButton*)[cell viewWithTag:2]).buttonColor = [UIColor colorFromHexCode:@"39C73C"];
             ((FUIButton*)[cell viewWithTag:2]).shadowColor = [UIColor greenSeaColor];
@@ -448,6 +466,7 @@
             string = [NSString stringWithFormat:@"%@ : %@",@"الكلمات الدالة",[dict objectForKey:@"keywords"]];
         }else
         {
+            ((UIButton*)[cell viewWithTag:7]).alpha = 0.0f;
             ((UILabel*)[cell viewWithTag:1]).alpha = 0.0f;
             ((FUIButton*)[cell viewWithTag:2]).buttonColor = [UIColor colorFromHexCode:@"39C73C"];
             ((FUIButton*)[cell viewWithTag:2]).shadowColor = [UIColor greenSeaColor];
@@ -471,6 +490,8 @@
         [(UILabel*)[cell viewWithTag:1] setText:string];
     }
     
+    
+    
     return cell;
 }
 
@@ -493,6 +514,178 @@
         selected = indexPath;
         [self performSegueWithIdentifier:@"exploreSeg" sender:self];
     }
+}
+
+- (void)editPriceClicked:(id)sender
+{
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:tableView];
+    NSIndexPath *indexPath = [tableView indexPathForRowAtPoint:buttonPosition];
+    if (indexPath != nil)
+    {
+        selected = indexPath;
+        Popup *popup = [[Popup alloc] initWithTitle:@"تحديد السعر"
+                                           subTitle:@"قم بإدخال الحد الأعلى للسعر أو أتركه فارغاً ليتم تنبيهك بكل الأسعار. سيتم تنبيهك أيضاً بالإعلانات التي لم تضمن السعر لحصولك على أكبر فرصة ممكنه لتجد ما تريده"
+                              textFieldPlaceholders:@[@""]
+                                        cancelTitle:@"إلغاء"
+                                       successTitle:@"تعديل"
+                                        cancelBlock:^{} successBlock:^{
+                                            [UIView transitionWithView:eqHolder
+                                                              duration:0.2f
+                                                               options:UIViewAnimationOptionTransitionCrossDissolve
+                                                            animations:^{
+                                                                [eqHolder setAlpha:1.0];
+                                                                [_equalizer show];
+                                                            } completion:NULL];
+                                            
+                                            
+                                            NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+                                            [dict setObject:[[dataSource objectAtIndex:selected.section] objectForKey:@"idd"] forKey:@"idd"];
+                                            if([maxPricee isEqualToString:@""])
+                                            {
+                                                maxPricee = @"-1";
+                                            }
+                                            [dict setObject:maxPricee forKey:@"value"];
+                                            
+                                            if([dataID isEqualToString:@"villas"] || [dataID isEqualToString:@"flats"] || [dataID isEqualToString:@"stores"])
+                                            {
+                                                [dict setObject:@"searchFlats" forKey:@"table"];
+                                            }else if([dataID isEqualToString:@"cars"])
+                                            {
+                                                [dict setObject:@"searchCars" forKey:@"table"];
+                                            }
+                                            [dict setObject:@"price" forKey:@"field"];
+                                            [self updateMe:dict];
+                                        }];
+        [popup setTag:1];
+        [popup setKeyboardTypeForTextFields:@[@"NUMBER"]];
+        [popup setBackgroundBlurType:PopupBackGroundBlurTypeDark];
+        [popup setIncomingTransition:PopupIncomingTransitionTypeBounceFromCenter];
+        [popup setOutgoingTransition:PopupOutgoingTransitionTypeBounceFromCenter];
+        [popup setTapBackgroundToDismiss:YES];
+        [popup setDelegate:self];
+        [popup setBackgroundColor:[UIColor colorFromHexCode:@"1085C7"]];
+        [popup setSuccessBtnColor:[UIColor colorFromHexCode:@"34a853"]];
+        [popup setSuccessTitleColor:[UIColor whiteColor]];
+        [popup setCancelTitleColor:[UIColor whiteColor]];
+        [popup setTitleColor:[UIColor whiteColor]];
+        [popup setSubTitleColor:[UIColor whiteColor]];
+        [popup showPopup];
+    }
+}
+
+- (void)editYearClicked:(id)sender
+{
+    CGPoint buttonPosition = [sender convertPoint:CGPointZero toView:tableView];
+    NSIndexPath *indexPath = [tableView indexPathForRowAtPoint:buttonPosition];
+    if (indexPath != nil)
+    {
+        selected = indexPath;
+        Popup *popup = [[Popup alloc] initWithTitle:@"تحديد السنة"
+                                           subTitle:@"قم بإدخال الحد الأدنى للسنة. سيتم تنبيهك أيضاً بالإعلانات التي لم تضمن السنة لحصولك على أكبر فرصة ممكنه لتجد ما تريده"
+                              textFieldPlaceholders:@[@""]
+                                        cancelTitle:@"إلغاء"
+                                       successTitle:@"تعديل"
+                                        cancelBlock:^{} successBlock:^{
+                                            [UIView transitionWithView:eqHolder
+                                                              duration:0.2f
+                                                               options:UIViewAnimationOptionTransitionCrossDissolve
+                                                            animations:^{
+                                                                [eqHolder setAlpha:1.0];
+                                                                [_equalizer show];
+                                                            } completion:NULL];
+                                            
+                                            
+                                            NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
+                                            [dict setObject:[[dataSource objectAtIndex:selected.section] objectForKey:@"idd"] forKey:@"idd"];
+                                            if([minYearr isEqualToString:@""])
+                                            {
+                                                minYearr = @"-1";
+                                            }
+                                            [dict setObject:minYearr forKey:@"value"];
+                                            
+                                            if([dataID isEqualToString:@"villas"] || [dataID isEqualToString:@"flats"] || [dataID isEqualToString:@"stores"])
+                                            {
+                                                [dict setObject:@"searchFlats" forKey:@"table"];
+                                            }else if([dataID isEqualToString:@"cars"])
+                                            {
+                                                [dict setObject:@"searchCars" forKey:@"table"];
+                                            }
+                                            [dict setObject:@"year" forKey:@"field"];
+                                            [self updateMe:dict];
+                                        }];
+        [popup setTag:2];
+        [popup setKeyboardTypeForTextFields:@[@"NUMBER"]];
+        [popup setBackgroundBlurType:PopupBackGroundBlurTypeDark];
+        [popup setIncomingTransition:PopupIncomingTransitionTypeBounceFromCenter];
+        [popup setOutgoingTransition:PopupOutgoingTransitionTypeBounceFromCenter];
+        [popup setTapBackgroundToDismiss:YES];
+        [popup setDelegate:self];
+        [popup setBackgroundColor:[UIColor colorFromHexCode:@"1085C7"]];
+        [popup setSuccessBtnColor:[UIColor colorFromHexCode:@"34a853"]];
+        [popup setSuccessTitleColor:[UIColor whiteColor]];
+        [popup setCancelTitleColor:[UIColor whiteColor]];
+        [popup setTitleColor:[UIColor whiteColor]];
+        [popup setSubTitleColor:[UIColor whiteColor]];
+        [popup showPopup];
+    }
+}
+
+-(void)updateMe:(NSDictionary*)dict
+{
+    AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
+    [manager POST:@"http://almasdarapp.com/Dawerle/updateSearch.php" parameters:dict progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+        NSString* ID = responseObject[@"res"];
+        if([ID containsString:@"ERROR"])
+        {
+            OpinionzAlertView *alert = [[OpinionzAlertView alloc]initWithTitle:@"حدث خلل" message:@"يرجى المحاولة مرة أحرى" cancelButtonTitle:@"OK" otherButtonTitles:@[]];
+            alert.iconType = OpinionzAlertIconWarning;
+            alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
+            
+            [UIView transitionWithView:eqHolder
+                              duration:0.2f
+                               options:UIViewAnimationOptionTransitionCrossDissolve
+                            animations:^{
+                                [eqHolder setAlpha:0.0];
+                                [_equalizer dismiss];
+                            } completion:^(BOOL finished){
+                                [alert show];
+                            }];
+        }else
+        {
+            [UIView transitionWithView:eqHolder
+                              duration:0.2f
+                               options:UIViewAnimationOptionTransitionCrossDissolve
+                            animations:^{
+                                [eqHolder setAlpha:0.0];
+                                [_equalizer dismiss];
+                            } completion:^(BOOL finished){
+                                NSMutableDictionary* dict = [[NSMutableDictionary alloc]initWithDictionary:[dataSource objectAtIndex:selected.section]];
+                                if([[dict objectForKey:@"field"]isEqualToString:@"price"])
+                                {
+                                    [dict setObject:maxPricee forKey:@"price"];
+                                }else
+                                {
+                                    [dict setObject:minYearr forKey:@"year"];
+                                }
+                                [dataSource replaceObjectAtIndex:selected.section withObject:dict];
+                                [tableView reloadSections:[NSIndexSet indexSetWithIndex:selected.section] withRowAnimation:UITableViewRowAnimationFade];
+                            }];
+        }
+    } failure:^(NSURLSessionTask *operation, NSError *error) {
+        OpinionzAlertView *alert = [[OpinionzAlertView alloc]initWithTitle:@"حدث خلل" message:@"يرجى المحاولة مرة أحرى" cancelButtonTitle:@"OK" otherButtonTitles:@[]];
+        alert.iconType = OpinionzAlertIconWarning;
+        alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
+        
+        [UIView transitionWithView:eqHolder
+                          duration:0.2f
+                           options:UIViewAnimationOptionTransitionCrossDissolve
+                        animations:^{
+                            [eqHolder setAlpha:0.0];
+                            [_equalizer dismiss];
+                        } completion:^(BOOL finished){
+                            [alert show];
+                        }];
+    }];
 }
 
 - (void)deleteClicked:(id)sender
@@ -582,6 +775,20 @@
 {
     return [NSString stringWithFormat:@"%@ : %li",@"بحث رقم",(long)section+1];
 }
+
+#pragma mark pop up delegate
+- (void)dictionary:(NSMutableDictionary *)dictionary forpopup:(Popup *)popup stringsFromTextFields:(NSArray *)stringArray {
+    
+    NSString *textFromBox1 = [stringArray objectAtIndex:0];
+    if(popup.tag == 1)
+    {
+        maxPricee = textFromBox1;
+    }else if(popup.tag == 2)
+    {
+        minYearr = textFromBox1;
+    }
+}
+
 /*
  // Override to support rearranging the table view.
  - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
