@@ -43,20 +43,11 @@
     {
         RoomsViewController* dst = (RoomsViewController*)[segue destinationViewController];
         NSMutableArray* keywords = [[NSMutableArray alloc]init];
-        if([_countryType isEqualToString:@"KW"])
-        {
-            for(int i = 0 ; i < [tableView indexPathsForSelectedRows].count ; i++)
-            {
-                [keywords addObject:[dataSource objectAtIndex:[[tableView.indexPathsForSelectedRows objectAtIndex:i] row]]];
-            }
-        }else
-        {
-            for(int i = 0 ; i < [tableView indexPathsForSelectedRows].count ; i++)
+        for(int i = 0 ; i < [tableView indexPathsForSelectedRows].count ; i++)
             {
                 NSIndexPath* index = [tableView.indexPathsForSelectedRows objectAtIndex:i];
                 [keywords addObject:[[[dataSource objectAtIndex:index.section] objectForKey:@"cities"] objectAtIndex:index.row]];
             }
-        }
         [dst setType:type];
         [dst setCountryType:_countryType];
         [dst setRentType:_rentType];
@@ -153,10 +144,11 @@
     [tracker send:[[GAIDictionaryBuilder createScreenView] build]];
     if(dataSource.count == 0)
     {
+        NSString *filePath = [[NSBundle mainBundle] pathForResource:@"combinedAreas" ofType:@"json"];
         if([_countryType isEqualToString:@"KW"])
         {
-            NSString *filePath = [[NSBundle mainBundle] pathForResource:@"combinedAreas" ofType:@"json"];
-            NSData *content = [[NSData alloc] initWithContentsOfFile:filePath];
+            filePath = [[NSBundle mainBundle] pathForResource:@"combinedAreas" ofType:@"json"];
+            /*NSData *content = [[NSData alloc] initWithContentsOfFile:filePath];
             dataSource = [[NSMutableArray alloc]initWithArray:[NSJSONSerialization JSONObjectWithData:content options:kNilOptions error:nil]];
             NSMutableArray* indices = [[NSMutableArray alloc]init];
             
@@ -165,11 +157,11 @@
                 [indices addObject:[NSIndexPath indexPathForRow:i inSection:0]];
             }
             
-            [tableView insertRowsAtIndexPaths:indices withRowAnimation:UITableViewRowAnimationTop];
+            [tableView insertRowsAtIndexPaths:indices withRowAnimation:UITableViewRowAnimationTop];*/
         }else
         {
-            NSString *filePath = [[NSBundle mainBundle] pathForResource:@"combinedAreasSA" ofType:@"json"];
-            NSData *content = [[NSData alloc] initWithContentsOfFile:filePath];
+           filePath = [[NSBundle mainBundle] pathForResource:@"combinedAreasSA" ofType:@"json"];
+            /*NSData *content = [[NSData alloc] initWithContentsOfFile:filePath];
             dataSource = [[NSMutableArray alloc]initWithArray:[NSJSONSerialization JSONObjectWithData:content options:kNilOptions error:nil]];
             NSMutableIndexSet* set = [[NSMutableIndexSet alloc]init];
             
@@ -177,8 +169,18 @@
             {
                 [set addIndex:i];
             }
-            [tableView insertSections:set withRowAnimation:UITableViewRowAnimationTop];
+            [tableView insertSections:set withRowAnimation:UITableViewRowAnimationTop];*/
         }
+        
+        NSData *content = [[NSData alloc] initWithContentsOfFile:filePath];
+        dataSource = [[NSMutableArray alloc]initWithArray:[NSJSONSerialization JSONObjectWithData:content options:kNilOptions error:nil]];
+        NSMutableIndexSet* set = [[NSMutableIndexSet alloc]init];
+        
+        for(int i = 0 ; i < dataSource.count ; i++)
+        {
+            [set addIndex:i];
+        }
+        [tableView insertSections:set withRowAnimation:UITableViewRowAnimationTop];
     }
 
     _equalizer = [[FeEqualize alloc] initWithView:eqHolder title:@"جاري حفظ بحثك"];
@@ -205,34 +207,16 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    if([_countryType isEqualToString:@"KW"])
-    {
-        return 1;
-    }else
-    {
-        return  dataSource.count;
-    }
+    return  dataSource.count;
 }
 -(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
-    if([_countryType isEqualToString:@"KW"])
-    {
-        return @"إختر المناطق :";
-    }else
-    {
-        return  [[dataSource objectAtIndex:section] objectForKey:@"title"];
-    }
+    return  [[dataSource objectAtIndex:section] objectForKey:@"title"];
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if([_countryType isEqualToString:@"KW"])
-    {
-        return dataSource.count;
-    }else
-    {
-        return  [[[dataSource objectAtIndex:section] objectForKey:@"cities"] count];
-    }
+    return  [[[dataSource objectAtIndex:section] objectForKey:@"cities"] count];
 }
 
 
@@ -246,27 +230,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellID];
     }
     
-    /*if([_countryType isEqualToString:@"KW"])
-    {
-        if (dataSource.count == (indexPath.row+1))
-        {
-            [(UILabel*)[cell viewWithTag:4]setHidden:YES];
-        }
-    }else
-    {
-        
-    }*/
-    
-    
-    
-    if([_countryType isEqualToString:@"KW"])
-    {
-        [(UILabel*)[cell viewWithTag:1]setText:[dataSource objectAtIndex:indexPath.row]];
-    }else
-    {
-        NSLog(@"%@",indexPath);
-        [(UILabel*)[cell viewWithTag:1]setText:[[[dataSource objectAtIndex:indexPath.section] objectForKey:@"cities"] objectAtIndex:indexPath.row]];
-    }
+    [(UILabel*)[cell viewWithTag:1]setText:[[[dataSource objectAtIndex:indexPath.section] objectForKey:@"cities"] objectAtIndex:indexPath.row]];
     [(UIImageView*)[cell viewWithTag:2]setImage:[UIImage imageNamed:@"mark-off.png"]];
     
     if([[tableView indexPathsForSelectedRows]containsObject:indexPath])
@@ -329,19 +293,10 @@
     if([type isEqualToString:@"stores"])
     {
         NSMutableArray* keywords = [[NSMutableArray alloc]init];
-        if([_countryType isEqualToString:@"KW"])
+        for(int i = 0 ; i < [tableView indexPathsForSelectedRows].count ; i++)
         {
-            for(int i = 0 ; i < [tableView indexPathsForSelectedRows].count ; i++)
-            {
-                [keywords addObject:[dataSource objectAtIndex:[[tableView.indexPathsForSelectedRows objectAtIndex:i] row]]];
-            }
-        }else
-        {
-            for(int i = 0 ; i < [tableView indexPathsForSelectedRows].count ; i++)
-            {
-                NSIndexPath* index = [tableView.indexPathsForSelectedRows objectAtIndex:i];
-                [keywords addObject:[[[dataSource objectAtIndex:index.section] objectForKey:@"cities"] objectAtIndex:index.row]];
-            }
+            NSIndexPath* index = [tableView.indexPathsForSelectedRows objectAtIndex:i];
+            [keywords addObject:[[[dataSource objectAtIndex:index.section] objectForKey:@"cities"] objectAtIndex:index.row]];
         }
         
         Popup *popup = [[Popup alloc] initWithTitle:@"تحديد السعر"

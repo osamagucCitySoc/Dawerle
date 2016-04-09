@@ -1242,9 +1242,9 @@
         <image name="settings-icon.png" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="lvM-MM-L7F"/>
         <segue reference="4Qq-bL-TWA"/>
         <segue reference="DCZ-UF-Ul3"/>
         <segue reference="Xoy-Bt-13L"/>
-        <segue reference="0Eg-Et-8qs"/>
     </inferredMetricsTieBreakers>
 </document>
