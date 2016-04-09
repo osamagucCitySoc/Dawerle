@@ -14,10 +14,10 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '53964C63961FC46D25BA5783'
-               BlueprintName = 'JJMaterialTextField'
+               BlueprintIdentifier = '989E4F374D8C968C4CABAD6A'
+               BlueprintName = 'NJKWebViewProgress'
                ReferencedContainer = 'container:Pods.xcodeproj'
-               BuildableName = 'libJJMaterialTextField.a'>
+               BuildableName = 'libNJKWebViewProgress.a'>
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>

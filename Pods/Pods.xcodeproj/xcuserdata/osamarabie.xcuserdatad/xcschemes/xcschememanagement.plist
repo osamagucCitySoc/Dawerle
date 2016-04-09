@@ -39,6 +39,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>NJKWebViewProgress.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>OpinionzAlertView-OpinionzAlertView.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -67,11 +72,6 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6574D1FBA8AEA4811F01654FC838E488</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
 		<key>70DB31BF3F5776DA349DC8C9471BC44B</key>
 		<dict>
 			<key>primary</key>
@@ -87,6 +87,11 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>B4A3E08D49931371F7247521A50EAF79</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>BF13FA57560D15BB359E3A4849021C59</key>
 		<dict>
 			<key>primary</key>
@@ -98,6 +103,11 @@
 			<true/>
 		</dict>
 		<key>F6369DCF9EF8959EE460063E1C27CF48</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F9E75369B6FE8E60AC2616201797F238</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'A4D01B2063E36E6B7283C906'
+               BlueprintIdentifier = '9E5FAF8454CDAB7743B3C0C5'
                BlueprintName = 'OpinionzAlertView-OpinionzAlertView'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'OpinionzAlertView.bundle'>
