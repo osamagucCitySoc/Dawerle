@@ -135,6 +135,9 @@
         [tableView insertRowsAtIndexPaths:indices withRowAnimation:UITableViewRowAnimationTop];
     }
     
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self tableView:tableView didSelectRowAtIndexPath:indexPath];
+    
     CGRect frame1 = bannerView.frame;
     CGRect frame2 = bannerAdHolder.frame;
     frame1.origin.x = (frame2.size.width/2)-160;
