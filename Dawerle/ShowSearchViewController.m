@@ -103,7 +103,6 @@
 
 - (void)webViewDidStartLoad:(UIWebView *)webVieww
 {
-
     if([[self.link absoluteString]containsString:@"q8car"] || [[self.link absoluteString]containsString:@"q84sale"] || !open)
     {
         [[UIApplication sharedApplication] openURL:self.link];
@@ -121,10 +120,16 @@
         [eqHolder setAlpha:1.0];
         [_equalizer show];
     }
-
 }
-- (void)webViewDidFinishLoad:(UIWebView *)webView
+
+- (void)webViewDidFinishLoad:(UIWebView *)webVieww
 {
+    
+    if([webVieww.request.URL.absoluteString containsString:@"opensooq"])
+    {
+        NSString* javascript = [NSString stringWithFormat:@"window.scrollBy(0, %ld);", (long)90];
+        [webVieww stringByEvaluatingJavaScriptFromString:javascript];
+    }
     [eqHolder setAlpha:0.0];
     [_equalizer dismiss];
 }

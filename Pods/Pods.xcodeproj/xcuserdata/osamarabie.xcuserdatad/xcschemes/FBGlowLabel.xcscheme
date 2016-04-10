@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'C25BB67326EF19A29CC6539D'
+               BlueprintIdentifier = '26D263627587E10A860F0ED6'
                BlueprintName = 'FBGlowLabel'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libFBGlowLabel.a'>

@@ -305,13 +305,7 @@
                                         cancelTitle:@"إلغاء"
                                        successTitle:@"دورلي ;)"
                                         cancelBlock:^{} successBlock:^{
-                                            [UIView transitionWithView:eqHolder
-                                                              duration:0.2f
-                                                               options:UIViewAnimationOptionTransitionCrossDissolve
-                                                            animations:^{
-                                                                [eqHolder setAlpha:1.0];
-                                                                [_equalizer show];
-                                                            } completion:NULL];
+                                            [eqHolder setAlpha:1.0];                                       [_equalizer show];
                                             
                                             
                                             NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
@@ -344,15 +338,7 @@
                                                     alert.iconType = OpinionzAlertIconWarning;
                                                     alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
                                                     
-                                                    [UIView transitionWithView:eqHolder
-                                                                      duration:0.2f
-                                                                       options:UIViewAnimationOptionTransitionCrossDissolve
-                                                                    animations:^{
-                                                                        [eqHolder setAlpha:0.0];
-                                                                        [_equalizer dismiss];
-                                                                    } completion:^(BOOL finished){
-                                                                        [alert show];
-                                                                    }];
+                                                    [eqHolder setAlpha:0.0];                                       [_equalizer dismiss];                                                            [alert show];
                                                 }else
                                                 {
                                                     NSMutableArray* searchFlats = [[NSMutableArray alloc] initWithArray:[[NSUserDefaults standardUserDefaults] objectForKey:@"storeSearch"]];
@@ -379,32 +365,12 @@
                                                     alert.iconType = OpinionzAlertIconSuccess;
                                                     alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
                                                     
-                                                    
-                                                    [UIView transitionWithView:eqHolder
-                                                                      duration:0.2f
-                                                                       options:UIViewAnimationOptionTransitionCrossDissolve
-                                                                    animations:^{
-                                                                        [eqHolder setAlpha:0.0];
-                                                                        [_equalizer dismiss];
-                                                                    } completion:^(BOOL finished){
-                                                                        [alert show];
-                                                                    }];
-                                                }
+                                                   [eqHolder setAlpha:0.0];                                       [_equalizer dismiss];                                                            [alert show];                                                }
                                             } failure:^(NSURLSessionTask *operation, NSError *error) {
                                                 OpinionzAlertView *alert = [[OpinionzAlertView alloc]initWithTitle:@"حدث خلل" message:@"يرجى المحاولة مرة أحرى" cancelButtonTitle:@"OK" otherButtonTitles:@[]];
                                                 alert.iconType = OpinionzAlertIconWarning;
                                                 alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
-                                                
-                                                [UIView transitionWithView:eqHolder
-                                                                  duration:0.2f
-                                                                   options:UIViewAnimationOptionTransitionCrossDissolve
-                                                                animations:^{
-                                                                    [eqHolder setAlpha:0.0];
-                                                                    [_equalizer dismiss];
-                                                                } completion:^(BOOL finished){
-                                                                    [alert show];
-                                                                }];
-                                            }];
+                                                [eqHolder setAlpha:0.0];                                       [_equalizer dismiss];                                                            [alert show];                                            }];
                                         }];
         [popup setKeyboardTypeForTextFields:@[@"NUMBER"]];
         [popup setBackgroundBlurType:PopupBackGroundBlurTypeDark];

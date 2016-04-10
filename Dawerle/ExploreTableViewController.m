@@ -91,16 +91,8 @@
     [_equalizer setBackgroundColor:[UIColor clearColor]];
     [eqHolder setBackgroundColor:[UIColor clearColor]];
     [eqHolder addSubview:_equalizer];
-    [eqHolder setAlpha:0.0];
-    [_equalizer dismiss];
-    
-    [UIView transitionWithView:eqHolder
-                      duration:0.2f
-                       options:UIViewAnimationOptionTransitionCrossDissolve
-                    animations:^{
-                        [eqHolder setAlpha:1.0];
-                        [_equalizer show];
-                    } completion:nil];
+    [eqHolder setAlpha:1.0];
+    [_equalizer show];
 
     NSString* url;
     if([className isEqualToString:@"cars"])
@@ -139,27 +131,16 @@
             alert.iconType = OpinionzAlertIconWarning;
             alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
             
-            [UIView transitionWithView:eqHolder
-                              duration:0.2f
-                               options:UIViewAnimationOptionTransitionCrossDissolve
-                            animations:^{
-                                [eqHolder setAlpha:0.0];
-                                [_equalizer dismiss];
-                            } completion:^(BOOL finished){
-                                [alert show];
-                            }];
+            [eqHolder setAlpha:0.0];
+            [_equalizer dismiss];
+            [alert show];
         }else
         {
              dispatch_async( dispatch_get_main_queue(), ^{
                  [self.tableView reloadData];
                  [self.tableView setNeedsDisplay];
-                 [UIView transitionWithView:eqHolder
-                                   duration:0.2f
-                                    options:UIViewAnimationOptionTransitionCrossDissolve
-                                 animations:^{
-                                     [eqHolder setAlpha:0.0];
-                                     [_equalizer dismiss];
-                                 } completion:nil];
+                 [eqHolder setAlpha:0.0];
+                 [_equalizer dismiss];
              });
             
         }
@@ -168,15 +149,9 @@
         alert.iconType = OpinionzAlertIconWarning;
         alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
         
-        [UIView transitionWithView:eqHolder
-                          duration:0.2f
-                           options:UIViewAnimationOptionTransitionCrossDissolve
-                        animations:^{
-                            [eqHolder setAlpha:0.0];
-                            [_equalizer dismiss];
-                        } completion:^(BOOL finished){
-                            [alert show];
-                        }];
+        [eqHolder setAlpha:0.0];
+        [_equalizer dismiss];
+        [alert show];
     }];
 }
 

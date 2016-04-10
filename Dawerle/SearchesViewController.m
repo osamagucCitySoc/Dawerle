@@ -79,17 +79,9 @@
         [_equalizer setBackgroundColor:[UIColor clearColor]];
         [eqHolder setBackgroundColor:[UIColor clearColor]];
         [eqHolder addSubview:_equalizer];
-        [eqHolder setAlpha:0.0];
-        [_equalizer dismiss];
-        
-        [UIView transitionWithView:eqHolder
-                          duration:0.2f
-                           options:UIViewAnimationOptionTransitionCrossDissolve
-                        animations:^{
-                            [eqHolder setAlpha:1.0];
-                            [_resView setHidden:YES];
-                            [_equalizer show];
-                        } completion:nil];
+        [eqHolder setAlpha:1.0];
+        [_resView setHidden:YES];
+        [_equalizer show];
         
         if (![[NSUserDefaults standardUserDefaults] objectForKey:localID] || [[[NSUserDefaults standardUserDefaults] objectForKey:localID] count] == 0)
         {
@@ -122,14 +114,9 @@
                     
                     [tableView insertSections:indices withRowAnimation:UITableViewRowAnimationTop];
                 });
-                [UIView transitionWithView:eqHolder
-                                  duration:0.2f
-                                   options:UIViewAnimationOptionTransitionCrossDissolve
-                                animations:^{
-                                    [eqHolder setAlpha:0.0];
-                                    [_resView setHidden:NO];
-                                    [_equalizer dismiss];
-                                } completion:nil];
+                [eqHolder setAlpha:0.0];
+                [_resView setHidden:NO];
+                [_equalizer dismiss];
                 
             } failure:^(NSURLSessionTask *operation, NSError *error) {
                 NSLog(@"%@",[operation response]);
@@ -142,14 +129,10 @@
                 alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
                 [alert show];
                 
-                [UIView transitionWithView:eqHolder
-                                  duration:0.2f
-                                   options:UIViewAnimationOptionTransitionCrossDissolve
-                                animations:^{
-                                    [eqHolder setAlpha:0.0];
-                                    [_resView setHidden:NO];
-                                    [_equalizer dismiss];
-                                } completion:nil];
+                [eqHolder setAlpha:0.0];
+                [_resView setHidden:NO];
+                [_equalizer dismiss];
+
                 
             }];
         }
@@ -529,13 +512,8 @@
                                         cancelTitle:@"إلغاء"
                                        successTitle:@"تعديل"
                                         cancelBlock:^{} successBlock:^{
-                                            [UIView transitionWithView:eqHolder
-                                                              duration:0.2f
-                                                               options:UIViewAnimationOptionTransitionCrossDissolve
-                                                            animations:^{
-                                                                [eqHolder setAlpha:1.0];
-                                                                [_equalizer show];
-                                                            } completion:NULL];
+                                            [eqHolder setAlpha:1.0];
+                                            [_equalizer show];
                                             
                                             
                                             NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
@@ -586,13 +564,8 @@
                                         cancelTitle:@"إلغاء"
                                        successTitle:@"تعديل"
                                         cancelBlock:^{} successBlock:^{
-                                            [UIView transitionWithView:eqHolder
-                                                              duration:0.2f
-                                                               options:UIViewAnimationOptionTransitionCrossDissolve
-                                                            animations:^{
-                                                                [eqHolder setAlpha:1.0];
-                                                                [_equalizer show];
-                                                            } completion:NULL];
+                                            [eqHolder setAlpha:1.0];
+                                            [_equalizer show];
                                             
                                             
                                             NSMutableDictionary* dict = [[NSMutableDictionary alloc]init];
@@ -630,10 +603,10 @@
     }
 }
 
--(void)updateMe:(NSDictionary*)dict
+-(void)updateMe:(NSDictionary*)dict2
 {
     AFHTTPSessionManager *manager = [AFHTTPSessionManager manager];
-    [manager POST:@"http://almasdarapp.com/Dawerle/updateSearch.php" parameters:dict progress:nil success:^(NSURLSessionTask *task, id responseObject) {
+    [manager POST:@"http://almasdarapp.com/Dawerle/updateSearch.php" parameters:dict2 progress:nil success:^(NSURLSessionTask *task, id responseObject) {
         NSString* ID = responseObject[@"res"];
         if([ID containsString:@"ERROR"])
         {
@@ -641,50 +614,31 @@
             alert.iconType = OpinionzAlertIconWarning;
             alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
             
-            [UIView transitionWithView:eqHolder
-                              duration:0.2f
-                               options:UIViewAnimationOptionTransitionCrossDissolve
-                            animations:^{
-                                [eqHolder setAlpha:0.0];
-                                [_equalizer dismiss];
-                            } completion:^(BOOL finished){
-                                [alert show];
-                            }];
+            [eqHolder setAlpha:0.0];
+            [_equalizer dismiss];
+            [alert show];
         }else
         {
-            [UIView transitionWithView:eqHolder
-                              duration:0.2f
-                               options:UIViewAnimationOptionTransitionCrossDissolve
-                            animations:^{
-                                [eqHolder setAlpha:0.0];
-                                [_equalizer dismiss];
-                            } completion:^(BOOL finished){
-                                NSMutableDictionary* dict = [[NSMutableDictionary alloc]initWithDictionary:[dataSource objectAtIndex:selected.section]];
-                                if([[dict objectForKey:@"field"]isEqualToString:@"price"])
-                                {
-                                    [dict setObject:maxPricee forKey:@"price"];
-                                }else
-                                {
-                                    [dict setObject:minYearr forKey:@"year"];
-                                }
-                                [dataSource replaceObjectAtIndex:selected.section withObject:dict];
-                                [tableView reloadSections:[NSIndexSet indexSetWithIndex:selected.section] withRowAnimation:UITableViewRowAnimationFade];
-                            }];
+            [eqHolder setAlpha:0.0];
+            [_equalizer dismiss];
+            NSMutableDictionary* dict = [[NSMutableDictionary alloc]initWithDictionary:[dataSource objectAtIndex:selected.section]];
+            if([[dict2 objectForKey:@"field"]isEqualToString:@"price"])
+            {
+                [dict setObject:maxPricee forKey:@"price"];
+            }else
+            {
+                [dict setObject:minYearr forKey:@"year"];
+            }
+            [dataSource replaceObjectAtIndex:selected.section withObject:dict];
+            [tableView reloadSections:[NSIndexSet indexSetWithIndex:selected.section] withRowAnimation:UITableViewRowAnimationFade];
         }
     } failure:^(NSURLSessionTask *operation, NSError *error) {
         OpinionzAlertView *alert = [[OpinionzAlertView alloc]initWithTitle:@"حدث خلل" message:@"يرجى المحاولة مرة أحرى" cancelButtonTitle:@"OK" otherButtonTitles:@[]];
         alert.iconType = OpinionzAlertIconWarning;
         alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
-        
-        [UIView transitionWithView:eqHolder
-                          duration:0.2f
-                           options:UIViewAnimationOptionTransitionCrossDissolve
-                        animations:^{
-                            [eqHolder setAlpha:0.0];
-                            [_equalizer dismiss];
-                        } completion:^(BOOL finished){
-                            [alert show];
-                        }];
+        [eqHolder setAlpha:0.0];
+        [_equalizer dismiss];
+        [alert show];
     }];
 }
 
@@ -699,14 +653,9 @@
                                                           cancelButtonTitle:@"إلغاء"              otherButtonTitles:@[@"مسح"]          usingBlockWhenTapButton:^(OpinionzAlertView *alertView, NSInteger buttonIndex) {
                                                               if(buttonIndex == 1)
                                                               {
-                                                                  [UIView transitionWithView:eqHolder
-                                                                                    duration:0.2f
-                                                                                     options:UIViewAnimationOptionTransitionCrossDissolve
-                                                                                  animations:^{
-                                                                                      [eqHolder setAlpha:1.0];
-                                                                                      [_resView setHidden:YES];
-                                                                                      [_equalizer show];
-                                                                                  } completion:nil];
+                                                                  [eqHolder setAlpha:1.0];
+                                                                  [_resView setHidden:YES];
+                                                                  [_equalizer show];
                                                                   
                                                                   
                                                                   
@@ -741,15 +690,9 @@
                                                                       alert.iconType = OpinionzAlertIconWarning;
                                                                       alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
                                                                       
-                                                                      [UIView transitionWithView:eqHolder
-                                                                                        duration:0.2f
-                                                                                         options:UIViewAnimationOptionTransitionCrossDissolve
-                                                                                      animations:^{
-                                                                                          [eqHolder setAlpha:0.0];
-                                                                                          [_equalizer dismiss];
-                                                                                      } completion:^(BOOL finished){
-                                                                                          [alert show];
-                                                                                      }];
+                                                                      [eqHolder setAlpha:0.0];
+                                                                      [_equalizer dismiss];
+                                                                      [alert show];
                                                                   }];
 
                                                               }

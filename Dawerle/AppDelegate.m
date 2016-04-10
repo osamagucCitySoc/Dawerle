@@ -12,6 +12,7 @@
 #import <Google/Analytics.h>
 #import "libpushwizard/PushWizard.h"
 
+
 static NSString *kAppKey = @"570232fea3fc275f288b470f";
 #define SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(v) ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
 
@@ -24,6 +25,14 @@ static NSString *kAppKey = @"570232fea3fc275f288b470f";
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    
+    
+    if(![[NSUserDefaults standardUserDefaults] objectForKey:@"deviceToken"])
+    {
+
+       [[NSUserDefaults standardUserDefaults]setObject:@"" forKey:@"deviceToken"];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+    }
     [[UINavigationBar appearance] setTintColor:[UIColor whiteColor]];
     [[UIApplication sharedApplication]setStatusBarStyle:UIStatusBarStyleLightContent];
     
