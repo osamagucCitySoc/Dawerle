@@ -263,6 +263,7 @@
                     <connections>
                         <outlet property="bannerAdHolder" destination="o4u-Wq-QdZ" id="1k7-na-iVm"/>
                         <outlet property="eqHolder" destination="CDo-Yc-6bP" id="pca-RM-sux"/>
+                        <outlet property="headerView" destination="aEF-ij-kYZ" id="l8H-cV-wdR"/>
                         <outlet property="roomesButton" destination="TWY-g2-C7v" id="evy-15-XzF"/>
                         <outlet property="tableView" destination="L2A-6F-GCF" id="gSD-vi-IkJ"/>
                         <segue destination="KQL-6N-5dk" kind="push" identifier="roomSeg" id="XyK-nO-5bn"/>
@@ -271,6 +272,24 @@
                         <segue destination="Eid-gq-M9Y" kind="push" identifier="exploreSeg" id="7jU-pM-P69"/>
                     </connections>
                 </viewController>
+                <view contentMode="scaleToFill" id="aEF-ij-kYZ">
+                    <rect key="frame" x="0.0" y="0.0" width="240" height="84"/>
+                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bentley.png" id="SZf-fm-wKZ">
+                            <rect key="frame" x="8" y="10" width="64" height="64"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fRK-FG-EdT">
+                            <rect key="frame" x="80" y="8" width="62" height="68"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxY="YES"/>
+                            <fontDescription key="fontDescription" name="Courier-Bold" family="Courier" pointSize="17"/>
+                            <color key="textColor" red="0.27058823529999998" green="0.27058823529999998" blue="0.28627450980000002" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" red="0.98039215690000003" green="0.98039215690000003" blue="0.98039215690000003" alpha="1" colorSpace="calibratedRGB"/>
+                </view>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AGg-wr-fuB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1179" y="-629"/>
@@ -1259,9 +1278,9 @@
         <image name="settings-icon.png" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="4Qq-bL-TWA"/>
         <segue reference="Ndx-2i-aPz"/>
-        <segue reference="Moa-F0-SEw"/>
-        <segue reference="gfB-64-xcI"/>
+        <segue reference="4Qq-bL-TWA"/>
+        <segue reference="Dgg-zD-W3T"/>
+        <segue reference="Bdp-lh-LGl"/>
     </inferredMetricsTieBreakers>
 </document>

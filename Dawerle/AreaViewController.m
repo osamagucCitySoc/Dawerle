@@ -25,6 +25,7 @@
 
 @implementation AreaViewController
 {
+    IBOutlet UIView *headerView;
     __weak IBOutlet UIView *bannerAdHolder;
     GADBannerView* bannerView;
     __weak IBOutlet FUIButton *roomesButton;
@@ -33,6 +34,8 @@
     NSString* maxPrice;
     __weak IBOutlet UIView *eqHolder;
     id<GAITracker> tracker;
+    NSMutableArray* openedSections;
+    NSMutableArray* selectedCities;
 }
 
 @synthesize type;
@@ -43,10 +46,10 @@
     {
         RoomsViewController* dst = (RoomsViewController*)[segue destinationViewController];
         NSMutableArray* keywords = [[NSMutableArray alloc]init];
-        for(int i = 0 ; i < [tableView indexPathsForSelectedRows].count ; i++)
+        for(int i = 0 ; i < selectedCities.count ; i++)
             {
-                NSIndexPath* index = [tableView.indexPathsForSelectedRows objectAtIndex:i];
-                [keywords addObject:[[[dataSource objectAtIndex:index.section] objectForKey:@"cities"] objectAtIndex:index.row]];
+                NSArray* arr = [[selectedCities objectAtIndex:i] componentsSeparatedByString:@"-"];
+                [keywords addObject:[[[dataSource objectAtIndex:[[arr objectAtIndex:0] intValue]] objectForKey:@"cities"] objectAtIndex:[[arr objectAtIndex:1] intValue]]];
             }
         [dst setType:type];
         [dst setCountryType:_countryType];
@@ -84,6 +87,8 @@
                                                          forBarMetrics:UIBarMetricsDefault];
 
     
+    openedSections = [[NSMutableArray alloc]init];
+    selectedCities = [[NSMutableArray alloc]init];
 //    UIImage *myImage = [UIImage imageNamed:@"search-icon.png"];
 //    myImage = [myImage imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 //    UIBarButtonItem *menuButton = [[UIBarButtonItem alloc] initWithImage:myImage style:UIBarButtonItemStylePlain target:self action:@selector(myFlatSearchClicked:)];
@@ -209,14 +214,18 @@
 {
     return  dataSource.count;
 }
--(NSString*)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    return  [[dataSource objectAtIndex:section] objectForKey:@"title"];
-}
+
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return  [[[dataSource objectAtIndex:section] objectForKey:@"cities"] count];
+    NSString* string = [NSString stringWithFormat:@"%i",(int)section];
+    if([openedSections containsObject:string])
+    {
+        return  [[[dataSource objectAtIndex:section] objectForKey:@"cities"] count];
+    }else
+    {
+        return 0;
+    }
 }
 
 
@@ -233,7 +242,10 @@
     [(UILabel*)[cell viewWithTag:1]setText:[[[dataSource objectAtIndex:indexPath.section] objectForKey:@"cities"] objectAtIndex:indexPath.row]];
     [(UIImageView*)[cell viewWithTag:2]setImage:[UIImage imageNamed:@"mark-off.png"]];
     
-    if([[tableView indexPathsForSelectedRows]containsObject:indexPath])
+    NSString* cellIndex = [NSString stringWithFormat:@"%i-%i",(int)indexPath.section,(int)indexPath.row];
+    
+
+    if([selectedCities containsObject:cellIndex])
     {
         [UIView transitionWithView:(UIImageView*)[cell viewWithTag:2]
                           duration:0.2f
@@ -248,12 +260,23 @@
 
 -(void)tableView:(UITableView *)tableVieww didDeselectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSString* toBeRemoved = [NSString stringWithFormat:@"%i-%i",(int)indexPath.section,(int)indexPath.row];
+    for(int i = 0 ; i < selectedCities.count ; i++)
+    {
+        if([[selectedCities objectAtIndex:i]isEqualToString:toBeRemoved])
+        {
+            [selectedCities removeObjectAtIndex:i];
+            break;
+        }
+    }
+    
+    [selectedCities removeObject:toBeRemoved];
     [UIView transitionWithView:(UIImageView*)[[tableVieww cellForRowAtIndexPath:indexPath] viewWithTag:2]
                       duration:0.2f
                        options:UIViewAnimationOptionTransitionCrossDissolve
                     animations:^{
                         [(UIImageView*)[[tableVieww cellForRowAtIndexPath:indexPath] viewWithTag:2]setImage:[UIImage imageNamed:@"mark-off.png"]];
-                        if(tableVieww.indexPathsForSelectedRows.count == 0)
+                        if(selectedCities.count == 0)
                         {
                             [roomesButton setAlpha:0.0f];
                         }
@@ -263,6 +286,7 @@
 }
 -(void)tableView:(UITableView *)tableVieww didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [selectedCities addObject:[NSString stringWithFormat:@"%i-%i",(int)indexPath.section,(int)indexPath.row]];
     [UIView transitionWithView:(UIImageView*)[[tableVieww cellForRowAtIndexPath:indexPath] viewWithTag:2]
                       duration:0.2f
                        options:UIViewAnimationOptionTransitionCrossDissolve
@@ -278,27 +302,72 @@
 {
     return 70.0f;
 }
-- (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view forSection:(NSInteger)section
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    // Background color
+    return 60.0f;
+}
+-(UIView*)tableView:(UITableView *)tableVieww viewForHeaderInSection:(NSInteger)section
+{
+    UIView* view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, tableVieww.frame.size.width, 60)];
+    [view setBackgroundColor:[UIColor clearColor]];
+    
+    UIImageView* imageView = [[UIImageView alloc]initWithFrame:CGRectMake(10, 14, 32, 32)];
+    imageView.contentMode = UIViewContentModeScaleAspectFit;
+    NSString* string = [NSString stringWithFormat:@"%i",(int)section];
+    
+    
+    UILabel* label = [[UILabel alloc]initWithFrame:CGRectMake(70, 0 , 300, 60)];
+    [label setText:[[dataSource objectAtIndex:section] objectForKey:@"title"]];
+    [label setTextColor:[UIColor colorWithRed:90.0/255.0 green:90.0/255.0 blue:90.0/255.0 alpha:1.0]];
+    [label setFont:[UIFont fontWithName:@"DroidArabicKufi" size:19.0]];
+    [label setTextAlignment:NSTextAlignmentRight];
+    
+    if([openedSections containsObject:string])
+    {
+        [imageView setImage:[UIImage imageNamed:@"collapse.png"]];
+    }else
+    {
+        [imageView setImage:[UIImage imageNamed:@"expand.png"]];
+    }
+    
+    [view addSubview:imageView];
+    [view addSubview:label];
+    
+    
+    UITapGestureRecognizer *singleTapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(gestureHandler:)];
+    singleTapRecognizer.numberOfTouchesRequired = 1;
+    singleTapRecognizer.numberOfTapsRequired = 1;
+    view.tag = section;
+    [view addGestureRecognizer:singleTapRecognizer];
 
-    // Text Color
-    UITableViewHeaderFooterView *header = (UITableViewHeaderFooterView *)view;
-    [header.textLabel setTextColor:[UIColor colorWithRed:90.0/255.0 green:90.0/255.0 blue:90.0/255.0 alpha:1.0]];
-    [header.textLabel setFont:[UIFont fontWithName:@"DroidArabicKufi" size:14.0]];
-    [header.textLabel setTextAlignment:NSTextAlignmentRight];
+    
+    return view;
+}
+
+-(void) gestureHandler:(UIGestureRecognizer *)gestureRecognizer
+{
+    int sectionClicked = (int)[gestureRecognizer.view tag];
+    NSString* string = [NSString stringWithFormat:@"%i",(int)sectionClicked];
+    if([openedSections containsObject:string])
+    {
+        [openedSections removeObject:string];
+        [tableView reloadSections:[NSIndexSet indexSetWithIndex:sectionClicked] withRowAnimation:UITableViewRowAnimationFade];
+    }else
+    {
+        [openedSections addObject:string];
+        [tableView reloadSections:[NSIndexSet indexSetWithIndex:sectionClicked] withRowAnimation:UITableViewRowAnimationFade];
+    }
 }
 
 - (IBAction)submitClicked:(id)sender {
     if([type isEqualToString:@"stores"])
     {
         NSMutableArray* keywords = [[NSMutableArray alloc]init];
-        for(int i = 0 ; i < [tableView indexPathsForSelectedRows].count ; i++)
+        for(int i = 0 ; i < selectedCities.count ; i++)
         {
-            NSIndexPath* index = [tableView.indexPathsForSelectedRows objectAtIndex:i];
-            [keywords addObject:[[[dataSource objectAtIndex:index.section] objectForKey:@"cities"] objectAtIndex:index.row]];
+            NSArray* arr = [[selectedCities objectAtIndex:i] componentsSeparatedByString:@"-"];
+            [keywords addObject:[[[dataSource objectAtIndex:[[arr objectAtIndex:0] intValue]] objectForKey:@"cities"] objectAtIndex:[[arr objectAtIndex:1] intValue]]];
         }
-        
         Popup *popup = [[Popup alloc] initWithTitle:@"تحديد السعر"
                                            subTitle:@"قم بإدخال الحد الأعلى للسعر أو أتركه فارغاً ليتم تنبيهك بكل الأسعار. سيتم تنبيهك أيضاً بالإعلانات التي لم تضمن السعر لحصولك على أكبر فرصة ممكنه لتجد ما تريده"
                               textFieldPlaceholders:@[@""]
