@@ -47,6 +47,7 @@
             <string>DroidArabicKufi</string>
             <string>DroidArabicKufi</string>
             <string>DroidArabicKufi</string>
+            <string>DroidArabicKufi</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -1135,6 +1136,13 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="عذراً، لا توجد نتائج تتطابق هذا البحث." textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1xm-aX-Oco">
+                                <rect key="frame" x="20" y="358" width="374" height="45"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                                <fontDescription key="fontDescription" name="DroidArabicKufi" family="Droid Arabic Kufi" pointSize="19"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="hAZ-4u-CX2" customClass="FUIButton">
                                 <rect key="frame" x="0.0" y="676" width="414" height="60"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -1152,6 +1160,7 @@
                     <connections>
                         <outlet property="eqHolder" destination="pFJ-f9-HwJ" id="2za-HF-9dq"/>
                         <outlet property="moreButton" destination="hAZ-4u-CX2" id="TDE-sg-MMs"/>
+                        <outlet property="noResultsLabel" destination="1xm-aX-Oco" id="hX8-zF-G8q"/>
                         <outlet property="tableView" destination="dMk-YP-OIW" id="HwY-P5-UAc"/>
                         <segue destination="TSk-DX-Pbb" kind="push" identifier="searchWebSeg" id="Xoy-Bt-13L"/>
                     </connections>
@@ -1279,8 +1288,8 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Ndx-2i-aPz"/>
-        <segue reference="Moa-F0-SEw"/>
         <segue reference="4Qq-bL-TWA"/>
-        <segue reference="gfB-64-xcI"/>
+        <segue reference="WuD-qA-ZUz"/>
+        <segue reference="Xoy-Bt-13L"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -28,6 +28,7 @@
     NSIndexPath* selected;
     id<GAITracker> tracker;
     __weak IBOutlet FUIButton *moreButton;
+    __weak IBOutlet UILabel *noResultsLabel;
 }
 
 @synthesize className,searchingParams;
@@ -137,8 +138,14 @@
         }else
         {
              dispatch_async( dispatch_get_main_queue(), ^{
-                 [self.tableView reloadData];
-                 [self.tableView setNeedsDisplay];
+                 if(dataSource.count == 0)
+                 {
+                     [noResultsLabel setAlpha:1.0];
+                 }else
+                 {
+                     [self.tableView reloadData];
+                     [self.tableView setNeedsDisplay];
+                 }
                  [eqHolder setAlpha:0.0];
                  [_equalizer dismiss];
              });
