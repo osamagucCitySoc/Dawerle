@@ -298,8 +298,9 @@
 #pragma mark textfield methods
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    //[self addKeyWordClicked:nil];
+    [self addKeyWordClicked:nil];
     [textField resignFirstResponder];
+    [self submitClicked:nil];
     return YES;
 }
 - (void)deleteClicked:(id)sender

@@ -14,6 +14,7 @@
 #import <Google/Analytics.h>
 #import "CarsBrandsViewController.h"
 #import "JobSearchViewController.h"
+#import <KSToastView/KSToastView.h>
 
 @import GoogleMobileAds;
 
@@ -223,6 +224,7 @@
         [dataSource addObject:[NSDictionary dictionaryWithObjects:@[@"storeSeg",@"stores",@"storeSearch",@"مكاتب",@"stores.png",@"من السوق المفتوح، أوليكس، الوسيط، مورجان."] forKeys:@[@"seg",@"dataID",@"localID",@"title",@"img",@"desc"]]];
         [dataSource addObject:[NSDictionary dictionaryWithObjects:@[@"carsSeg",@"cars",@"carSearch",@"سيارات",@"cars.png",@"من السوق المفتوح، أوليكس، الوسيط، كويت كار."] forKeys:@[@"seg",@"dataID",@"localID",@"title",@"img",@"desc"]]];
         [dataSource addObject:[NSDictionary dictionaryWithObjects:@[@"jobsSeg",@"jobs",@"jobSearch",@"وظائف",@"jobs.png",@"من السوق المفتوح، أوليكس، الوسيط، لينكد إن، بيت.كوم."] forKeys:@[@"seg",@"dataID",@"localID",@"title",@"img",@"desc"]]];
+        [dataSource addObject:[NSDictionary dictionaryWithObjects:@[@"historySeg",@"history",@"historySearch",@"تصفح نتائج عمليات البحث المسجلة",@"history.png",@"من السوق المفتوح، أوليكس، الوسيط، لينكد إن، بيت.كوم."] forKeys:@[@"seg",@"dataID",@"localID",@"title",@"img",@"desc"]]];
         NSMutableArray* indecies = [[NSMutableArray alloc]init];
         
         for(int i = 0 ; i < dataSource.count ; i++)
@@ -297,36 +299,44 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     savedInd = indexPath.row;
-    
-    BOOL isSearches = NO;
-    
-    if([[NSUserDefaults standardUserDefaults] objectForKey:[[dataSource objectAtIndex:indexPath.row] objectForKey:@"localID"]] && [[[NSUserDefaults standardUserDefaults] objectForKey:[[dataSource objectAtIndex:indexPath.row] objectForKey:@"localID"]] count]>0)
+    if(indexPath.row == dataSource.count-1)
     {
-        isSearches = YES;
-    }
-    
-    
-    if (isSearches)
+        UIActionSheet* sheet = [[UIActionSheet alloc]initWithTitle:@"قسم البحث المسجل" delegate:self cancelButtonTitle:@"إلغاء" destructiveButtonTitle:nil otherButtonTitles:@"شقق",@"فلل",@"مكاتب",@"سيارات",@"وظائف",nil];
+        sheet.tag = 1212;
+        [sheet showInView:self.view];
+    }else
     {
-//        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"إلغاء" destructiveButtonTitle:nil otherButtonTitles:@"بحث جديد",@"تصفح عمليات البحث المحفوظة",nil];
-//        [actionSheet setTag:11];
-//        [actionSheet showInView:[UIApplication sharedApplication].keyWindow];
         
-        [_firstOptionsButton setTag:5];
-        [_secondOptionsButton setTag:6];
+        BOOL isSearches = NO;
         
-        [self openOptionsWithFirstLabel:@"بحث جديد" andSecondLabel:@"عمليات البحث المحفوظة" andFirstImg:@"search-options-icon.png" andSecondImg:@"archive-icon.png"];
-    }
-    else
-    {
-//        UIActionSheet* sheet = [[UIActionSheet alloc]initWithTitle:@"خيارات الدولة" delegate:self cancelButtonTitle:@"إلغاء" destructiveButtonTitle:nil otherButtonTitles:@"الكويت",@"السعودية",nil];
-//        [sheet setTag:111];
-//        [sheet showInView:self.view];
+        if([[NSUserDefaults standardUserDefaults] objectForKey:[[dataSource objectAtIndex:indexPath.row] objectForKey:@"localID"]] && [[[NSUserDefaults standardUserDefaults] objectForKey:[[dataSource objectAtIndex:indexPath.row] objectForKey:@"localID"]] count]>0)
+        {
+            isSearches = YES;
+        }
         
-        [_firstOptionsButton setTag:1];
-        [_secondOptionsButton setTag:2];
         
-        [self openOptionsWithFirstLabel:@"الكويت" andSecondLabel:@"السعودية" andFirstImg:@"kw-icon.png" andSecondImg:@"sa-icon.png"];
+        if (isSearches)
+        {
+            //        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:nil delegate:self cancelButtonTitle:@"إلغاء" destructiveButtonTitle:nil otherButtonTitles:@"بحث جديد",@"تصفح عمليات البحث المحفوظة",nil];
+            //        [actionSheet setTag:11];
+            //        [actionSheet showInView:[UIApplication sharedApplication].keyWindow];
+            
+            [_firstOptionsButton setTag:5];
+            [_secondOptionsButton setTag:6];
+            
+            [self openOptionsWithFirstLabel:@"بحث جديد" andSecondLabel:@"عمليات البحث المحفوظة" andFirstImg:@"search-options-icon.png" andSecondImg:@"archive-icon.png"];
+        }
+        else
+        {
+            //        UIActionSheet* sheet = [[UIActionSheet alloc]initWithTitle:@"خيارات الدولة" delegate:self cancelButtonTitle:@"إلغاء" destructiveButtonTitle:nil otherButtonTitles:@"الكويت",@"السعودية",nil];
+            //        [sheet setTag:111];
+            //        [sheet showInView:self.view];
+            
+            [_firstOptionsButton setTag:1];
+            [_secondOptionsButton setTag:2];
+            
+            [self openOptionsWithFirstLabel:@"الكويت" andSecondLabel:@"السعودية" andFirstImg:@"kw-icon.png" andSecondImg:@"sa-icon.png"];
+        }
     }
 }
 
@@ -427,7 +437,26 @@
 - (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex  {
     [tableVieww deselectRowAtIndexPath:tableVieww.indexPathForSelectedRow animated:YES];
     
-    if(actionSheet.tag == 111 && actionSheet.cancelButtonIndex != buttonIndex)
+    if(actionSheet.tag == 1212)
+    {
+        savedInd = buttonIndex;
+        BOOL isSearches = NO;
+        
+        if([[NSUserDefaults standardUserDefaults] objectForKey:[[dataSource objectAtIndex:savedInd] objectForKey:@"localID"]] && [[[NSUserDefaults standardUserDefaults] objectForKey:[[dataSource objectAtIndex:savedInd] objectForKey:@"localID"]] count]>0)
+        {
+            isSearches = YES;
+        }else
+        {
+            isSearches = NO;
+            [KSToastView ks_showToast:@"لا يوجد بحث مسجل في هذا القسم من قبل." delay:1];
+
+        }
+        
+        if (isSearches)
+        {
+            [self performSegueWithIdentifier:@"showRecordedSearch" sender:self];
+        }
+    }else if(actionSheet.tag == 111 && actionSheet.cancelButtonIndex != buttonIndex)
     {
         countryType = @"";
         

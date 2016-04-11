@@ -92,8 +92,8 @@
                                                     <color key="textColor" red="0.35294117650000001" green="0.35294117650000001" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="سيارات" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="sbm-Hd-wWE">
-                                                    <rect key="frame" x="124" y="23" width="228" height="31"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" tag="1" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="سيارات" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="sbm-Hd-wWE">
+                                                    <rect key="frame" x="40" y="23" width="312" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" heightSizable="YES"/>
                                                     <fontDescription key="fontDescription" name="DroidArabicKufi" family="Droid Arabic Kufi" pointSize="19"/>
                                                     <color key="textColor" red="0.078431372550000003" green="0.078431372550000003" blue="0.078431372550000003" alpha="1" colorSpace="calibratedRGB"/>
@@ -850,7 +850,7 @@
                                 <rect key="frame" x="117" y="141" width="248" height="27"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="DroidArabicKufi" family="Droid Arabic Kufi" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="done"/>
+                                <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="search"/>
                                 <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
                                     <rect key="frame" x="20" y="139" width="320" height="17"/>
                                 </variation>
@@ -1279,8 +1279,8 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Ndx-2i-aPz"/>
+        <segue reference="Moa-F0-SEw"/>
         <segue reference="4Qq-bL-TWA"/>
-        <segue reference="Dgg-zD-W3T"/>
-        <segue reference="Bdp-lh-LGl"/>
+        <segue reference="gfB-64-xcI"/>
     </inferredMetricsTieBreakers>
 </document>

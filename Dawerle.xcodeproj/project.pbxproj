@@ -204,6 +204,7 @@
 		E81DB8DE1C8B8D4500826EFE /* FeEqualize.m in Sources */ = {isa = PBXBuildFile; fileRef = E81DB8DD1C8B8D4500826EFE /* FeEqualize.m */; };
 		E81DB8E31C8B8D5D00826EFE /* FXBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = E81DB8E01C8B8D5D00826EFE /* FXBlurView.m */; };
 		E81DB8E41C8B8D5D00826EFE /* UIColor+flat.m in Sources */ = {isa = PBXBuildFile; fileRef = E81DB8E21C8B8D5D00826EFE /* UIColor+flat.m */; };
+		E81EFD591CBBE168002CA881 /* history.png in Resources */ = {isa = PBXBuildFile; fileRef = E81EFD581CBBE168002CA881 /* history.png */; };
 		E81F75201CAA62EC00D7F623 /* CarsSubBrandsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E81F751F1CAA62EC00D7F623 /* CarsSubBrandsViewController.m */; };
 		E8205C861CB94D2600E49939 /* Edit Property-52.png in Resources */ = {isa = PBXBuildFile; fileRef = E8205C851CB94D2600E49939 /* Edit Property-52.png */; };
 		E82DD3C51CA00389008CA31D /* lexus@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = E82DD3B91CA00389008CA31D /* lexus@3x.png */; };
@@ -515,6 +516,7 @@
 		E81DB8E01C8B8D5D00826EFE /* FXBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FXBlurView.m; sourceTree = "<group>"; };
 		E81DB8E11C8B8D5D00826EFE /* UIColor+flat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+flat.h"; sourceTree = "<group>"; };
 		E81DB8E21C8B8D5D00826EFE /* UIColor+flat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+flat.m"; sourceTree = "<group>"; };
+		E81EFD581CBBE168002CA881 /* history.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = history.png; sourceTree = "<group>"; };
 		E81F751E1CAA62EB00D7F623 /* CarsSubBrandsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarsSubBrandsViewController.h; sourceTree = "<group>"; };
 		E81F751F1CAA62EC00D7F623 /* CarsSubBrandsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarsSubBrandsViewController.m; sourceTree = "<group>"; };
 		E8205C851CB94D2600E49939 /* Edit Property-52.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Edit Property-52.png"; sourceTree = "<group>"; };
@@ -756,6 +758,7 @@
 				E81DB8D01C8B757600826EFE /* eye-on-magnifying-glass.png */,
 				E81DB8CE1C8B71D700826EFE /* left-arrow-angle.png */,
 				E81DB8CA1C8B712200826EFE /* stores.png */,
+				E81EFD581CBBE168002CA881 /* history.png */,
 				E81DB8C81C8B711600826EFE /* villas.png */,
 				E81DB8C21C8B70FB00826EFE /* cars.png */,
 				E81DB8C41C8B710400826EFE /* flats.png */,
@@ -1265,6 +1268,7 @@
 				1EAFBE5B1CA7F8CE00E01891 /* options-back.png in Resources */,
 				1E1E8FBC1C917396007E0700 /* Chrysler.png in Resources */,
 				1E1E8FE71C917396007E0700 /* Infiniti@2x.png in Resources */,
+				E81EFD591CBBE168002CA881 /* history.png in Resources */,
 				1E1E8FD01C917396007E0700 /* Ferrari@3x.png in Resources */,
 				E82DD3C51CA00389008CA31D /* lexus@3x.png in Resources */,
 				E87D53651CA40F100092A922 /* combinedAreasSA.json in Resources */,
