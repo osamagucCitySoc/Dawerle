@@ -152,6 +152,14 @@
                                         <color key="textColor" red="0.15686274509803921" green="0.15686274509803921" blue="0.15686274509803921" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="5cQ-RL-971">
+                                        <rect key="frame" x="77" y="254" width="32" height="32"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                        <state key="normal" image="Cancel-32.png"/>
+                                        <connections>
+                                            <action selector="closeOptionViewClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Tea-1G-5x1"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
@@ -1264,6 +1272,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Cancel-32.png" width="32" height="32"/>
         <image name="Edit Property-52.png" width="52" height="52"/>
         <image name="No Audio-96.png" width="96" height="96"/>
         <image name="add-circular-button.png" width="34" height="34"/>
@@ -1288,8 +1297,8 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Ndx-2i-aPz"/>
+        <segue reference="Moa-F0-SEw"/>
         <segue reference="4Qq-bL-TWA"/>
-        <segue reference="WuD-qA-ZUz"/>
-        <segue reference="Xoy-Bt-13L"/>
+        <segue reference="gfB-64-xcI"/>
     </inferredMetricsTieBreakers>
 </document>

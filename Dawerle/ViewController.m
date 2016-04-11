@@ -382,27 +382,10 @@
     }
     else if (theTag == 5)
     {
-        if(YES || [[UIApplication sharedApplication] isRegisteredForRemoteNotifications])
-        {
-            [_firstOptionsButton setTag:1];
-            [_secondOptionsButton setTag:2];
-            
-            [self openOptionsWithFirstLabel:@"الكويت" andSecondLabel:@"السعودية" andFirstImg:@"kw-icon.png" andSecondImg:@"sa-icon.png"];
-        }else
-        {
-            OpinionzAlertView *alert = [[OpinionzAlertView alloc] initWithTitle:@"خطأ"
-                                                                        message:@"للأسف لم تسمح لنا بإرسال إشعارات لك:( يجب تفعيلها لكي نستطيع تبيلغك عند وجود إعلان يهمك"
-                                                              cancelButtonTitle:@"إلغاء"              otherButtonTitles:@[@"تفعيل"]          usingBlockWhenTapButton:^(OpinionzAlertView *alertView, NSInteger buttonIndex) {
-                                                                  if(buttonIndex == 1)
-                                                                  {
-                                                                      NSURL* settingsURL = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
-                                                                      [[UIApplication sharedApplication] openURL:settingsURL];
-                                                                  }
-                                                              }];
-            alert.iconType = OpinionzAlertIconWarning;
-            alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
-            [alert show];
-        }
+        [_firstOptionsButton setTag:1];
+        [_secondOptionsButton setTag:2];
+        
+        [self openOptionsWithFirstLabel:@"الكويت" andSecondLabel:@"السعودية" andFirstImg:@"kw-icon.png" andSecondImg:@"sa-icon.png"];
     }
     else if (theTag == 6)
     {
@@ -503,26 +486,10 @@
         {
             if (actionSheet.tag == 11)
             {
-                if(YES || [[UIApplication sharedApplication] isRegisteredForRemoteNotifications])
-                {
-                    UIActionSheet* sheet = [[UIActionSheet alloc]initWithTitle:@"خيارات الدولة" delegate:self cancelButtonTitle:@"إلغاء" destructiveButtonTitle:nil otherButtonTitles:@"الكويت",@"السعودية",nil];
-                    [sheet setTag:111];
-                    [sheet showInView:self.view];
-                }else
-                {
-                    OpinionzAlertView *alert = [[OpinionzAlertView alloc] initWithTitle:@"خطأ"
-                                                                                message:@"للأسف لم تسمح لنا بإرسال إشعارات لك:( يجب تفعيلها لكي نستطيع تبيلغك عند وجود إعلان يهمك"
-                                                                      cancelButtonTitle:@"إلغاء"              otherButtonTitles:@[@"تفعيل"]          usingBlockWhenTapButton:^(OpinionzAlertView *alertView, NSInteger buttonIndex) {
-                                                                                    if(buttonIndex == 1)
-                                                                                    {
-                                                                                        NSURL* settingsURL = [NSURL URLWithString:UIApplicationOpenSettingsURLString];
-                                                                                        [[UIApplication sharedApplication] openURL:settingsURL];
-                                                                                    }
-                                                                                }];
-                    alert.iconType = OpinionzAlertIconWarning;
-                    alert.color = [UIColor colorWithRed:0.15 green:0.68 blue:0.38 alpha:1];
-                    [alert show];
-                }
+                UIActionSheet* sheet = [[UIActionSheet alloc]initWithTitle:@"خيارات الدولة" delegate:self cancelButtonTitle:@"إلغاء" destructiveButtonTitle:nil otherButtonTitles:@"الكويت",@"السعودية",nil];
+                [sheet setTag:111];
+                [sheet showInView:self.view];
+
             }
         }
             break;
@@ -534,6 +501,9 @@
             }
         }
     }
+}
+- (IBAction)closeOptionViewClicked:(id)sender {
+    [self closeOptionsView];
 }
 
 @end

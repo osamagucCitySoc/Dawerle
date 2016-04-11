@@ -284,6 +284,8 @@
 		E860D4DF1CB26B31006FD1B5 /* readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = E860D4DD1CB26B31006FD1B5 /* readme.txt */; };
 		E862BD591C8C25BC00541240 /* SearchesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E862BD581C8C25BC00541240 /* SearchesViewController.m */; };
 		E862BD5E1C8C4C7C00541240 /* SplashScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E862BD5D1C8C4C7C00541240 /* SplashScreenViewController.m */; };
+		E86EDDD71CBC1AA10035902F /* cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = E86EDDD61CBC1AA10035902F /* cancel.png */; };
+		E86EDDD91CBC1AFA0035902F /* Cancel-32.png in Resources */ = {isa = PBXBuildFile; fileRef = E86EDDD81CBC1AFA0035902F /* Cancel-32.png */; };
 		E87710D91C5A558A0079BF0D /* CarsBrandsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E87710D81C5A558A0079BF0D /* CarsBrandsViewController.m */; };
 		E87710DD1C5A61120079BF0D /* carsOlx.json in Resources */ = {isa = PBXBuildFile; fileRef = E87710DA1C5A61120079BF0D /* carsOlx.json */; };
 		E87710DE1C5A61120079BF0D /* carsSooq.json in Resources */ = {isa = PBXBuildFile; fileRef = E87710DB1C5A61120079BF0D /* carsSooq.json */; };
@@ -603,6 +605,8 @@
 		E862BD581C8C25BC00541240 /* SearchesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchesViewController.m; sourceTree = "<group>"; };
 		E862BD5C1C8C4C7C00541240 /* SplashScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SplashScreenViewController.h; sourceTree = "<group>"; };
 		E862BD5D1C8C4C7C00541240 /* SplashScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SplashScreenViewController.m; sourceTree = "<group>"; };
+		E86EDDD61CBC1AA10035902F /* cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cancel.png; sourceTree = "<group>"; };
+		E86EDDD81CBC1AFA0035902F /* Cancel-32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cancel-32.png"; sourceTree = "<group>"; };
 		E87710D71C5A558A0079BF0D /* CarsBrandsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CarsBrandsViewController.h; sourceTree = "<group>"; };
 		E87710D81C5A558A0079BF0D /* CarsBrandsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CarsBrandsViewController.m; sourceTree = "<group>"; };
 		E87710DA1C5A61120079BF0D /* carsOlx.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = carsOlx.json; sourceTree = "<group>"; };
@@ -753,6 +757,8 @@
 		E81DB8AB1C8AE4C300826EFE /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				E86EDDD61CBC1AA10035902F /* cancel.png */,
+				E86EDDD81CBC1AFA0035902F /* Cancel-32.png */,
 				E81DB8D41C8B796B00826EFE /* dark-eye-2.png */,
 				E81DB8D21C8B78AC00826EFE /* dark-eye.png */,
 				E81DB8D01C8B757600826EFE /* eye-on-magnifying-glass.png */,
@@ -1295,6 +1301,7 @@
 				E82DD3FD1CA0045A008CA31D /* nissan.png in Resources */,
 				1E1C58D21C959AF3009BD677 /* help-1@2x.png in Resources */,
 				1E1E8FA41C917396007E0700 /* alfaromeo.png in Resources */,
+				E86EDDD71CBC1AA10035902F /* cancel.png in Resources */,
 				E82DD3CE1CA00389008CA31D /* opel@3x.png in Resources */,
 				1E1C58E11C95AE3E009BD677 /* help-3@2x.png in Resources */,
 				1E1E8FA51C917396007E0700 /* alfaromeo@2x.png in Resources */,
@@ -1346,6 +1353,7 @@
 				E82DD3F91CA0045A008CA31D /* mercedes.png in Resources */,
 				1E1E8FC81C917396007E0700 /* Daihatsu.png in Resources */,
 				E82DD3C61CA00389008CA31D /* Maserati@3x.png in Resources */,
+				E86EDDD91CBC1AFA0035902F /* Cancel-32.png in Resources */,
 				1E1E8FBA1C917396007E0700 /* Chevrolet@2x.png in Resources */,
 				1E1C58D91C959F0B009BD677 /* help-2@3x.png in Resources */,
 				1E1C58C11C91AC90009BD677 /* help-icon@3x.png in Resources */,
